@@ -163,3 +163,4 @@ createCollectable("steve", 145, 25, 0, 0);
 
   registerSetup(setup);
 });
+//test
