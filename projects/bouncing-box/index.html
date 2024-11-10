@@ -6,23 +6,59 @@
 	<title>Bouncing Box</title>
 	<script src="jquery.min.js"></script>
 	<style>
+		
+		
 		.box {
 			width: 70px;
 			height: 70px;
-			background-color: teal;
+			background-color: #1500d3;
 			font-size: 300%;
 			text-align: center;
 			user-select: none;
 			display: block;
 			position: absolute;
-			top: 100px;
+			top: 500px;
+			color: #ffffff;
+			font-family: Verdana, sans-serif;
+			border-radius: 15px; /*Box's special looks*/
+			border: solid 5px #000000;
+			transition: background-color 3s;
 			/* Change me! */
-			left: 0px;
+			left: 5px;
+		}
+		.scoreboard {
+			position: relative;
+			border-radius: 10px;
+			border: solid 5px #333;
+			height: 100px;
+			width: 275px;
+			top: 825px;
+			left: 40px;
+			text-align: center;
+			font-family: Verdana, sans-serif;background: #888;
+			font-size: 2rem;
+			font-weight: bold;
+			color: #333;
+			transition: transform 1.5s ease; /* Smooth transition */
+		}
+		.scoreboard:hover {
+			transform: translateY(-100px) translateX(300px) scale(3);
 		}
 
 		.board {
 			height: 100vh;
+			background: radial-gradient(circle, #777 5px, transparent 5px) #222;
+		 	background-size: 20px 20px;
+ 			 animation: moveDots 5s linear infinite;
+			 transition: all 3s;
 		}
+
+		@keyframes moveDots {
+  		from { background-position: 0 0; }
+ 		 to { background-position: 200px 200px; }
+		}	
+
+
 	</style>
 	<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 
@@ -31,6 +67,9 @@
 <body class="board">
 	<!-- HTML for the box -->
 	<div class="box">?</div>
+	<div class="scoreboard">Score: 0 Speed: ?</div>
+
+	
 
 	<script>
 		(function () {
@@ -44,6 +83,7 @@
 			var box = jQuery('.box');	// reference to the HTML .box element
 			var board = jQuery('.board');	// reference to the HTML .board element
 			var boardWidth = board.width();	// the maximum X-Coordinate of the screen
+			var scoreboard = jQuery('.scoreboard');
 
 			// Every 50 milliseconds, call the update Function (see below)
 			setInterval(update, 50);
@@ -60,6 +100,9 @@
 			function changeBoxText(newText) {
 				box.text(newText);
 			}
+			function changeScoreText(newScore) {
+				scoreboard.text(newScore);
+			}
 
 			//////////////////////////////////////////////////////////////////
 			/////////////////// YOUR CODE BELOW HERE /////////////////////////
@@ -67,7 +110,15 @@
 
 			// TODO 2 - Variable declarations 
 
-
+			var positionX = 0;
+			var points = 0;
+			var speed = 10;
+			var colorStr1 = "white";
+			var boardCol = "#222";
+			var boxCol1 = "#1500d3";
+			var boxCol2 = "#ffffff";
+			var boxCol3 = "#000";
+			
 
 			/* 
 			This Function will be called 20 times/second. Each time it is called,
@@ -75,8 +126,32 @@
 			turn it around! 
 			*/
 			function update() {
+				positionX = positionX + speed
+				moveBoxTo(positionX++);
+				
+				if(positionX >= boardWidth){
+					speed = -speed;
+				}
+				if(positionX < 0){
+					speed = -speed;
+				}
+				if(points >= 20){
+				board.css("background-color", colorStr1);
+				box.css("background-color", colorStr1);
+				box.css("color", colorStr1);
+				box.css("border", colorStr1);
+				}
+				if(points >= 35){
+				board.css("background-color", boardCol);
+				box.css("background-color", boxCol1);
+				box.css("color", boxCol2);
+				box.css("border", boxCol3);
+				}
+				changeScoreText("Score: " + points + " Speed: " + speed);
 
-
+				if (points + 8 === speed){ //The if and if else statements for the bug fix in TODO 7 still had a slight issue for me, here is how I fixed the bug.
+					speed = speed + 2
+				}
 			};
 
 			/* 
@@ -85,11 +160,11 @@
 			the left side of the screen.
 			*/
 			function handleBoxClick() {
-
-
+				positionX = 0;
+				points++
+				changeBoxText(points);
+				speed++
 			};
-
-
 
 
 
