@@ -1,0 +1,80 @@
+  body {
+    width: 100%;
+    max-height: 100vh;
+    height: 100vh;
+    background: linear-gradient(to right, #6400c2, #28bbfa);
+  }
+  .nav-bar{
+    margin: 0;
+    padding: 15px;
+    background: rgb(239, 80, 41);
+    width: 100%;
+    color: #ffffff;
+    margin-left: 0;
+    margin-top: 0;
+    border-radius: 50px;
+  }
+  .nav-bar h1{
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 1.75rem;
+    background: rgb(239, 80, 41);
+  }
+  .container {
+    margin: center;
+    display: flex;
+  }
+  #question {
+    margin: center;
+    text-align: center;
+    margin-top: 75px;
+  }
+  #questionText {
+    font-family: 'Arial';
+    font-weight: bold;
+    font-size: 2rem;
+    color: #ffffff;
+  
+  }
+  #answerOne, #answerTwo, #answerThree, #answerFour {
+      margin: center;
+      display: flex;
+      font-size: 1.5rem;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      padding: 25px;
+      margin-top: 20px;
+      border: 2px solid #222;
+      border-radius: 7px;
+      transition: all 0.5s;
+      background: #ffffff;
+      color: #222;
+  }
+  #answerOne:hover, #answerTwo:hover, #answerThree:hover, #answerFour:hover {
+    transform: translateY(-5px);
+    background: #222;
+    color: #ffffff;
+  }
+  button {
+    padding: 30px;
+    background: #3483eb;
+    margin-top: 25px;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    color: #ffffff;
+    transition: all 0.5s;
+  }
+  button:hover {
+    transform: translateY(-5px);
+    cursor: pointer;
+  }
+  .clicked {
+    background-color: #555;
+  }
+  .cursorFalse {
+    cursor: not-allowed;
+  }
+  .cursorTrue {
+    cursor: pointer;
+  }
