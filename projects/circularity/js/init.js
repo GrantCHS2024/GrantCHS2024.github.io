@@ -20,6 +20,13 @@ var init = function (window) {
         ///////////////////
         // PROGRAM SETUP //
         ///////////////////
+
+        var nightbtn = document.querySelector(".night-mode");
+        var body = document.querySelector(".bodyone")
+
+        nightbtn.onclick = function(){
+            body.classList.toggle("dark");
+        }
         
         // TODO 1 : Declare and initialize our variables
         var circle; // variable to hold a single circle when creating circles / iterating
@@ -34,8 +41,6 @@ physikz.addRandomVelocity(circle, canvas, 5, 5);
 view.addChild(circle);
 circles.push(circle);
         }
-
-        // TODO 3 : Call the drawCircle() function
 
         
 
