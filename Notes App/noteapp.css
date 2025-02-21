@@ -98,10 +98,10 @@
     height: 1200px;
     top: 450px;
     left: 25%;
-    padding: 35px;
+    padding: 10px;
     overflow-y: auto;
     opacity: 0;
-    border-radius: 100px;
+    border-radius: 50px;
   }
   .note{
     position: relative;
