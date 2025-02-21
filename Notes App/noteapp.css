@@ -1,0 +1,236 @@
+.body {
+    background: white;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+  }
+  .container {
+    background: white;
+    width: 1200px;
+    height: 300px;
+    position: absolute;
+    top: 50px;
+    left: 20%;
+    border-radius: 25px;
+    box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);
+  }
+  .nav-bar {
+    position: relative; 
+    border-bottom: 2px solid #888;
+    padding: 40px;
+    background: #f1f1f1;
+    border-radius: 25px 25px 10px 10px;
+  }
+  .nav-bar h1{
+    color: #555;
+    font-family: 'Impact';
+    font-weight: 50;
+    text-align: left;
+    display: inline;
+    user-select: none;
+  }
+  .nav-bar h2{
+    color: #555;
+    font-family: 'Impact';
+    font-weight: 50;
+    margin-left: 950px;
+    display: inline;
+    user-select: none;
+    cursor: pointer;
+    transition: 0.5s all;
+  }
+  .nav-bar h2:hover {
+    color: #888;
+  }
+  .settings {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    top: 75px;
+    left: 25%;
+    background: #cccccc;
+    border-radius: 100px;
+    border: 5px solid #666;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease-in-out; 
+  }
+  .settings h1{
+    margin-top: 35px;
+    margin-left: 235px;
+    font-family: Impact;
+    font-weight: 100;
+    color: #666;
+    user-select: none;
+  }
+  
+  
+  
+  .findNoteBtn {
+    position: relative;
+    width: 250px;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid #888;
+    margin: auto;
+    text-align: center;
+    font-family: 'Impact';
+    font-size: 1.2rem;
+    user-select: none;
+  }
+  .findNoteBtn input{
+    width: 50px;
+    border-radius: 5px;
+    border: none;
+    border-bottom: 2px solid;
+  }
+  .findNote {
+    padding: 10px;
+    width: 100px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  .notesContainer{
+    position: absolute;
+    height: 1200px;
+    top: 450px;
+    left: 25%;
+    padding: 10px;
+    overflow-y: auto;
+    opacity: 0;
+    border-radius: 100px;
+  }
+  .note{
+    position: relative;
+    width: 900px;
+    height: 1000px;
+    border-radius: 10px;
+    border: 3px solid #888;
+    font-family: Arial;
+    padding: 10px;
+    margin-top: 100px;
+  }
+  .deleteNote {
+    position: absolute;
+    width: 50px;
+    height: 25px;
+    top: 100%;
+    background: red;
+    user-select: none;
+    transition: background 0.5s
+  }
+  .deleteNote:hover {
+    background: darkred;
+  }
+  
+  
+  
+  .addNoteBtn {
+    position: relative;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid #888;
+    margin: auto;
+    margin-top: 30px;
+  }
+  .addNoteBtn h1{
+    text-align: center;
+    font-family: 'Impact';
+    font-weight: 100;
+    margin-top: 5px;
+    user-select: none;
+    transition: all 0.5s ease-in-out;
+  }
+  .addNoteBtn:hover {
+    cursor: pointer;
+  }
+  
+  
+  
+  .dark-mode {
+    width: 500px;
+    margin-top: 75px;
+    margin-left: 45px;
+    border-radius: 50px;
+    height: 50px;
+    border: 2px solid #999;
+    background: #333;
+    text-align: center;
+    font-size: 2.3rem;
+    font-family: Impact;
+    font-weight: 50;
+    color: #ebebeb;
+    transition: 0.5s background;
+    user-select: none;
+  }
+  .dark-mode:hover {
+    background: #ebebeb;
+    color: #333;
+    cursor: pointer;
+  }
+  .show {
+    opacity: 1;
+    z-index: 2;
+  }
+  .hide {
+    opacity: 0;
+  }
+  .dark {
+    background: #111;
+    box-shadow: 0px 5px 100px 0px rgba(255, 255, 255, 0.35);
+    color: #ebebeb;
+  }
+  .noteDark {
+  background: #111;
+  color: #fefefe;
+  }
+  
+  
+
+  .background {
+    position: relative;
+    width: 500px;
+    height: 100px;
+    border: 2px solid;
+    margin: auto;
+    margin-top: 20px;
+  }
+  .background h1{
+    margin: 5px;
+    text-align: left;
+    font-family: Impact;
+    font-size: 1.5rem;
+  }
+
+  .backgroundVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+.background button{
+  padding: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #666;
+  font-family: Arial;
+  color: white;
+  font-weight: 200;
+  transition: background 1s;
+}
+.background button:hover{
+  background: linear-gradient(to right, #66a1ff, #0062ff);
+  color: #555;
+}
+#videoOne, #videoTwo, #videoThree, #videoFour{
+  opacity: 0;
+}

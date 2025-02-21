@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Notes App</title>
+  <link rel="stylesheet" href="noteapp.css">
+</head>
+<body class="body">
+  <div class="container">
+    
+    <div class="nav-bar">
+      <h1>Home</h1> <h2 class="settingsLink">Settings</h2>
+    </div>
+    
+    <div class="addNoteBtn">
+      <h1>Add Note + </h1>
+    </div>
+    
+    <div class="findNoteBtn">
+      <h1>Find Note: <input type="number" class="findNoteNum"></input></h1>
+    <button class="findNote">Find</button>
+    </div>
+    
+    <div class="settings">
+      <h1>Settings</h1>
+      <div class="dark-mode" onclick="darkMode()">Dark Mode</div>
+      <div class="background">
+        <h1>Backgrounds</h1>
+        <button onclick="playVideoOne()">Sunset</button>
+        <button onclick="playVideoTwo()">Waterfall</button>
+        <button onclick="playVideoThree()">Shoreline</button>
+        <button onclick="playVideoFour()">City</button>
+        <button onclick="clearVideos()">Clear Background</button>
+      </div>
+    </div>
+  </div>
+  <div class="notesContainer">
+   <!--<p contenteditable="true" class="note"></p> <!-->
+  </div>
+  <video muted loop class="backgroundVideo" id="videoOne">
+    <source src="videos/backgroundOne.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<video muted loop class="backgroundVideo" id="videoTwo">
+    <source src="videos/backgroundTwo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<video muted loop class="backgroundVideo" id="videoThree">
+    <source src="videos/backgroundThree.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<video muted loop class="backgroundVideo" id="videoFour">
+    <source src="videos/backgroundFour.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+  <script src="notappcode.js"></script>
+</body>
+</html>
