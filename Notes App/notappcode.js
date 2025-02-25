@@ -1,4 +1,4 @@
-windows.alert("This app is a TEST and does NOT have localStorage!");
+window.alert("This app is a TEST and does NOT have localStorage!");
 var body = document.querySelector(".body");
 var container = document.querySelector(".container");
 var settingsContainer = document.querySelector(".settings");
