@@ -1,0 +1,91 @@
+body {
+    background: black;
+    user-select: none;
+  }
+  
+  .canvas {
+    width: 1000px;
+    height: 600px;
+    overflow: hidden;
+    position: absolute;
+    left: 15%;
+    opacity: 0.8;
+    scroll-behavior: smooth;
+  }
+  .information {
+    position: absolute;
+    left: 30%;
+    top: 650px;
+    border-radius: 25px;
+    width: 500px;
+    height: 75px;
+    font-family: impact, sans-serif;
+    color: white;
+    text-align: center;
+    font-size: 2.5rem;
+    z-index: 3;
+  }
+  .menu {
+    position: absolute;
+    width: 1000px;
+    height: 600px;
+    left: 15%;
+    z-index: 2;
+    background: #4f4f4f;
+  }
+  .menu button{
+    position: absolute;
+    width: 300px;
+    height: 100px;
+    border-radius: 25px;
+    font-size: 3rem;
+    font-family: impact;
+    left: 36%;
+  }
+  .easyBtn {
+    margin-top: 200px;
+    transition: all 0.5s;
+  }
+  .easyBtn:hover {
+    background: green;
+    color: white;
+  }
+  .hardBtn {
+    margin-top: 330px;
+    transition: all 0.5s;
+  }
+  .hardBtn:hover{
+    background: darkred;
+    color: white;
+  }
+  .transition {
+    animation-name: transition;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+  }
+  @keyframes transition {
+    75%{
+      z-index: -1;
+      opacity: 0;
+    }
+    100%{
+      z-index: -1;
+      opacity: 0;
+      display: none;
+    }
+  }
+  .menu h1{
+    font-family: impact;
+    font-weight: 14;
+    font-size: 4rem;
+    color: #5c0403;
+    position: absolute;
+    left: 27%;
+    top: 7%;
+  }
+  .dark {
+    opacity: 0.1;
+  }
+  .light {
+    opacity: 0.8;
+  }

@@ -148,3 +148,30 @@ marquee {
                 }
             }
 
+/* Slideshow Portion */
+
+.slideshow {
+  position: relative;
+  width: 600px;
+  height: 600px;
+}
+.left-btn {
+  position: relative;
+  left: 40%;
+  width: 50px;
+  background: black;
+  font-family: impact;
+  color: white;
+  border: none;
+  border-radius: 15px;
+}
+.right-btn {
+  position: relative;
+  left: 50%;
+  width: 50px;
+  background: black;
+  font-family: impact;
+  color: white;
+  border: none;
+  border-radius: 15px;
+}
