@@ -1,7 +1,15 @@
 var gameFlag = false;
+var ambience = document.getElementById("ambience");
+var nightambience = document.getElementById("nightAmbience");
+var paperCollect = document.getElementById("paperCollect");
+var trapPlace = document.getElementById("trapPlace");
+var boxSearchSfx = document.getElementById("boxSearch");
+var Deadambience = document.getElementById("Deadambience");
 var menu = document.querySelector(".menu");
+var walkingSfx = document.getElementById("walking");
 var easyBtn = document.querySelector(".easyBtn");
 var hardBtn = document.querySelector(".hardBtn");
+var impossibleBtn = document.querySelector(".impossibleBtn");
 var canvasDIV = document.querySelector(".canvas");
 var body = document.querySelector(".body")
 var infoBox = document.querySelector(".information");
@@ -36,7 +44,6 @@ var moving = {
 
 var numOfEvidence = 10;
 var evidenceCollected = 0;
-var difficultyModifier = 1;
 var walls = [];
 var luckyBoxes = [];
 var evidences = [];
@@ -60,11 +67,10 @@ easyBtn.addEventListener("click", () => {
 });
 hardBtn.addEventListener("click", () => {
     menu.classList.add("transition");
+    canvasSize = 6000;
+    numOfEvidence = 15;
     startGame();
     time = 0;
-    numOfEvidence = 15;
-    difficultyModifier = 1.2;
-    canvasSize = 6000;
     hardMode = true;
     canvas.width = canvasSize;
     canvas.height = canvasSize;
@@ -79,14 +85,33 @@ hardBtn.addEventListener("click", () => {
   
     update();
 });
+impossibleBtn.addEventListener("click", () => {
+    menu.classList.add("transition");
+    canvasSize = 7000;
+    numOfEvidence = 20;
+    startGame();
+    time = 0;
+    hardMode = true;
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+    infoBox.textContent = "";
+
+    enemy.speed = 2;
+  
+  for(var i = 0; i <= numOfEvidence; i++){
+  var x = Math.floor(Math.random() * (canvasSize - 1) + 1);
+  var y = Math.floor(Math.random() * (canvasSize - 75) + 1);
+
+  evidences.push({x: x, y: y, size: 20});
+}
+  
+    update();
+});
 
 
 function startGame(){
   gameFlag = true;
-  
-  if(hardMode === true){
-    canvasSize = 6000;
-  }
+  ambience.play();
   
 for(var i = 0; i <  75; i++){
   walls.push({x: Math.floor(Math.random() * (canvasSize - 1) + 1), y: Math.floor(Math.random() * (canvasSize - 1) + 1), width: 75, height: 75});
@@ -128,8 +153,6 @@ for(var c = 0; c < 16; c++){
 }
 
 //Objectives section
-  
-
 
 
 setInterval(() =>{
@@ -166,12 +189,12 @@ function randomItem(){
     infoBox.textContent = "You recieved a trap, press E to use";
   }
   if(ranNum === 2){
-    enemy.speed = (enemy.speed * 0.8) * difficultyModifier;
+    enemy.speed = (enemy.speed * 0.8);
     infoBox.textContent = "Killer has been slowed down";
     enemy.speed = Math.min(enemy.speed, maxSpeed);
   }
   if(ranNum === 3){
-    player.speed = (player.speed * 1.2) + difficultyModifier;
+    player.speed = (player.speed * 1.2);
     infoBox.textContent = "Player speed increased";
     player.speed = Math.min(player.speed, maxSpeed);
   }
@@ -186,13 +209,14 @@ var numberTraps = 0;
 function placeTrap(){
   placedTraps.push({x: player.x, y: player.y, size: 20});
   numberTraps--
+  trapPlace.play();
 }
 
 //End of section
 
 document.addEventListener("keydown", (event) => {
-  if(event.key == "w" && gameFlag === true) {moving.w = true;}//
-  if(event.key == "a" && gameFlag === true) {moving.a = true;}//
+  if(event.key == "w" && gameFlag === true) {moving.w = true;}
+  if(event.key == "a" && gameFlag === true) {moving.a = true;}
   if(event.key == "s" && gameFlag === true) {moving.s = true;}
   if(event.key == "d" && gameFlag === true) {moving.d = true;}
   
@@ -202,13 +226,13 @@ document.addEventListener("keydown", (event) => {
   if(event.key === " "){
     infoBox.textContent = "";
   }
-                                            }
+   }
 });
 document.addEventListener("keyup", (event) => {
-  if(event.key == "w") moving.w = false;
-  if(event.key == "a") moving.a = false;
-  if(event.key == "s") moving.s = false;
-  if(event.key == "d") moving.d = false;
+  if(event.key == "w") {moving.w = false;}
+  if(event.key == "a") {moving.a = false;}
+  if(event.key == "s") {moving.s = false;}
+  if(event.key == "d") {moving.d = false;}
 });
 
 function isColliding(x, y){
@@ -258,12 +282,6 @@ function update(){
   }
   if(player.x % 1000 < 10 && moving.a){
     canvasDIV.scrollLeft = player.x - 1000;
-  }
-
-  function checkPlayerStill(){
-    if(newX === player.x && newY === player.y){
-      return true;
-    }
   }
   
   //Enemy movement section
@@ -319,6 +337,7 @@ function update(){
         player.y <= box.y + box.size
     ) {
        
+      boxSearchSfx.play();
       randomItem();  
       return false; // Remove this box
     }
@@ -336,6 +355,7 @@ function update(){
        player.y <= evidence.y + evidence.size)
     {
       evidenceCollected++
+      paperCollect.play();
       
       if(evidenceCollected === numOfEvidence){
     canvasDIV.style.opacity = 0;
@@ -372,6 +392,9 @@ function update(){
     canvasDIV.style.opacity = 0;
     time = 0;
     infoBox.textContent = "He caught you. . ."
+    ambience.pause();
+    nightambience.pause();
+    Deadambience.play();
   }
   if(gameFlag === false){
     canvasDIV.addEventListener("click", () => {
@@ -403,10 +426,14 @@ setInterval(() => {
   if(time % 60 === 0){
   canvasDIV.classList.add("dark");
   canvasDIV.classList.remove("light");
-  enemy.speed = (enemy.speed * 1.6) * difficultyModifier;
+  ambience.pause();
+  nightambience.play();
+  enemy.speed = (enemy.speed * 1.6);
 }
-  if(time % 120 === 0){
+  if(time % 119 === 0){
     time = 0;
+    ambience.play();
+    nightambience.pause();
     canvasDIV.classList.remove("dark");
     canvasDIV.classList.add("light");
     enemy.speed = (enemy.speed / 1.6) + 0.5;
@@ -425,35 +452,110 @@ setInterval(() => {
 var enemyColor = "red";
 
 //Extra enemies section
+var stalker = document.querySelector(".stalkerImage");
+var stalkerScream = document.getElementById("scream");
+var LOOKATME = document.querySelector(".LOOKATMEImage");
+var LOOKATMEX = 0;
+var LOOKATMEY = 0;
+var lookatmeClicked = false;
+LOOKATME.style.top = LOOKATMEY + 'px';
+LOOKATME.style.left = LOOKATMEX + 'px';
+var lookatmeLAUGH = document.getElementById("laughing");
+var blurIntensity = 0;
+canvasDIV.style.filter = `blur(${blurIntensity}px)`;
+var JesterBox = document.querySelector(".JesterBox");
+var JesterNum = document.querySelector(".JesterNum");
+var JesterInputBox = document.querySelector(".JesterInput");
+var submitBtn = document.querySelector(".submitBtn");
+
+
 function event(){
-  var random = Math.floor(Math.random() * (2 - 1) + 1);
+  if(hardMode === true){
+    var random = Math.floor(Math.random() * (6 - 1) + 1);
   
   if(random === 1){
+    console.log("Nothing");
     random = 0; //Nothing
   }
-  if(random === 2){
-    enemyColor = "rgba(0, 0, 0, 0)"; //The Cena Enemy
+  else if(random === 2){
+    console.log("Cena");
+    enemyColor = "rgba(0, 0, 0, 0)"; //The Cena Enemy (HARD)
     setTimeout(() => {
-      enemyColor = "red";
+      enemyColor = "rgba(255, 0, 0, 1)";
     }, 60000)
        random = 0;
   }
-  if(random === 3){
-    //Show Stalker
-    //setTimeout(() => {
-    //if(checkPlayerStill){
-    //player.speed = 1 (Then add the slight screen blur)
-    //}
-    //}, 1200)
-    //random = 0;
+  else if(random === 3){
+    console.log("Stalker");
+    stalker.style.opacity = 100;
+    setTimeout(() => {
+    if(moving.w || moving.a || moving.s || moving.d){
+    player.speed = 1;
+    blurIntensity += 2;
+    canvasDIV.style.filter = `blur(${blurIntensity}px)`;
+    stalkerScream.play();
+    canvasDIV.classList.add("shake");
+    infoBox.textContent = "WHY DID YOU MOVE?!";
+    }
+    stalker.style.opacity = 0;
+    }, 1100)
+    random = 0;
   }
-  if(random === 4){
-    //Smiley
+  else if(random === 4){
+    console.log("LOOKATME");
+    LOOKATMEX = Math.floor(Math.random() * (1000 - 1) + 1); //LOOKATME (HARD)
+    LOOKATMEY = Math.floor(Math.random() * (500 - 1) + 1);
+    LOOKATME.style.opacity = 100;
+    lookatmeClicked = false;
+    
+    LOOKATME.addEventListener("click", () => {
+        LOOKATME.style.opacity = 0
+        lookatmeClick = true;
+    });
+
+    setTimeout(() => {
+       if(lookatmeClicked == false){
+            player.speed = 2;
+            numberTraps = 0;
+            blurIntensity += 1;
+            canvasDIV.style.filter = `blur(${blurIntensity}px)`;
+            lookatmeLAUGH.play();
+            infoBox.textContent = "You should've clicked on him...";
+        }
+
+        lookatmeClicked = false;
+        LOOKATME.style.opacity = 0;
+    }, 1500);
+
+    random = 0;
+    LOOKATME.style.top = LOOKATMEY + 'px';
+    LOOKATME.style.left = LOOKATMEX + 'px';
   }
-  if(random === 5){
-    //Jester
+  else if (random === 5) {
+    console.log("Jester"); // Jester
+    JesterBox.style.opacity = 75;
+    JesterBox.style.zIndex = 5;
+    var JesterNumber = Math.floor(Math.random() * 1000);
+    JesterNum.textContent = JesterNumber;
+    submitBtn.addEventListener("click", () => {
+        var JesterInput = parseInt(JesterInputBox.value);
+       
+       if(JesterInput == JesterNumber){
+        JesterBox.style.opacity = 0;
+        JesterBox.style.zIndex = -1;
+        JesterInputBox.value = '';
+       }
+       else{
+         blurIntensity += 0.5;
+         canvasDIV.style.filter = `blur(${blurIntensity}px)`;
+       }
+      });
+     
+    random = 0;
   }
+ }
 }
+
 //End of section.
 
 function checkEnemyStuck(){
