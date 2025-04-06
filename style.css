@@ -3,10 +3,42 @@ body {
     color: rgb(45, 45, 45);
     padding: 10px;
     font-family: arial;
+    user-select: none;
 }
 #all-contents {
   max-width: 800px;
     margin: auto;
+    margin-top: 40px;
+}
+.background {
+  position: absolute;
+  top: -15px;
+  z-index: -1;
+  font-size: 45rem;
+  color: grey;
+  font-family: impact;
+  opacity: 50%;
+}
+.musicBtn:hover {
+  cursor: pointer;
+}
+.musicBtn {
+  color: black;
+}
+
+.pulse {
+  animation: pulse 0.66s infinite;
+}
+@keyframes pulse {
+  0% {
+    color: grey;
+  }
+  50% {
+    color: white;
+  }
+  100% {
+    color: grey;
+  }
 }
 
 /* navigation menu */
@@ -174,4 +206,41 @@ marquee {
   color: white;
   border: none;
   border-radius: 15px;
+}
+.musicPlayer {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  height: 175px;
+  width: 200px;
+  background: grey;
+  border-radius: 20px;
+}
+.songName {
+  margin-left: 15px;
+  margin-top: 5px;
+  display: flex;
+  color: rgb(54, 54, 54);
+  font-family: Verdana;
+  font-size: 1rem;
+}
+
+
+
+.equalizer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  height: 60px;
+  width: 1000px;
+  margin: 325px auto;
+}
+
+.bar {
+  width: 10px;
+  height: 10px;
+  background: white;
+  transition: height 0.1s ease;
+  border-radius: 2px;
 }

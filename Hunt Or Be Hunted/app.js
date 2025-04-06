@@ -509,8 +509,8 @@ function event(){
     lookatmeClicked = false;
     
     LOOKATME.addEventListener("click", () => {
-        LOOKATME.style.opacity = 0
-        lookatmeClick = true;
+        LOOKATME.style.opacity = 0;
+        lookatmeClicked = true;
     });
 
     setTimeout(() => {
