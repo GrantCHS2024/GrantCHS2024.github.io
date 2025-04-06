@@ -1,91 +1,176 @@
 body {
-    background: black;
-    user-select: none;
+  background: black;
+  user-select: none;
+}
+
+.canvas {
+  width: 1000px;
+  height: 600px;
+  overflow: hidden;
+  position: absolute;
+  left: 15%;
+  opacity: 0.8;
+  scroll-behavior: smooth;
+  filter: blur(0px);
+}
+.information {
+  position: absolute;
+  left: 30%;
+  top: 650px;
+  border-radius: 25px;
+  width: 500px;
+  height: 75px;
+  font-family: impact, sans-serif;
+  color: white;
+  text-align: center;
+  font-size: 2.5rem;
+  z-index: 3;
+}
+.menu {
+  position: absolute;
+  width: 1000px;
+  height: 600px;
+  left: 15%;
+  z-index: 2;
+  background: #4f4f4f;
+}
+.menu button{
+  position: absolute;
+  width: 300px;
+  height: 100px;
+  border-radius: 25px;
+  font-size: 3rem;
+  font-family: impact;
+  left: 36%;
+}
+.easyBtn {
+  margin-top: 200px;
+  transition: all 0.5s;
+}
+.easyBtn:hover {
+  background: green;
+  color: white;
+}
+.hardBtn {
+  margin-top: 330px;
+  transition: all 0.5s;
+}
+.hardBtn:hover{
+  background: darkred;
+  color: white;
+}
+.impossibleBtn {
+  margin-top: 460px;
+  transition: all 0.5s;
+}
+.impossibleBtn:hover {
+  background: black;
+  color: darkred;
+}
+.transition {
+  animation-name: transition;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+}
+@keyframes transition {
+  75%{
+    z-index: -1;
+    opacity: 0;
   }
-  
-  .canvas {
-    width: 1000px;
-    height: 600px;
-    overflow: hidden;
-    position: absolute;
-    left: 15%;
-    opacity: 0.8;
-    scroll-behavior: smooth;
+  100%{
+    z-index: -1;
+    opacity: 0;
+    display: none;
   }
-  .information {
-    position: absolute;
-    left: 30%;
-    top: 650px;
-    border-radius: 25px;
-    width: 500px;
-    height: 75px;
-    font-family: impact, sans-serif;
-    color: white;
-    text-align: center;
-    font-size: 2.5rem;
-    z-index: 3;
-  }
-  .menu {
-    position: absolute;
-    width: 1000px;
-    height: 600px;
-    left: 15%;
-    z-index: 2;
-    background: #4f4f4f;
-  }
-  .menu button{
-    position: absolute;
-    width: 300px;
-    height: 100px;
-    border-radius: 25px;
-    font-size: 3rem;
-    font-family: impact;
-    left: 36%;
-  }
-  .easyBtn {
-    margin-top: 200px;
-    transition: all 0.5s;
-  }
-  .easyBtn:hover {
-    background: green;
-    color: white;
-  }
-  .hardBtn {
-    margin-top: 330px;
-    transition: all 0.5s;
-  }
-  .hardBtn:hover{
-    background: darkred;
-    color: white;
-  }
-  .transition {
-    animation-name: transition;
-    animation-duration: 3s;
-    animation-fill-mode: forwards;
-  }
-  @keyframes transition {
-    75%{
-      z-index: -1;
-      opacity: 0;
-    }
-    100%{
-      z-index: -1;
-      opacity: 0;
-      display: none;
-    }
-  }
-  .menu h1{
-    font-family: impact;
-    font-weight: 14;
-    font-size: 4rem;
-    color: #5c0403;
-    position: absolute;
-    left: 27%;
-    top: 7%;
-  }
-  .dark {
-    opacity: 0.1;
-  }
-  .light {
-    opacity: 0.8;
-  }
+}
+.shake {
+  animation: shake 0.5s;
+  animation-iteration-count: 27;
+}
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.menu h1{
+  font-family: impact;
+  font-weight: 14;
+  font-size: 4rem;
+  color: #5c0403;
+  position: absolute;
+  left: 27%;
+  top: 7%;
+}
+.dark {
+  opacity: 0.1;
+}
+.light {
+  opacity: 0.8;
+}
+.stalkerImage {
+  position: absolute;
+  top: 15%;
+  left: 75%;
+  opacity: 0;
+}
+.LOOKATMEImage {
+  position: absolute;
+  opacity: 0;
+  z-index: 6;
+}
+.jester-obstacle {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 0, 255, 0.4); /* Slightly purple for effect */
+  backdrop-filter: blur(4px); /* Blur anything behind it */
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.JesterBox {
+  position: absolute;
+  top: 10%;
+  left: 15%;
+  width: 800px;
+  height: 500px;
+  background: grey;
+  border-radius: 50px;
+  opacity: 0;
+  z-index: -1;
+}
+.JesterBox button{
+  position: relative;
+  top: 200px;
+  left: 3%;
+}
+.JesterNum {
+  position: relative;
+  top: 50px;
+  left: 40%;
+  font-size: 3rem;
+  font-family: impact;
+  color: white;
+}
+.JesterInput {
+  position: relative;
+  top: 200px;
+  left: 5%;
+}
+.Death {
+  position: absolute;
+  z-index: 0;
+  opacity: 0;
+  top: 45%;
+  left: 45%;
+}
