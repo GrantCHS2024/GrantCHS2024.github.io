@@ -52,12 +52,12 @@ notesContainer.addEventListener("click", function(e){
 });
 
 
-var findNote = document.querySelector(".findNoteNum");
+var findNote = document.querySelector(".findNoteNum");  //Input
 var findNoteBtn = document.querySelector(".findNote");
 var findNoteContainer = document.querySelector(".findNoteBtn");
 
 
-findNoteBtn.onclick = function(){
+findNoteBtn.onclick = function(){  //Half of this function was created with help
   const findNoteNum = parseInt(findNote.value);
   let notes = notesContainer.children[findNoteNum - 1];
   notesContainer.scrollTo({top: notes.offsetTop, behavior: "smooth"});

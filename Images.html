@@ -25,22 +25,40 @@
         </ul>
        </nav>
        <main>
+        
          <div class="content">
           <div class="slideshow">
-
+            <div class="slide"><img src="Images Folder/Picture.png"></div>  <!--Input the link inside the src="" attribute-->
+            <div class="slide"><img src="Images Folder/Picture2.png"></div>  <!--These images are TEST images, placeholders for upcoming pictures-->
+            <div class="slide"><img src="Images Folder/Picture3.png"></div>
+            <div class="slide"><img src="Images Folder/Picture4.png"></div>
           </div>
-          <button class="left-btn">Left</button> <button class="right-btn">Right</button>
+          <button class="left-btn">Back</button> <button class="right-btn">Next</button>
          </div>
         </main>
   </div>
+  <marquee scrollamount="8" class="background" direction="left">IMAGES</marquee>
 
  <!--IMAGES SCRIPT-->
 
   <script>
   var imageIndex = 0;
   var slideshow = document.querySelector(".slideshow");
-  
-  
+  var leftBtn = document.querySelector(".left-btn");
+  var rightBtn = document.querySelector(".right-btn");
+
+  rightBtn.onclick = function(){  //Copied from Notes App. find note.
+    if(imageIndex < slideshow.children.length - 1)imageIndex++;
+    let slide = slideshow.children[imageIndex];
+    slideshow.scrollTo({top: slide.offsetTop, behavior: "smooth"});
+    console.log(imageIndex);
+  }
+  leftBtn.onclick = function(){  //Copied from Notes App. find note.
+    if(imageIndex > 0)imageIndex--;
+    let slide = slideshow.children[imageIndex];
+    slideshow.scrollTo({top: slide.offsetTop, behavior: "smooth"});
+  }
+
   </script>
 </body>
 </html>

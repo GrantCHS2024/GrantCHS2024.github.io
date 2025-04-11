@@ -184,29 +184,56 @@ marquee {
 
 .slideshow {
   position: relative;
-  width: 600px;
+  width: 700px;
+  height: 650px;
+  overflow: hidden;
+}
+.slide {
+  margin-top: 50px;
+  /*border: 2px solid;*/
+  width: 700px;
   height: 600px;
+  /*background: white;*/
+}
+.slide img{
+  width: 100%;
+  margin-top: 100px;
 }
 .left-btn {
   position: relative;
-  left: 40%;
+  margin-left: 275px;
   width: 50px;
   background: black;
   font-family: impact;
   color: white;
   border: none;
   border-radius: 15px;
+  transition: background 0.5s;
+}
+.left-btn:hover{
+  cursor: pointer;
+  background: white;
+  color: black;
+}
+.right-btn:hover {
+  cursor: pointer;
+  background: white;
+  color: black;
 }
 .right-btn {
   position: relative;
-  left: 50%;
+  margin-left: 50px;
   width: 50px;
   background: black;
   font-family: impact;
   color: white;
   border: none;
   border-radius: 15px;
+  transition: background 0.5s;
 }
+
+/*MUSIC PLAYER*/
+
 .musicPlayer {
   position: absolute;
   bottom: 30px;
@@ -225,7 +252,7 @@ marquee {
   font-size: 1rem;
 }
 
-
+/*EQUALIZER PORTION*/
 
 .equalizer {
   display: flex;
