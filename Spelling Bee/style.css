@@ -1,0 +1,87 @@
+* {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #555;
+    font-family: Verdana, sans-serif;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .text {
+    font-size: 3em;
+    margin-bottom: 20px;
+    user-select: none;
+  }
+
+  .startScreen, .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    transition: opacity 0.5s ease;
+  }
+
+  .main {
+    margin-top: 40px;
+    opacity: 0;
+  }
+
+  button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 8px;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.3s;
+  }
+
+  button:hover {
+    background-color: #777;
+  }
+
+  .submit {
+    opacity: 1;
+  }
+
+  .submit.disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #word {
+width: 200px;
+height: 100px;
+font-size: 24px;
+padding: 10px;
+box-sizing: border-box;
+    text-align: center;
+    border-radius: 10px;
+}
+
+  .correct {
+    animation: correct 1s forwards;
+  }
+
+  .incorrect {
+    animation: incorrect 1s forwards;
+  }
+
+  @keyframes correct {
+    0% { background: green; }
+    100% { background: #555; }
+  }
+
+  @keyframes incorrect {
+    0% { background: red; }
+    100% { background: #555; }
+  }
