@@ -5,6 +5,7 @@ var paperCollect = document.getElementById("paperCollect");
 var trapPlace = document.getElementById("trapPlace");
 var boxSearchSfx = document.getElementById("boxSearch");
 var Deadambience = document.getElementById("Deadambience");
+var staticVideo = document.getElementById("staticVideo");
 var menu = document.querySelector(".menu");
 var walkingSfx = document.getElementById("walking");
 var easyBtn = document.querySelector(".easyBtn");
@@ -113,6 +114,34 @@ function startGame(){
   gameFlag = true;
   ambience.play();
   
+  var time = 0;
+  setInterval(() => {
+    time++
+    var eventTime = Math.floor(Math.random() * (120 - 1) + 1);
+    
+    if(time % 60 === 0){
+    canvasDIV.classList.add("dark");
+    canvasDIV.classList.remove("light");
+    ambience.pause();
+    nightambience.play();
+    enemy.speed += 0.5;
+  }
+    if(time % 119 === 0){
+      time = 0;
+      ambience.play();
+      nightambience.pause();
+      canvasDIV.classList.remove("dark");
+      canvasDIV.classList.add("light");
+      enemy.size = enemy.size * 1.25;
+      infoBox.textContent = "A day has passed";
+    }
+    if(time % eventTime === 0){
+      event();
+      eventTime = Math.floor(Math.random() * (120 - 30 + 1) + 30);
+    }
+    //
+  }, 1000)
+
 for(var i = 0; i <  75; i++){
   walls.push({x: Math.floor(Math.random() * (canvasSize - 1) + 1), y: Math.floor(Math.random() * (canvasSize - 1) + 1), width: 75, height: 75});
   }
@@ -365,7 +394,7 @@ function update(){
     infoBox.textContent = "You collected all evidence, you made us proud."
     }
       else {
-        infoBox.textContent = "Evidence Collected! (" + evidenceCollected + "/ " + numOfEvidence + ")"
+        infoBox.textContent = "Evidence Collected! " + evidenceCollected + " pages out of " + numOfEvidence + ""
       }
       
       return false
@@ -397,7 +426,7 @@ function update(){
     Deadambience.play();
   }
   if(gameFlag === false){
-    canvasDIV.addEventListener("click", () => {
+    window.addEventListener("click", () => {
       location.reload();
     })
   }
@@ -416,38 +445,6 @@ function update(){
 
 
 
-//Time section
-
-var time = 0;
-setInterval(() => {
-  time++
-  var eventTime = Math.floor(Math.random() * (120 - 1) + 1);
-  
-  if(time % 60 === 0){
-  canvasDIV.classList.add("dark");
-  canvasDIV.classList.remove("light");
-  ambience.pause();
-  nightambience.play();
-  enemy.speed = (enemy.speed * 1.6);
-}
-  if(time % 119 === 0){
-    time = 0;
-    ambience.play();
-    nightambience.pause();
-    canvasDIV.classList.remove("dark");
-    canvasDIV.classList.add("light");
-    enemy.speed = (enemy.speed / 1.6) + 0.5;
-    enemy.size = enemy.size * 1.25;
-    infoBox.textContent = "A day has passed";
-  }
-  if(time % eventTime === 0){
-    event();
-    eventTime = Math.floor(Math.random() * (120 - 30 + 1) + 30);
-  }
-  //
-}, 1000)
-
-//End of section
 
 var enemyColor = "red";
 
@@ -467,11 +464,33 @@ var JesterBox = document.querySelector(".JesterBox");
 var JesterNum = document.querySelector(".JesterNum");
 var JesterInputBox = document.querySelector(".JesterInput");
 var submitBtn = document.querySelector(".submitBtn");
+var staticVideoOpacity = 0;
+staticVideo.style.opacity = staticVideoOpacity;
+var staticAudio = document.getElementById("staticAudio");
+
+function speakWord(word) { //Function was not created by me
+const utterance = new SpeechSynthesisUtterance(word);
+
+utterance.pitch = 0.1;
+   // Optionally select a Microsoft voice if available
+   const voices = window.speechSynthesis.getVoices();
+   const msVoice = voices.find(v => v.name.includes("Microsoft"));
+   if (msVoice) {
+     utterance.voice = msVoice;
+   }
+
+   speechSynthesis.speak(utterance);
+ }
+
+ // Load voices before using them
+ window.speechSynthesis.onvoiceschanged = () => {
+   console.log("Voices loaded:", speechSynthesis.getVoices());
+ };
 
 
 function event(){
   if(hardMode === true){
-    var random = Math.floor(Math.random() * (6 - 1) + 1);
+    var random = Math.floor(Math.random() * (7 - 1) + 1);
   
   if(random === 1){
     console.log("Nothing");
@@ -498,7 +517,7 @@ function event(){
     infoBox.textContent = "WHY DID YOU MOVE?!";
     }
     stalker.style.opacity = 0;
-    }, 1100)
+    }, 1000)
     random = 0;
   }
   else if(random === 4){
@@ -515,11 +534,20 @@ function event(){
 
     setTimeout(() => {
        if(lookatmeClicked == false){
-            player.speed = 2;
+            player.speed = 1.5;
             numberTraps = 0;
             blurIntensity += 1;
             canvasDIV.style.filter = `blur(${blurIntensity}px)`;
             lookatmeLAUGH.play();
+            staticVideo.style.opacity = 1;
+            staticVideo.style.zIndex = 10;
+            staticAudio.play();
+            setTimeout(() => {
+              staticVideo.style.opacity = 0;
+              staticVideo.style.zIndex = 4;
+            staticAudio.pause();
+            }, 1000);
+
             infoBox.textContent = "You should've clicked on him...";
         }
 
@@ -553,6 +581,81 @@ function event(){
      
     random = 0;
   }
+  else if(random == 6){
+    console.log("Corruption")
+    var randomSpeech = Math.floor(Math.random() * (8 - 1) + 1);
+
+    if(randomSpeech === 1){
+      staticAudio.play();
+      setTimeout(() =>{
+        staticAudio.pause();
+        speakWord("You will not get away with this... Trust me... I... Am... Your.. Friend");
+      }, 500);
+
+      randomSpeech = 0;
+    }
+    if(randomSpeech === 2){
+      staticAudio.play();
+      setTimeout(() =>{
+        staticAudio.pause();
+      speakWord("Give up... He will find you");
+    }, 500);
+
+    randomSpeech = 0;
+    }
+    if(randomSpeech === 3){
+      staticAudio.play();
+      setTimeout(() =>{
+        staticAudio.pause();
+      speakWord("Nothing is worth the risk... Stop Now");
+    }, 500);
+
+    randomSpeech = 0;
+    }
+    if(randomSpeech === 4){
+      staticAudio.play();
+      setTimeout(() =>{
+        staticAudio.pause();
+      speakWord("Run... Run... Run... Run... Run... ");
+    }, 500);
+
+    randomSpeech = 0;
+    }
+    if(randomSpeech === 5){
+      staticAudio.play();
+      setTimeout(() =>{
+        staticAudio.pause();
+      speakWord("Something went wrong... but it's still watching you.");
+    }, 500);
+
+    randomSpeech = 0;
+    }
+    if(randomSpeech === 6){
+      staticAudio.play();
+      setTimeout(() =>{
+        staticAudio.pause();
+      speakWord("4... 0... 4... Escape not found... Turn Back");
+    }, 500);
+
+    randomSpeech = 0;
+    }
+    if(randomSpeech === 7){
+      staticAudio.play();
+      setTimeout(() =>{
+        staticAudio.pause();
+      speakWord("Unknown glitch detected... its growing closer.");
+    }, 500);
+    
+    randomSpeech = 0;
+    }
+
+    staticVideo.play();
+    staticVideoOpacity += 0.1;
+    staticVideo.style.opacity = staticVideoOpacity;
+
+    random = 0;
+  }
+  
  }
 }
 

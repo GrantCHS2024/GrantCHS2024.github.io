@@ -20,11 +20,12 @@ body {
   border-radius: 25px;
   width: 500px;
   height: 75px;
-  font-family: impact, sans-serif;
+  font-family: Doctor Glitch, sans-serif;
   color: white;
   text-align: center;
   font-size: 2.5rem;
   z-index: 3;
+  transition: all 0.5s;
 }
 .menu {
   position: absolute;
@@ -121,11 +122,14 @@ body {
   top: 15%;
   left: 75%;
   opacity: 0;
+  z-index: 5;
+  transition: all 0.5s;
 }
 .LOOKATMEImage {
   position: absolute;
   opacity: 0;
   z-index: 6;
+  transition: all 0.5s;
 }
 .jester-obstacle {
   position: absolute;
@@ -148,6 +152,7 @@ body {
   border-radius: 50px;
   opacity: 0;
   z-index: -1;
+  transition: all 0.5s;
 }
 .JesterBox button{
   position: relative;
@@ -173,4 +178,10 @@ body {
   opacity: 0;
   top: 45%;
   left: 45%;
+}
+#staticVideo {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 4;
 }
