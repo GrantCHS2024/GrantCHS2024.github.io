@@ -7,7 +7,8 @@ var boxSearchSfx = document.getElementById("boxSearch");
 var Deadambience = document.getElementById("Deadambience");
 var staticVideo = document.getElementById("staticVideo");
 var killerHum = document.getElementById("killerHum");
-killerHum.volume = 0.2;
+killerHum.volume = 0.1;
+var movingFlag = true;
 var menu = document.querySelector(".menu");
 var walkingSfx = document.getElementById("walking");
 var easyBtn = document.querySelector(".easyBtn");
@@ -41,8 +42,11 @@ var moving = {
   a: false,
   s: false,
   d: false,
+  up: false,
+  down: false,
+  left: false,
+  right: false,
 }
-
 
 
 var numOfEvidence = 10;
@@ -323,22 +327,38 @@ function update(){
   enemy.x = Math.max(0, Math.min(canvas.width - enemy.size, enemy.x));
   enemy.y = Math.max(0, Math.min(canvas.height - enemy.size, enemy.y));
   
-  if(player.x + player.size / 4 > enemy.x){
-    eNewX += enemy.speed;
+  if(player.x > enemy.x && movingFlag){
+    moving.right = true;
+    moving.left = false;
   }
-  if(player.x + player.size / 4 < enemy.x){
-    eNewX -= enemy.speed;
+  else if(player.x < enemy.x && movingFlag){
+    moving.right = false;
+    moving.left = true;
   }
-  if(player.y + player.size / 4 > enemy.y){
-    eNewY += enemy.speed;
+  if(player.y > enemy.y && movingFlag){
+    moving.down = true;
+    moving.up = false;
   }
-  if(player.y + player.size / 4 < enemy.y){
-    eNewY -= enemy.speed;
+  else if(player.y < enemy.y && movingFlag){
+    moving.down = false;
+    moving.up = true;
   }
+  if(moving.up) eNewY -= enemy.speed;
+  if(moving.down) eNewY += enemy.speed;
+  if(moving.right) eNewX += enemy.speed;
+  if(moving.left) eNewX -= enemy.speed;
   
   if(!isEnemyColliding(eNewX, enemy.y)) enemy.x = eNewX;
   if(!isEnemyColliding(enemy.x, eNewY)) enemy.y = eNewY;
   
+ //Enemy Stuck subsection
+
+ //if(enemy.x === eNewX && enemy.y === eNewY){
+ // 
+ //}
+
+ //End of subsection
+
   placedTraps = placedTraps.filter(trap => {
     if(enemy.x + enemy.size >= trap.x && 
        enemy.x <= trap.x + trap.size &&
@@ -676,12 +696,97 @@ function checkEnemyStuck(){
   
   setTimeout(() => {
     if(enemy.x === enemyXCheck && enemy.y === enemyYCheck){
-     enemy.y += 125;
+     if(moving.up && moving.left || moving.up || moving.right){
+    movingFlag = false;
+    moveTopRight();
+  }
+  else if(moving.up && moving.right || moving.left){
+    movingFlag = false;
+    moveTopLeft();
+  }
+  else if(moving.down && moving.right){
+    movingFlag = false;
+    moveBottomLeft();
+  }
+  else if(moving.down && moving.left || moving.down){
+    movingFlag = false;
+    moveBottomRight();
+  }
+//  else if(moving.up){
+//    movingFlag = false;
+//    moveTopRight();
+//  }
+//  else if(moving.down){
+//    movingFlag = false;
+//    moveBottomRight();
+//  }
+//  else if(moving.left){
+//    movingFlag = false;
+//    moveTopLeft();
+//  }
+//  else if(moving.right){
+//    movingFlag = false;
+//    moveTopRight();
+//  }
     }
     checkEnemyStuck();
-  }, 5000)
+  }, 3100)
 }
 checkEnemyStuck();
+
+function moveTopRight(){
+  moving.left = false;
+  moving.right = true;
+  moving.up = true;
+  moving.down = false;
+  setTimeout(() => {
+    movingFlag = true;
+    moving.left = false;
+    moving.down = false;
+    moving.right = false;
+    moving.up = false;
+  }, 3000);
+ }
+ function moveTopLeft(){
+  moving.left = true;
+  moving.right = false;
+  moving.up = true;
+  moving.down = false;
+  setTimeout(() => {
+    movingFlag = true;
+    moving.left = false;
+    moving.down = false;
+    moving.right = false;
+    moving.up = false;
+  }, 3000);
+ }
+ function moveBottomRight(){
+  moving.left = false;
+  moving.right = true;
+  moving.up = false;
+  moving.down = true;
+  setTimeout(() => {
+    movingFlag = true;
+    moving.left = false;
+    moving.down = false;
+    moving.right = false;
+    moving.up = false;
+  }, 3000);
+ }
+ function moveBottomLeft(){
+  moving.left = true;
+  moving.right = false;
+  moving.up = false;
+  moving.down = true;
+  setTimeout(() => {
+    movingFlag = true;
+    moving.left = false;
+    moving.down = false;
+    moving.right = false;
+    moving.up = false;
+  }, 3000);
+ }
+
 
 function draw(){
   ctx.clearRect(0, 0, canvas.width, canvas.height);
