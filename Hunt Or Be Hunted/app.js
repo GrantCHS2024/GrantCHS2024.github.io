@@ -6,6 +6,8 @@ var trapPlace = document.getElementById("trapPlace");
 var boxSearchSfx = document.getElementById("boxSearch");
 var Deadambience = document.getElementById("Deadambience");
 var staticVideo = document.getElementById("staticVideo");
+var killerHum = document.getElementById("killerHum");
+killerHum.volume = 0.2;
 var menu = document.querySelector(".menu");
 var walkingSfx = document.getElementById("walking");
 var easyBtn = document.querySelector(".easyBtn");
@@ -32,7 +34,7 @@ var enemy = {
   x: 4900,
   y: 4900,
   size: 25,  //When the time function is added, make the enemy's size slightly bigger after every full day.
-  speed: 1,  //At nighttime, multiply speed by two. After a full day increase the overall speed by 0.2
+  speed: 1,
 }
 var moving = {
   w: false,
@@ -353,7 +355,14 @@ function update(){
       return true
     }
   })
-  
+
+  if(Math.abs(player.x - enemy.x) < 120 || Math.abs(player.y - enemy.y) < 120){
+    killerHum.play();
+  }
+  else {
+    killerHum.pause();
+  }
+
   //End of section
   
   //Lucky boxes section
