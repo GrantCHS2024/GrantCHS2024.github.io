@@ -3,20 +3,28 @@ var ambience = document.getElementById("ambience");
 var nightambience = document.getElementById("nightAmbience");
 var paperCollect = document.getElementById("paperCollect");
 var trapPlace = document.getElementById("trapPlace");
+var minePlace = document.getElementById("PlaceMineSfx");
+var mineCloseExplosion = document.getElementById("MineCloseExplosion");
+var mineFarExplosion = document.getElementById("MineFarExplosion");
+mineFarExplosion.volume = 0.5;
+var explosion = document.querySelector(".explosion"); 
 var boxSearchSfx = document.getElementById("boxSearch");
 var Deadambience = document.getElementById("Deadambience");
 var staticVideo = document.getElementById("staticVideo");
 var killerHum = document.getElementById("killerHum");
-killerHum.volume = 0.1;
+killerHum.volume = 0.2;
 var movingFlag = true;
 var menu = document.querySelector(".menu");
 var walkingSfx = document.getElementById("walking");
 var easyBtn = document.querySelector(".easyBtn");
 var hardBtn = document.querySelector(".hardBtn");
 var impossibleBtn = document.querySelector(".impossibleBtn");
-var canvasDIV = document.querySelector(".canvas");
+var items = document.querySelector(".items");
+var trapsCount = document.querySelector(".trapsCount");
+var minesCount = document.querySelector(".minesCount");
 var body = document.querySelector(".body")
 var infoBox = document.querySelector(".information");
+var canvasDIV = document.querySelector(".canvas");
 var canvas = document.getElementById("canvas");
 var canvasSize = 4000;
 canvas.width = canvasSize;
@@ -148,6 +156,10 @@ function startGame(){
     //
   }, 1000)
 
+  items.style.opacity = 1;
+  trapsCount.textContent = "Traps. " + numberTraps;
+  minesCount.textContent = "Mines. " + numberMines;
+
 for(var i = 0; i <  75; i++){
   walls.push({x: Math.floor(Math.random() * (canvasSize - 1) + 1), y: Math.floor(Math.random() * (canvasSize - 1) + 1), width: 75, height: 75});
   }
@@ -217,11 +229,12 @@ setInterval(() =>{
 //Random Item section
 
 function randomItem(){
-  var ranNum = Math.floor(Math.random() * (4 - 1) + 1);
+  var ranNum = Math.floor(Math.random() * (6 - 1) + 1);
   
   if(ranNum === 1){
     numberTraps++
     infoBox.textContent = "You recieved a trap, press E to use";
+    trapsCount.textContent = "Traps. " + numberTraps;
   }
   if(ranNum === 2){
     enemy.speed = (enemy.speed * 0.8);
@@ -232,6 +245,16 @@ function randomItem(){
     player.speed = (player.speed * 1.2);
     infoBox.textContent = "Player speed increased";
     player.speed = Math.min(player.speed, maxSpeed);
+  }
+  if(ranNum === 4){
+    numberMines++
+    infoBox.textContent = "You recieved a Landmine, press Q to use";
+    minesCount.textContent = "Mines. " + numberMines;
+  }
+  if(ranNum === 5){
+    infoBox.textContent = "Screen has been repaired";
+    blurIntensity--
+    staticVideoOpacity -+ 0.2;
   }
 }
 
@@ -245,6 +268,21 @@ function placeTrap(){
   placedTraps.push({x: player.x, y: player.y, size: 20});
   numberTraps--
   trapPlace.play();
+  trapsCount.textContent = "Traps. " + numberTraps;
+}
+
+//End of section
+
+//Landmines section
+
+var placedMines = []
+var numberMines = 0;
+
+function placeMine(){
+  placedMines.push({x: player.x, y: player.y, size: 40});
+  numberMines--
+  minePlace.play();
+  minesCount.textContent = "Mines. " + numberMines;
 }
 
 //End of section
@@ -257,12 +295,13 @@ document.addEventListener("keydown", (event) => {
   
   if(event.key == "e" && numberTraps !== 0) {infoBox.textContent = "";
   placeTrap()
-  
-  if(event.key === " "){
-    infoBox.textContent = "";
-  }
    }
-});
+   if(event.key === "q" && numberMines !== 0){
+    placeMine();
+  }
+
+  }
+);
 document.addEventListener("keyup", (event) => {
   if(event.key == "w") {moving.w = false;}
   if(event.key == "a") {moving.a = false;}
@@ -376,7 +415,50 @@ function update(){
     }
   })
 
-  if(Math.abs(player.x - enemy.x) < 120 || Math.abs(player.y - enemy.y) < 120){
+  placedMines = placedMines.filter(mine => {
+    if(enemy.x + enemy.size >= mine.x && 
+       enemy.x <= mine.x + mine.size &&
+       enemy.y + enemy.size >= mine.y &&
+       enemy.y <= mine.y + mine.size){
+      enemy.speed = -6;
+      setTimeout(() => {
+        enemy.speed = 2;
+        
+      }, 15000)
+
+      if(player.x + player.size + 800 > mine.x &&
+        player.x - 800 < mine.x + mine.size &&
+        player.y + player.size + 800 > mine.y &&
+        player.y - 800 < mine.y + mine.size)
+        {
+          mineCloseExplosion.play();
+          explosion.style.opacity = 1;
+          explosion.style.zIndex = 50;
+          setTimeout(() => {
+            explosion.style.opacity = 0;
+            explosion.style.zIndex = -2;
+          }, 1200);
+        }
+        else {
+          mineFarExplosion.play();
+        }
+
+        canvasDIV.classList.add("shake");
+        setTimeout(()=> {
+          canvasDIV.classList.remove("shake");
+        }, 2500);
+      return false
+    }
+    else {
+      return true
+    }
+  })
+
+  if(player.x + player.size + 400 > enemy.x &&
+    player.x - 400 < enemy.x + enemy.size &&
+    player.y + player.size + 400 > enemy.y &&
+    player.y - 400 < enemy.y + enemy.size)
+    {
     killerHum.play();
   }
   else {
@@ -611,7 +693,7 @@ function event(){
     random = 0;
   }
   else if(random == 6){
-    console.log("Corruption")
+    console.log("Corruption"); //Corruption
     var randomSpeech = Math.floor(Math.random() * (8 - 1) + 1);
 
     if(randomSpeech === 1){
@@ -679,7 +761,7 @@ function event(){
     }
 
     staticVideo.play();
-    staticVideoOpacity += 0.1;
+    staticVideoOpacity += 0.2;
     staticVideo.style.opacity = staticVideoOpacity;
 
     random = 0;
@@ -816,6 +898,11 @@ function draw(){
   ctx.fillStyle = "white";
   evidences.forEach(evidence => {
     ctx.fillRect(evidence.x, evidence.y, evidence.size, evidence.size);
+  });
+
+  ctx.fillStyle = "#752b2b";
+  placedMines.forEach(mine => {
+    ctx.fillRect(mine.x, mine.y, mine.size, mine.size);
   });
 }
 
