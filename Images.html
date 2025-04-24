@@ -28,15 +28,20 @@
         
          <div class="content">
           <div class="slideshow">
-            <div class="slide"><img src="Images Folder/Big Pond[Wide shot].JPG"></div>  <!--Input the link inside the src="" attribute-->
+            <div class="slide"><img src="Images Folder/Big Pond[Wide shot].JPG"></div>
             <div class="slide"><img src="Images Folder/Big Pond[With weeds].JPG"></div>  
             <div class="slide"><img src="Images Folder/Ducks Big Pond[Zoomed in].JPG"></div> 
             <div class="slide"><img src="Images Folder/Ducks water[Zoomed in shot].JPG"></div> 
             <div class="slide"><img src="Images Folder/Ducks[Zoomed in shot].JPG"></div>
-            <div class="slide"><img src="Images Folder/Mustang[Ground-up corner angle].JPG"></div>
+            <div class="slide"><img src="Images Folder/Ant.JPG"></div>
             <div class="slide"><img src="Images Folder/Pond Trail[Zoomed in, tree close up].JPG"></div>
+            <div class="slide"><img src="Images Folder/CHS.JPG"></div>
+            <div class="slide"><img src="Images Folder/CHS(2).JPG"></div>
+            <div class="slide"><img src="Images Folder/Beauty.JPG"></div>
+            <div class="slide"><img src="Images Folder/Line.JPG"></div>
+            <div class="slide"><img src="Images Folder/Line(2).JPG"></div>
           </div>
-          <button class="left-btn">Back</button> <button class="right-btn">Next</button>
+          <button class="left-btn"><</button> <button class="right-btn">></button>
          </div>
         </main>
   </div>
@@ -54,7 +59,6 @@
     if(imageIndex < slideshow.children.length - 1)imageIndex++;
     let slide = slideshow.children[imageIndex];
     slideshow.scrollTo({top: slide.offsetTop, behavior: "smooth"});
-    console.log(imageIndex);
   }
   leftBtn.onclick = function(){  //Copied from Notes App. find note.
     if(imageIndex > 0)imageIndex--;

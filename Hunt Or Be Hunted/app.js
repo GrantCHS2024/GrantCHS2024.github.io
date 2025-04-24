@@ -226,8 +226,6 @@ setInterval(() =>{
 
 
 
-
-
 //Random Item section
 
 function randomItem(){
@@ -485,7 +483,7 @@ function update(){
   
   //Lucky boxes section
   
-  luckyBoxes = luckyBoxes.filter(box => {  //Study '.filter()' method. [Not created by me]
+  luckyBoxes = luckyBoxes.filter(box => { 
     if (
         player.x + player.size >= box.x &&
         player.x <= box.x + box.size &&
