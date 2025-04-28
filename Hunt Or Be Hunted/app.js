@@ -943,7 +943,7 @@ function draw(){
 
       ctx.fillStyle = "black"
   if(hardMode){
-    ctx.fillRect(portal.x, portal.y, portal. size, portal.size);
+    ctx.fillRect(portal.x, portal.y, portal.size, portal.size);
   }
 }
 

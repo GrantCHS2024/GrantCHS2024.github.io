@@ -116,9 +116,6 @@ var safesOpened = 0;
 for(var i = 0; i < 4; i++){
   safes.push({x: Math.floor(Math.random() * (canvasSize - 1) + 1), y: Math.floor(Math.random() * (canvasSize - 1) + 1), size: 20})
 }
-safes.push({x: 280, y: 280, size: 20});
-safes.push({x: 320, y: 320, size: 20});
-safes.push({x: 360, y: 360, size: 20});
 
 
 
