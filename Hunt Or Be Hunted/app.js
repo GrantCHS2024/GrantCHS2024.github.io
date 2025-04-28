@@ -35,6 +35,12 @@ var ctx = canvas.getContext("2d");
 
 var maxSpeed = 6;
 
+var portal = {
+  x: undefined,
+  y: undefined,
+  size: 100,
+}
+
 var player = {
   x: 200,
   y: 200,
@@ -92,7 +98,11 @@ hardBtn.addEventListener("click", () => {
     canvas.width = canvasSize;
     canvas.height = canvasSize;
     infoBox.textContent = "";
-  
+    portal.x = Math.floor(Math.random() * canvasSize);
+    portal.y = Math.floor(Math.random() * canvasSize);
+    console.log(portal.x);
+    console.log(portal.y);
+
   for(var i = 0; i <= numOfEvidence; i++){
   var x = Math.floor(Math.random() * (canvasSize - 1) + 1);
   var y = Math.floor(Math.random() * (canvasSize - 75) + 1);
@@ -112,6 +122,10 @@ impossibleBtn.addEventListener("click", () => {
     canvas.width = canvasSize;
     canvas.height = canvasSize;
     infoBox.textContent = "";
+    portal.x = Math.floor(Math.random() * canvasSize);
+    portal.y = Math.floor(Math.random() * canvasSize);
+    console.log(portal.x);
+    console.log(portal.y);
 
     enemy.speed = 2;
   
@@ -533,7 +547,20 @@ function update(){
   
   //End of section
   
-  
+  //DEEP DOWN IN THE RABBIT HOLE PORTAL
+
+  if(
+    player.x + player.size >= portal.x &&
+    player.x <= player.x + portal.size &&
+    player.y + player.size >= portal.y &&
+    player.y <= portal.y + portal.size
+  )
+  {
+    window.location.replace("Deep%20Down%20in%20the%20Rabbit%20Hole/index.html");
+  }
+
+  //END OF SECTION
+
   //Game Over(Dead) section
   
   if(player.x + player.size > enemy.x &&
@@ -913,6 +940,11 @@ function draw(){
   placedMines.forEach(mine => {
     ctx.fillRect(mine.x, mine.y, mine.width, mine.height);
   });
+
+      ctx.fillStyle = "black"
+  if(hardMode){
+    ctx.fillRect(portal.x, portal.y, portal. size, portal.size);
+  }
 }
 
 

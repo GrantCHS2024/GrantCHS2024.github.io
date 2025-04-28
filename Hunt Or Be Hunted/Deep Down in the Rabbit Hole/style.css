@@ -248,3 +248,6 @@ body {
     opacity: 0.5;
   }
 }
+.red {
+  background: red;
+}
