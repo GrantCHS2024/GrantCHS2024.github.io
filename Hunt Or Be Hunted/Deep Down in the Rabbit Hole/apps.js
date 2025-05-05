@@ -258,10 +258,10 @@ function isEnemyColliding(x, y){
 function startGhostPath(){
   var g = Math.floor(Math.random() * 5);
 
-  if(g == 1){ghost.up = true; ghost.down = false; ghost.left = false; ghost.right = false};
-  if(g == 2){ghost.up = false; ghost.down = true; ghost.left = false; ghost.right = false};
-  if(g == 3){ghost.up = false; ghost.down = false; ghost.left = true; ghost.right = false};
-  if(g == 4){ghost.up = false; ghost.down = false; ghost.left = false; ghost.right = true};
+  if(g == 1){ghost.up = true; ghost.down = false; ghost.left = true; ghost.right = false};
+  if(g == 2){ghost.up = false; ghost.down = true; ghost.left = false; ghost.right = true};
+  if(g == 3){ghost.up = false; ghost.down = true; ghost.left = true; ghost.right = false};
+  if(g == 4){ghost.up = true; ghost.down = false; ghost.left = false; ghost.right = true};
 
   setTimeout(() => {
     startGhostPath();

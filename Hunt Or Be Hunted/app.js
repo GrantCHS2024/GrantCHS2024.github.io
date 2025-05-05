@@ -176,7 +176,7 @@ function startGame(){
   trapsCount.textContent = "Traps. " + numberTraps;
   minesCount.textContent = "Mines. " + numberMines;
 
-for(var i = 0; i <  75; i++){
+for(var i = 0; i <  90; i++){
   walls.push({x: Math.floor(Math.random() * (canvasSize - 1) + 1), y: Math.floor(Math.random() * (canvasSize - 1) + 1), width: Math.floor(Math.random() * (150 - 80) + 80), height: Math.floor(Math.random() * (150 - 80) + 80)});
   }
 //Small Houses Section
@@ -917,8 +917,13 @@ function draw(){
   
           ctx.fillStyle = "brown";
   walls.forEach(wall => {
+    if(player.x + player.size + 1000 >= wall.x &&
+      player.x - 1000 <= wall.x + wall.width &&
+      player.y + player.size + 1000 >= wall.y &&
+      player.y - 1000 <= wall.y + wall.height
+    ){
     ctx.fillRect(wall.x, wall.y, wall.width, wall.height);
-  
+  }
   })
   
   ctx.fillStyle = "#fa6000";
@@ -931,6 +936,10 @@ function draw(){
     ctx.fillRect(trap.x, trap.y, trap.size, trap.size);
   });
   
+  if(hardMode){
+    ctx.fillRect(portal.x, portal.y, portal.size, portal.size);
+  }
+  
   ctx.fillStyle = "white";
   evidences.forEach(evidence => {
     ctx.fillRect(evidence.x, evidence.y, evidence.size, evidence.size);
@@ -940,11 +949,6 @@ function draw(){
   placedMines.forEach(mine => {
     ctx.fillRect(mine.x, mine.y, mine.width, mine.height);
   });
-
-      ctx.fillStyle = "black"
-  if(hardMode){
-    ctx.fillRect(portal.x, portal.y, portal.size, portal.size);
-  }
 }
 
 
