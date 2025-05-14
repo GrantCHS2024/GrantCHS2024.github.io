@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Grant's Coding Site - Premium Images</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="all-contents">
+    <nav>
+        <h1>
+          Tennessee Photos (Grant Oleksik)
+        </h1>
+        <ul id="nav-ul">
+          <li class="nav-li">
+            <a href="index.html"> Home </a>
+          </li>
+          <li class="nav-li">
+            <a href="portfolio.html"> Portfolio </a>
+          </li>
+          <li class="nav-li">
+            <a href="Images.html"> Images </a>
+          </li>
+        </ul>
+       </nav>
+       <main>
+
+         <div class="content">
+          <div class="slideshow">
+            <div class="slide"><h1>NO IMAGES AT THIS TIME</h1></div>
+          </div>
+          <button class="left-btn"><</button> <button class="right-btn">></button>
+         </div>
+        </main>
+  </div>
+  <marquee scrollamount="8" class="background" direction="left">PREMIUM IMAGES</marquee>
+
+ <!--IMAGES SCRIPT-->
+
+  <script>
+  var imageIndex = 0;
+  var slideshow = document.querySelector(".slideshow");
+  var leftBtn = document.querySelector(".left-btn");
+  var rightBtn = document.querySelector(".right-btn");
+
+  rightBtn.onclick = function(){  //Copied from Notes App. find note.
+    if(imageIndex < slideshow.children.length - 1)imageIndex++;
+    let slide = slideshow.children[imageIndex];
+    slideshow.scrollTo({top: slide.offsetTop, behavior: "smooth"});
+  }
+  leftBtn.onclick = function(){  //Copied from Notes App. find note.
+    if(imageIndex > 0)imageIndex--;
+    let slide = slideshow.children[imageIndex];
+    slideshow.scrollTo({top: slide.offsetTop, behavior: "smooth"});
+  }
+
+  let passcode = prompt("Enter the code to move forward");
+
+  if(passcode !== "GATLINBURG2025"){
+    window.location.replace("Images.html");
+  }
+
+  </script>
+</body>
+</html>

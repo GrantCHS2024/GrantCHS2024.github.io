@@ -1,4 +1,9 @@
-fetch('passage.txt')
+
+//Passage finder & load
+
+function load(){
+  let passageSearch = document.querySelector(".input").value;
+  fetch(`${passageSearch}.txt`)
   .then(r => r.text())
   .then(data => {
     const lines = data.split('\n');
@@ -23,4 +28,5 @@ fetch('passage.txt')
     document.getElementById("title").innerText = title;
     document.getElementById("passage").innerText = passage.trim();
   })
-.catch(error => console.error('Error loading text file:', error));
+  .catch(error => console.error('Error loading text file:', error));
+}
