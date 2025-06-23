@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Grant's Coding Site - Premium Images</title>
+  <title>Grant's Coding Site - Production Download</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,15 +25,9 @@
         </ul>
        </nav>
        <main>
-
+        <div class="slideshow">
          <div class="content">
-          <div class="slideshow">
-            <div class="slide"><img src="Images Folder/Genesis(Front).JPG" alt=""></div>
-            <div class="slide"><img src="Images Folder/Genesis(Back).JPG" alt=""></div>
-            <div class="slide"><img src="Images Folder/Bike.JPG" alt=""></div>
-            <div class="slide"><img src="Images Folder/Bucees.JPG" alt=""></div>
-            <div class="slide"><img src="Images Folder/River.JPG" alt=""></div>
-            <div class="slide"><img src="Images Folder/House.JPG" alt=""></div>
+          <div class="slide"><img src="Images Folder/4th of July.png" alt=""></div>
           </div>
           <button class="left-btn"><</button> <button class="right-btn">></button>
          </div>
@@ -60,9 +54,9 @@
     slideshow.scrollTo({top: slide.offsetTop, behavior: "smooth"});
   }
 
-  let passcode = prompt("Enter the code to move forward");
+  let passcode = prompt("Enter the pin to move forward");
 
-  if(passcode !== "GATLINBURG2025"){
+  if(passcode !== "0424"){
     window.location.replace("Images.html");
   }
 
