@@ -7,6 +7,21 @@ body {
   background: #e8e8e8;
   flex-direction: column;
 }
+.watermark {
+  position: sticky;
+  text-align: center;
+  justify-content: center;
+  width: 220px;
+  height: 35px;
+  border-radius: 25px;
+   background-color: rgba(255, 255, 255, 0.4);
+   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background-size: cover;
+  font-size: 20px;
+  top: 30px;
+  left: 30px;
+}
 .main {
   width: 100vh;
   height: 100vh;
