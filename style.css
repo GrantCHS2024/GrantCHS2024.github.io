@@ -1,207 +1,226 @@
 body {
-    background: linear-gradient(to right, #6400c2, #28bbfa);
-    color: rgb(45, 45, 45);
-    padding: 10px;
-    font-family: arial;
-    user-select: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e8e8e8;
+  flex-direction: column;
 }
-#all-contents {
-  max-width: 1000px;
-    margin: auto;
-    margin-top: 40px;
+.main {
+  width: 100vh;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Verdana, sans-serif;
+  font-size: 19px;
 }
-.background {
+.about-me {
+  width: 100vh;
+  height: 80vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-family: Verdana, sans-serif;
+}
+.about-me h1 {
+  text-decoration: underline;
+}
+.abtMeBox {
   position: absolute;
-  top: -15px;
-  z-index: -1;
-  font-size: 45rem;
-  color: grey;
-  font-family: impact;
-  opacity: 50%;
+  width: 200px;
+  height: 500px;
+  border: solid;
+  margin-top: 100px;
+  border-radius: 20px;
+  box-shadow: 10px 10px 15px grey;
+  transition: all 0.5s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
-.musicBtn:hover {
+.abtMeBox h2{
+  font-size: 23px;
+  font-family: 'courier', monospace;
+}
+.abtMeBox:hover {
+  box-shadow: 20px 20px 15px grey;
+  transform: translate(-10px, -10px);
+}
+.abtMeBox:nth-child(2){
+  margin-left: 700px;
+}
+.abtMeBox:nth-child(3){
+  margin-left: -700px;
+}
+
+.personal {
+  width: 100vh;
+  height: 90vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-family: Verdana, sans-serif;
+}
+.personal h1 {
+  text-decoration: underline;
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+.game {
+  position: absolute;
   cursor: pointer;
+  width: 400px;
+  height: 200px;
+  box-shadow: 5px 5px 20px grey;
+  margin-top: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  padding: 25px;
+  border-radius: 10px;
+  transition: all 0.5s;
+  color: #777;
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
 }
-.musicBtn {
-  color: black;
+.game:hover {
+  color: white;
+  background: #777;
 }
-
-.pulse {
-  animation: pulse 0.66s infinite;
+.game h1 {
+  text-decoration: none;
 }
-@keyframes pulse {
-  0% {
-    color: grey;
-  }
-  50% {
-    color: white;
-  }
-  100% {
-    color: grey;
-  }
+.game h2 {
+  font-size: 15px;
 }
-
-/* navigation menu */
-nav {
-    background: linear-gradient(to right, #222, #999);
-   margin: 0 auto;
-   margin-bottom: 20px;
-    display: flex;
-    padding: 10px;
-    border-radius: 50px;
+.game:nth-child(2){
+  margin-left: -1000px;
 }
-h1 {
-    display: flex;
-    align-items: center;
-    color: white;
-    flex: 1;
-    margin: 0;
+.game:nth-child(4){
+  margin-left: 1000px;
 }
-#nav-ul {
-    list-style-image: none;
+.game:nth-child(5){
+  margin-top: 450px;
+  margin-left: -1000px;
 }
-.nav-li {
-    display: inline-block;
-    padding: 0 10px;
+.game:nth-child(6){
+  margin-top: 450px;
 }
-a {
-    text-decoration: none;
-    color: #fff;
+.game:nth-child(7){
+  margin-top: 450px;
+  margin-left: 1000px;
 }
 
-/* main container area beneath menu */
-main {
-    display: flex;
-    border-radius: 15px;
-    padding: 10px;
+.asd {
+  width: 100vh;
+  height: 70vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-family: Verdana, sans-serif;
 }
-.sidebar {
-    margin-right: 25px;
-    padding: 10px;
+.asd h1 {
+  text-decoration: underline;
 }
-.sidebar-img {
-    width: 200px;
-    border-radius: 10px;
-    border: 4px solid #333;
+.project {
+  position: absolute;
+  cursor: pointer;
+  width: 400px;
+  height: 200px;
+  box-shadow: 5px 5px 20px grey;
+  margin-top: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  padding: 25px;
+  border-radius: 10px;
+  color: #777;
+  transition: all 0.5s;
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
 }
-.content {
-    flex: 1;
-    padding: 15px;
+.project:hover {
+  color: white;
+  background: #777;
+}
+.project h1 {
+  text-decoration: none;
+}
+.project h2 {
+  font-size: 15px;
+}
+.project:nth-child(2){
+  margin-left: -1000px;
+}
+.project:nth-child(4){
+  margin-left: 1000px;
+}
+.project:nth-child(5){
+  margin-top: 450px;
+  margin-left: -1000px;
+}
+.project:nth-child(6){
+  margin-top: 450px;
+}
+.project:nth-child(7){
+  margin-top: 450px;
+  margin-left: 1000px;
 }
 
-/* portfolio styles */
-#interests {
-  position: relative;
-  margin-top: 70px;
-    padding: 15px;
-    width: 500px;
-}
-#interests h1{
-  font-size: 2.25rem;
-  font-family: Arial;
-  color: #222;
-}
-marquee {
-  font-size: 2rem;
-}
- /* portfolio styles */
- .content h1 {
-    color: linear-gradient(to right, #eee, #000000);
-}
 
-#portfolio {
-    list-style-type: none;
-    padding-left: 0;
+.images {
+  width: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Verdana;
+  font-size: 20px;
 }
-
-#portfolio li {
-    background: #fff;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+.images h1 {
+  text-decoration: underline;
 }
-
-#portfolio li:hover {
-    background: #eee;
-}
-
-#portfolio a {
-    text-decoration: none;
-    color: #454545;
-}
-            /* responsive web design */
-            @media screen and (min-width: 120px) and (max-width: 1080px) {
-                main {
-                  height: 100ch;
-                  zoom: 1.5;
-                  display: grid;
-                }
-  
-                h1 {
-                  font-size: 44px;
-                }
-  
-                h2 {
-                  font-size: 42px;
-                }
-  
-                h3 {
-                  font-size: 36px;
-                }
-  
-                #all-contents {
-                  height: 100ch;
-                  margin: none;
-                }
-  
-                a {
-                  font-size: 42px;
-                }
-  
-                .sidebar {
-                  margin-right: 0px;
-                  justify-content: center;
-                  align-items: center;
-                }
-  
-                .sidebar-img {
-                  width: 100%;
-                }
-  
-                p,
-                li {
-                  font-size: 24px;
-                }
-  
-                .content {
-                  align-content: center;
-                  justify-content: center;
-                }
-            }
-
-/* Slideshow Portion */
 
 .slideshow {
-  position: relative;
-  width: 700px;
+  margin-top: 50px;
+  width: 1600px;
   height: 650px;
-  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 100px;
+  /*overflow: scroll;*/
 }
 .slide {
-  margin-top: 50px;
-  /*border: 2px solid;*/
   width: 700px;
-  height: 600px;
-  /*background: white;*/
+  height: 500px;
+  transition: all 0.5s;
 }
 .slide img{
   width: 100%;
-  margin-top: 100px;
   box-shadow: 0px 20px 50px #777;
+  border-radius: 30px;
 }
-.left-btn {
-  position: relative;
-  margin-left: 275px;
+.slide:hover {
+  width: 75vh;
+}
+/*.left-btn {
+  margin-left: -100px;
   width: 50px;
   background: black;
   font-family: impact;
@@ -221,8 +240,8 @@ marquee {
   color: black;
 }
 .right-btn {
-  position: relative;
-  margin-left: 50px;
+  margin-left: 100px;
+  margin-top: -17px;
   width: 50px;
   background: black;
   font-family: impact;
@@ -230,44 +249,4 @@ marquee {
   border: none;
   border-radius: 15px;
   transition: background 0.5s;
-}
-
-/*MUSIC PLAYER*/
-
-.musicPlayer {
-  position: absolute;
-  bottom: 30px;
-  left: 30px;
-  height: 175px;
-  width: 200px;
-  background: grey;
-  border-radius: 20px;
-}
-.songName {
-  margin-left: 15px;
-  margin-top: 5px;
-  display: flex;
-  color: rgb(54, 54, 54);
-  font-family: Verdana;
-  font-size: 1rem;
-}
-
-/*EQUALIZER PORTION*/
-
-.equalizer {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 10px;
-  height: 60px;
-  width: 1000px;
-  margin: 325px auto;
-}
-
-.bar {
-  width: 10px;
-  height: 10px;
-  background: white;
-  transition: height 0.1s ease;
-  border-radius: 2px;
-}
+}                                   ISSUES OCURRED AFTER PORTFOLIO OVERHAUL! THEREFORE IMAGES SLIDE HAS BEEN TONED DOWN! SORRY FOR THE INCONVENIENCE*/
