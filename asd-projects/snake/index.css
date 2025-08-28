@@ -1,6 +1,6 @@
 
 body {
-  background-color: darkgreen;
+  background-color: #333;
 }
 
 #board {
@@ -9,9 +9,22 @@ body {
   border: 1px solid white;
   background-color: black;
 }
+.spin{
+  animation: spin 60s linear infinite;
+}
+@keyframes spin {
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
 
 #score, #highScore {
   color: white;
+  margin-left: 100px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .snake, .apple {
