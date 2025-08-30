@@ -1,0 +1,53 @@
+body{
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  user-select: none;
+}
+#canvas{
+  z-index: 1;
+}
+
+.endScreen {
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  text-align: center;
+  z-index: 2;
+  font-size: 5rem;
+  color: white;
+  font-weight: bold;
+  font-family: "Courier New", 'sans-serif';
+}
+.score{
+  position: absolute;
+  width: 150px;
+  height: 100px;
+  /*top: 400px;*/
+  color: white;
+  opacity: 0;
+  font-family: Verdana;
+  font-size: 3rem;
+  font-weight: bold;
+  transition: all 2s;
+}
+.highScore{
+  position: absolute;
+  width: 150px;
+  height: 100px;
+  /*top: 475px;*/
+  color: white;
+  opacity: 0;
+  font-family: Verdana;
+  font-size: 3rem;
+  font-weight: bold;
+  transition: all 2s;
+}
+.appear{
+  opacity: 100;
+}
+.hide {
+  opacity: 0;
+}
