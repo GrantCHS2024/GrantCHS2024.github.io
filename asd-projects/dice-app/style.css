@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    user-select: none;
+}
+#die {
+  height: 100px;
+  width: 100px;
+  background-color: lightgray; /* Feel free to customize */
+  position: absolute;
+  top: 25%;
+}
+#dieTwo {
+  height: 100px;
+  width: 100px;
+  background-color: lightgray; /* Feel free to customize */
+  position: absolute;
+  top: 75%;
+}
+.number{
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    font-size: 50rem;
+    color: white;
+    font-family: Verdana;
+}
