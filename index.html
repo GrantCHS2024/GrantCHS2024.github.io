@@ -5,9 +5,15 @@
   <meta name="viewport" content="width=device-width">
   <title>Portfolio / Grant Oleksik</title>
   <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 </head>
 <body>
   <div class="watermark" style="font-family: 'Courier New', Courier, monospace;">Grant Oleksik</div>
+  <audio id="Menu_music" src="Wii Menu Music - Oheao.mp3"></audio>
+  <audio id="clickSound" src="Wii click sound.mp3"></audio>
+
+  <img class="startScreen" src="Website_Startup_Screen.png">
+  <div class="box"><img src="Cursor.png"></img></div> <!--Custom Cursor box-->
 
   <div class="main">
     <h1 class="welcome"</h1>
@@ -108,6 +114,38 @@
   </div>
 
   <script>
+    var started = false;
+    var startScreen = document.querySelector(".startScreen");
+    var menuMusic = document.getElementById("Menu_music");
+    var clickSound = document.getElementById("clickSound");
+
+    window.onload = () => {
+      startScreen.style.opacity = 100;
+      $("body").css("background-color", "black");
+      $(".watermark").css("opacity", "0%");
+      started = false;
+    };
+
+    document.addEventListener("click", () => {
+      clickSound.currentTime = 0;
+      clickSound.play();
+      if(!started) {menuMusic.play(); $(".watermark").css("opacity", "100%"); startScreen.style.opacity = 0; startScreen.style.zIndex = -1; $("body").css("background-color", "#e8e8e8"); type();}
+    });
+
+    //Custom Cursor box and inner workings
+    var box = document.querySelector(".box");
+
+document.addEventListener("mousemove", (event) => {
+  let mouseX = event.clientX;
+  let mouseY = event.clientY;
+  
+  $(".box").css("left", mouseX - Number($(".box").css("width")[0] + $(".box").css("width")[1]) / 2);
+  $(".box").css("top", mouseY - Number($(".box").css("height")[0] + $(".box").css("height")[1]) / 2);
+  $("body").css("cursor", "none");
+});
+
+
+
     let text = "Hello, I am Grant Oleksik!";
 const speed = 100;
 
@@ -119,7 +157,6 @@ function type() {
     setTimeout(type, speed);
   }
 }
-type();
 
 //FYI: Script above was created with help... Only thing I really needed to know was '.charAt' (That means study it, Grant)
 
