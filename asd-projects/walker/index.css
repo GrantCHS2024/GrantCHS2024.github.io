@@ -1,21 +1,35 @@
 
 body {
-  background-color: darkgreen;
+  background-color: #adadad;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  transition: all 2s;
 }
 
 #board {
-  width: 440px;
-  height: 440px;
+  width: 800px;
+  height: 800px;
   border: 1px solid white;
   background-color: black;
   position: relative;
 }
 
 #gameItem {
-  background-color: teal;
+  background-color: grey;
   width: 50px;
   height: 50px;
   position: absolute;
-/*   left: 100px; */  /* Uncomment if you want to set a "starting" position */
-/*   top: 100px;  */  /* Uncomment if you want to set a "starting" position */
+  left: 100px;  /* Uncomment if you want to set a "starting" position */
+  top: 100px;  /* Uncomment if you want to set a "starting" position */
+}
+#playerTwo{
+  background-color: red;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 700px;  /* Uncomment if you want to set a "starting" position */
+  top: 700px;  /* Uncomment if you want to set a "starting" position */
 }
