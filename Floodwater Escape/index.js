@@ -1,3 +1,4 @@
+var body = document.querySelector("body");
 const canvas = document.getElementById("canvas");
 let CANVAS_GAME_HEIGHT = 3000;
 var camera = document.querySelector(".canvasDiv");
@@ -18,7 +19,7 @@ menuMusic.volume = 0.7;
 var jetSFX = document.querySelector(".jetSFX");
 jetSFX.volume = 0.5;
 var gameSFX = document.querySelector(".gameSFX");
-gameSFX.volume = 0.5;
+gameSFX.volume = 0.75;
 var jumpSFX = document.querySelector(".jumpSFX");
 jumpSFX.volume = 0.1;
 var deathSFX = document.querySelector(".deathSFX");
@@ -260,12 +261,23 @@ for(var i = 0; i < numWalls; i++){
       spikes.push(spike);
     }
   }
+
+  //Blackout occurance
+
+  if(world.level % 5 === 0 || world.level % 7 === 0 || world.level % 12 === 0){
+    body.classList.remove("blackout");
+    body.classList.add("blackout");
+    setTimeout(() => {
+      body.style.background = "black";
+    }, 3500);
+  }
     
     camera.scrollTop = player.y - 400;
     
   }, 1500);
 }
 
+//END OF startGame FUNCTION
 
 var player = {
   width: 20,
@@ -339,7 +351,7 @@ menuMusic.play();
 player.x = canvas.width / 2;
 player.y = canvas.height - 40;
 player.health = 100;
-player.coins -= 50;
+player.coins -= 25;
 coinCounter.textContent = "Coins: $" + player.coins;
 camera.classList.remove("shake");
   $(".redScreen").css("opacity", ((player.health - 100) * -1) + "%");
@@ -377,6 +389,8 @@ camera.classList.remove("shake");
       player.alive = true;
       document.querySelector(".menuSigns").style.opacity = 1;
   document.querySelector(".menuSigns").classList.add("flicker");
+  body.classList.remove("blackout");
+  body.style.background = "#555";
       tipsDIV.style.opacity = 1;
       randomizeTips();
     }, 1500);
@@ -392,6 +406,8 @@ function levelCompletion(){
   tran_Screen.style.opacity = 1;
   tran_Screen.style.top = 0;
   tran_Screen.classList.add("fade");
+  body.classList.remove("blackout");
+  body.style.background = "#555";
   gameSFX.pause();
 
   setTimeout(() => {
@@ -773,7 +789,7 @@ function update(){
        newY < wall.y + wall.height && 
        wall.breakable){
       if(wall.height !== 0){
-        wall.height -= 0.25;
+        wall.height -= 0.15;
       }
       else if(wall.height === 0){
         wall.x = 500;
@@ -791,6 +807,13 @@ function update(){
       wall.direction *= -1;
     }
    }
+   if(newX + player.width > wall.x &&
+       newX < wall.x + wall.width &&
+       newY + player.height > wall.y &&
+       newY < wall.y + wall.height && 
+       wall.moving){
+        newX += wall.direction;
+       }
   });
   
   if(!isColliding(newX, player.y) && newX > 0 && newX + player.width < canvas.width) player.x = newX;

@@ -31,7 +31,14 @@ img {
   font-family: Impact;
   z-index: 4;
 }
-.returnBTN:hover {
+.returnBTN:nth-child(2){
+  left: 7%;
+}
+.returnBTN:nth-child(2):hover{
+  background: #ceb632;
+  cursor: pointer;
+}
+.returnBTN:nth-child(1):hover {
   background: red;
   cursor: pointer;
 }
@@ -181,6 +188,30 @@ img {
 }
 .fade {
   animation: fade 3s linear;
+}
+.blackout{
+  animation: blackout 5s linear;
+  animation-fill-mode: forwards;
+}
+@keyframes blackout {
+  0% {
+    opacity: 1;
+  }
+  15% {
+    opacity: 0.2;
+  }
+  30%{
+    opacity: 1;
+  }
+  45%{
+    opacity: 0.2;
+  }
+  60%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0.2;
+  }
 }
 @keyframes fade {
   0% {
