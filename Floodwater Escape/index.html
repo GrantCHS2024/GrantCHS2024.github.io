@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <title>Floodwater Escape</title>
+</head>
+<body>
+  <div class="returnBTN" onclick="window.location.href='../index.html'"><= EXIT</div>
+
+  <img class="JS_logo" src="Images/JavaScript PNG.png">
+  <img class="gameLogo" src="Images/Floodwater Escape logo.png">
+
+  <audio class="bPSFX" src="SFX/block-placer-sfx.mp3" preload="auto"></audio>
+  <audio class="canonSFX" src="SFX/canon-shot-sfx.mp3" preload="auto"></audio>
+  <audio class="coinCollectSFX" src="SFX/coin-collect-sfx.mp3" preload="auto"></audio>
+  <audio class="menuMusic" src="SFX/jazz-lounge-elevator-music-332339.mp3" loop></audio>
+  <audio class="jetSFX" src="SFX/jet-engine-6753.mp3"></audio>
+  <audio class="gameSFX" src="SFX/low-rumbling-176033.mp3" loop></audio>
+  <audio class="jumpSFX" src="SFX/pixel-jump-319167.mp3" preload="auto"></audio>
+  <audio class="deathSFX" src="SFX/player-death-sfx.mp3" preload="auto"></audio>
+  <audio class="spikeDamageSFX" src="SFX/Spike-damage-sfx.mp3" preload="auto"></audio>
+  <audio class="purchaseSFX" src="SFX/cash-register-purchase-87313.mp3" preload="auto"></audio>
+
+  <div class="redScreen"></div>
+  <div class="transitionScreen"></div>
+  <div class="frontText"></div>
+  <div class="levelCount"></div>
+  <div class="menuSigns"><= SHOP - - - NEXT =></div>
+    <div class="tips">W to jump, A and D to move side to side, S to crouch, and SPACEBAR for special items.</div>
+  
+    <div class="shop">
+      <h1 class="coinCounter">Coins</h1>
+      <div class="jumpBoost">
+        <h1>Jump Boost</h1>
+        <button></button>
+      </div>
+      <div class="speedBoost">
+        <h1>Speed Boost</h1>
+        <button></button>
+      </div>
+      <div class="umbrella">
+        <h1>Umbrella</h1>
+        <button></button>
+      </div>
+      <div class="blockPlacer">
+        <h1>Platform Placer</h1>
+        <button></button>
+      </div>
+      <div class="jetPack">
+        <h1>Jet Pack</h1>
+        <button></button>
+      </div>
+      <div class="canon">
+        <h1>Canon</h1>
+        <button></button>
+      </div>
+      
+    </div>
+    <div class="inventory">Empty</div>
+    
+  <div class="canvasDiv">
+    <canvas id="canvas"></canvas>
+  </div>
+    <!--This is for the introduction and all... Just to avoid the clutter in the JS file-->
+    <script src="index.js"></script>
+</body>
+</html>

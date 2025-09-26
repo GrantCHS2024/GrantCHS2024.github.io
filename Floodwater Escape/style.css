@@ -1,0 +1,260 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #555;
+  overflow: hidden;
+  user-select: none;
+}
+img {
+  position: absolute;
+  z-index: 6;
+  opacity: 0;
+  transition: all 3s;
+}
+.returnBTN{
+  position: absolute;
+  padding: 3px;
+  top: 2%;
+  left: 2%;
+  text-align: center;
+  width: 75px;
+  height: 20px;
+  background: white;
+  border: 3px solid;
+  border-radius: 20px;
+  transition: all 0.5s;
+  font-family: Impact;
+  z-index: 4;
+}
+.returnBTN:hover {
+  background: red;
+  cursor: pointer;
+}
+.gameLogo{
+  width: 1400px;
+  height: 500px;
+}
+.gameLogo img{
+  width: 100%;
+}
+.canvasDiv {
+  width: 800px;
+  height: 500px;
+  padding: 0;
+  background: #222;
+  overflow: hidden;
+  z-index: 2;
+}
+.inventory{
+  position: absolute;
+  top: 5%;
+  padding: 5px;
+  width: 180px;
+  height: 30px;
+  border-radius: 20px;
+  border: solid 3px;
+  background: #777;
+  font-family: Impact;
+  text-align: center;
+  font-size: 1.5rem;
+  z-index: 3;
+}
+
+.shop{
+  position: absolute;
+  width: 800px;
+  height: 500px;
+  padding: 30px;
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  z-index: 5;
+  transition: all 1s;
+  display: flex;
+  flex-wrap: wrap;
+}
+.shop .coinCounter{
+  position: absolute;
+  left: 60%;
+  top: -10%;
+  color: gold;
+  font-family: Verdana;
+  font-size: 2rem;
+}
+.shop div{
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  border: solid 3px;
+  margin-right: 30px;
+  background: #777;
+  font-family: Verdana;
+  text-align: center;
+}
+.shop div h1{
+  font-size: 1.10rem;
+}
+.shop div button{
+  width: 140px;
+  height: 22px;
+  margin-top: 50px;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 4px 4px 10px #333;
+  transition: all 0.25s;
+  font-family: Verdana;
+}
+.shop div button:hover{
+  background: #999;
+  cursor: pointer;
+}
+
+.redScreen{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background: darkred;
+  opacity: 0;
+}
+.transitionScreen{
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background: black;
+  z-index: 4;
+  opacity: 1;
+  top: 0%;
+}
+.frontText {
+  position: absolute;
+  width: 700px;
+  height: 500px;
+  color: white;
+  opacity: 0;
+  font-size: 3rem;
+  font-family: Verdana;
+  font-weight: bold;
+  z-index: 6;
+  transition: all 1s;
+  text-align: center;
+}
+.levelCount{
+  position: absolute;
+  width: 90vw;
+  height: 100vh;
+  color: #888;
+  font-family: Impact;
+  font-size: 45rem;
+}
+.menuSigns{
+  position: absolute;
+  top: 80%;
+  color: #222;
+  width: 700px;
+  height: 300px;
+  text-align: center;
+  font-size: 5rem;
+  font-family: 'Impact';
+}
+.tips{
+  position: absolute;
+  width: 500px;
+  height: 50px;
+  color: white;
+  font-family: Verdana;
+  font-weight: bold;
+  font-size: 1.5rem;
+  z-index: 3;
+  top: 25%;
+  text-align: center;
+}
+.invalid{
+  background: red;
+}
+.flicker{
+  animation: flicker 1s linear infinite;
+}
+.fade {
+  animation: fade 3s linear;
+}
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.slideUp{
+  animation: slideup 3s ease-in-out;
+}
+@keyframes slideup {
+  0% {
+    top: 100%;
+  }
+  50%{
+    top: 0%;
+  }
+  100% {
+    top: -100%;
+  }
+}
+@keyframes flicker {
+  0% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  15% {
+    opacity: 0.5;
+    filter: brightness(0.5);
+  }
+  20% {
+    opacity: 0.8;
+    filter: brightness(1.2);
+  }
+  35% {
+    opacity: 0.4;
+    filter: brightness(0.3);
+  }
+  40% {
+    opacity: 0.9;
+    filter: brightness(1.1);
+  }
+  60% {
+    opacity: 0.6;
+    filter: brightness(0.7);
+  }
+  65% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  80% {
+    opacity: 0.7;
+    filter: brightness(0.9);
+  }
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+.shake {
+  animation: shake 0.5s linear infinite;
+}
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}

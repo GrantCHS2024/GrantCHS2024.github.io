@@ -43,19 +43,19 @@
     </div>
     <div class="game" onclick="window.location.href='Hunt Or Be Hunted/index.html'">
       <h1>HUNT OR BE HUNTED</h1>
-      <h2>(FINAL RELEASE!) We need you to search this place for evidence, but whatever you do, stay alive and bring back that evidence, now. Don't let him catch you</h2>
+      <h2>(OLD)(FULL) We need you to search this place for evidence, but whatever you do, stay alive and bring back that evidence, now. Don't let him catch you</h2>
     </div>
     <div class="game" onclick="window.location.href='Spelling Bee/index.html'">
       <h1>Spelling Bee</h1>
       <h2>Spelling Bee using microsoft's text to speech!</h2>
     </div>
-    <div class="game" onclick="window.location.href='Left Alone/index.html'">
-      <h1>Left Alone</h1>
-      <h2>(NEW)(WIP) Search the world for resources to sustain your base. But don't let the villagers get to you...</h2>
-    </div>
     <div class="game" onclick="window.location.href='Pong(Personal)/index.html'">
       <h1>Pong Game</h1>
-      <h2>(NEW)My OWN PERSONAL Pong game with random game events! Do you have what it takes?</h2>
+      <h2>My OWN PERSONAL Pong game with random game events! Do you have what it takes?</h2>
+    </div>
+    <div class="game" id="favorite" onclick="window.location.href='Floodwater Escape/index.html'">
+      <h1>Floodwater Escape</h1>
+      <h2>(NEW)Escape the flood in this action-packed platformer with many items you can buy to help you along the way!</h2>
     </div>
   </div>
   <div class="asd">
@@ -175,23 +175,13 @@ setTimeout(() => {
 
 //Now, this script above this comment was created by me for more learning purposes.
 
-
-
-var imageIndex = 0;
-  var slideshow = document.querySelector(".slideshow");
-  var leftBtn = document.querySelector(".left-btn");
-  var rightBtn = document.querySelector(".right-btn");
-
-/*  rightBtn.onclick = function(){  //Copied from Notes App. find note.
-    if(imageIndex < slideshow.children.length - 1)imageIndex++;
-    let slide = slideshow.children[imageIndex];
-    slideshow.scrollTo({top: slide.offsetTop, behavior: "smooth"});
-  }
-  leftBtn.onclick = function(){  //Copied from Notes App. find note.
-    if(imageIndex > 0)imageIndex--;
-    let slide = slideshow.children[imageIndex];
-    slideshow.scrollTo({top: slide.offsetTop, behavior: "smooth"});
-  }                                                                     */
+var topGame = $("#favorite");
+var colorIndex = -1;
+setInterval(() => {
+  colorIndex *= -1;
+  var color = (colorIndex === 1) ? "" : "yellow";
+  topGame.css("background", color);
+}, 500);
   </script>
 </body>
 </html>
