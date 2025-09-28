@@ -6,10 +6,12 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
   <title>Floodwater Escape</title>
+  <link rel="icon" href="Images/Floodwater Escape logo2.png" type="image/x-icon">
 </head>
 <body>
   <div class="returnBTN" onclick="window.location.href='../index.html'"><= EXIT</div>
   <div class="returnBTN" onclick="window.location.reload();">Restart</div>
+  <div class="returnBTN" onclick="highRiskf();">HIGH RISK (EXPERIMENTAL)</div>
 
   <img class="JS_logo" src="Images/JavaScript PNG.png">
   <img class="gameLogo" src="Images/Floodwater Escape logo.png">
@@ -24,6 +26,7 @@
   <audio class="deathSFX" src="SFX/player-death-sfx.mp3" preload="auto"></audio>
   <audio class="spikeDamageSFX" src="SFX/Spike-damage-sfx.mp3" preload="auto"></audio>
   <audio class="purchaseSFX" src="SFX/cash-register-purchase-87313.mp3" preload="auto"></audio>
+  <audio class="waterSplashSFX" src="SFX/splash-6213.mp3" preload="auto"></audio>
 
   <div class="redScreen"></div>
   <div class="transitionScreen"></div>
@@ -46,6 +49,10 @@
         <h1>Umbrella</h1>
         <button></button>
       </div>
+      <div class="health">
+        <h1>Health Upgrade</h1>
+        <button></button>
+      </div>
       <div class="blockPlacer">
         <h1>Platform Placer</h1>
         <button></button>
@@ -56,6 +63,10 @@
       </div>
       <div class="canon">
         <h1>Canon</h1>
+        <button></button>
+      </div>
+      <div class="teleporter">
+        <h1>Teleporter(up)</h1>
         <button></button>
       </div>
       

@@ -20,7 +20,7 @@ img {
   position: absolute;
   padding: 3px;
   top: 2%;
-  left: 2%;
+  left: 0%;
   text-align: center;
   width: 75px;
   height: 20px;
@@ -31,8 +31,11 @@ img {
   font-family: Impact;
   z-index: 4;
 }
+.returnBTN:nth-child(1){
+  margin-left: 20px;
+}
 .returnBTN:nth-child(2){
-  left: 7%;
+  margin-left: 110px;
 }
 .returnBTN:nth-child(2):hover{
   background: #ceb632;
@@ -41,6 +44,14 @@ img {
 .returnBTN:nth-child(1):hover {
   background: red;
   cursor: pointer;
+}
+.returnBTN:nth-child(3){
+  margin-left: 210px;
+  width: 200px;
+}
+.returnBTN:nth-child(3):hover{
+  background: darkred;
+  cursor: help;
 }
 .gameLogo{
   width: 1400px;
