@@ -5,6 +5,8 @@ var camera = document.querySelector(".canvasDiv");
 var ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 500;
+let RENDER_DISTANCE = 700; //FOR LATER LARGER USE
+let gameFlag = false;
 
 var tran_Screen = document.querySelector(".transitionScreen");
 
@@ -26,7 +28,35 @@ var deathSFX = document.querySelector(".deathSFX");
 var spikeDamageSFX = document.querySelector(".spikeDamageSFX");
 var purchaseSFX = document.querySelector(".purchaseSFX");
 var waterSplashSFX = document.querySelector(".waterSplashSFX");
+var clockTick = document.querySelector(".clockTick");
+var suspense = document.querySelector(".suspense");
+
 let highRisk = false;
+let clock = 60;
+let activateTimer = false;
+  setInterval(() => {
+      if(gameFlag && activateTimer){
+        clock--
+        tipsDIV.style.opacity = 1;
+        tipsDIV.textContent = clock;
+        camera.classList.remove("shake");
+        gameSFX.pause();
+        clockTick.play();
+        if(clock < 30){
+          suspense.play();
+          tipsDIV.style.color = "red";
+        }
+        if(clock === 0){
+          player.health = 0;
+          activateTimer = false;
+          clockTick.pause();
+          suspense.pause();
+          clockTick.currentTime = 0;
+          suspense.currentTime = 0;
+          removeInterval(countdown);
+        }
+      }
+    }, 1000);
 
 //INTRODUCTION
 var frontText = $(".frontText");
@@ -81,9 +111,6 @@ document.querySelector(".menuSigns").classList.add("flicker");
 var tipsDIV = document.querySelector(".tips");
 var tip = "";
 
-let RENDER_DISTANCE = 100; //FOR LATER LARGER USE
-let gameFlag = false;
-
 var world = {
   gravity: 0.6,
   level: 1,
@@ -92,7 +119,7 @@ levelCount.textContent = world.level;
 
 //HIGH RISK FUNCTION
 function highRiskf(){
-  if(!highRisk){
+  if(!highRisk && !gameFlag){
   highRisk = true;
   world.level = 0;
   levelCount.textContent = "?";
@@ -316,8 +343,25 @@ for(var i = 0; i < numWalls; i++){
     body.classList.add("blackout");
     setTimeout(() => {
       body.style.background = "black";
-    }, 3500);
+    }, 5000);
   }
+
+  // - - - - - - - - - - - - - - - - - - - TIMER ROUND - - - - - - - - - - - - - - - - - - - - -
+
+  var clockRoundChance = Math.floor(Math.random() * 100);
+  if(clockRoundChance <= 10){
+    clock = 60;
+    activateTimer = true;
+    tipsDIV.textContent = clock;
+    tipsDIV.style.height = "500px";
+    tipsDIV.style.fontSize = "5rem";
+    tipsDIV.style.color = "white";
+    setTimeout(() => {
+      tipsDIV.style.height = "50px";
+    tipsDIV.style.fontSize = "1.5rem";
+    tipsDIV.style.color = "white";
+    }, 5000);
+  };
     
     camera.scrollTop = player.y - 400;
     
@@ -339,7 +383,8 @@ var player = {
   alive: true,
   maxHealth: 100,
   health: 100,
-  coins: 0,
+  coins: 100000,     //TESTING NUMBER - - - - - - - - - - - - - - - - - RETURN BACK TO ZERO BEFORE UPDATE - - - - - - - - - - - - - - - - 
+  coinsLost: 25,
 }
 var reward = 100;
 
@@ -377,6 +422,7 @@ document.addEventListener('keyup', (e) => {
 function playerDeath(){
   gameFlag = false;
   player.alive = false;
+  activateTimer = false;
   deathSFX.currentTime = 0;
   deathSFX.play();
   setTimeout(() => {
@@ -395,13 +441,20 @@ canvas.height = 500;
 $(".canvasDiv").css("width", "800px");
 $(".canvasDiv").css("height", "500px");
 
+clockTick.pause();
+suspense.pause();
+clockTick.currentTime = 0;
+suspense.currentTime = 0;
 gameSFX.pause();
 menuMusic.play();
 
 player.x = canvas.width / 2;
 player.y = canvas.height - 40;
 player.health = player.maxHealth;
-player.coins -= 25;
+if(world.level % 10 === 0){
+  player.coinsLost *= 2;
+}
+player.coins -= player.coinsLost;
 player.coins = Math.max(player.coins, 0);
 coinCounter.textContent = "Coins: $" + player.coins;
 camera.classList.remove("shake");
@@ -443,6 +496,7 @@ camera.classList.remove("shake");
   body.classList.remove("blackout");
   if(!highRisk)body.style.background = "#555";
       tipsDIV.style.opacity = 1;
+      tipsDIV.style.color = "white";
       randomizeTips();
     }, 1500);
   }, 2000);
@@ -456,6 +510,7 @@ camera.classList.remove("shake");
 function levelCompletion(){
   tran_Screen.style.opacity = 1;
   tran_Screen.style.top = 0;
+  activateTimer = false;
   tran_Screen.classList.add("fade");
   body.classList.remove("blackout");
   if(!highRisk)body.style.background = "#555";
@@ -469,6 +524,7 @@ function levelCompletion(){
   document.querySelector(".menuSigns").style.opacity = 1;
   document.querySelector(".menuSigns").classList.add("flicker");
   tipsDIV.style.opacity = 1;
+  tipsDIV.style.color = "white";
   randomizeTips();
   
 walls = [];
@@ -483,6 +539,10 @@ canvas.height = 500;
 $(".canvasDiv").css("width", "800px");
 $(".canvasDiv").css("height", "500px");
 
+clockTick.pause();
+suspense.pause();
+clockTick.currentTime = 0;
+suspense.currentTime = 0;
 menuMusic.play();
 
 player.x = canvas.width / 2;
@@ -674,7 +734,7 @@ var blockPlacerBtn = document.querySelector(".blockPlacer button");
 let blockPlacerCost = 300;
 let blockPlacerLvl = 0;
 let blockPlacermaxLvl = 3;
-let blockPlacerCooldown = 6000;
+let blockPlacerCooldown = 7000;
 let bPFlag = true;
 blockPlacerBtn.textContent = "Buy - " + blockPlacerCost + "C";
 
@@ -689,13 +749,13 @@ blockPlacerBtn.addEventListener("click", () => {
     blockPlacerLvl++
     
     //Addon
-    blockPlacerCooldown -= 1000;
+    blockPlacerCooldown -= 2000;
     equipped.block_placer = true;
     equipped.jet_pack = false;
     equipped.canon = false;
     equipped.teleporter = false;
     
-    blockPlacerCost *= 2;
+    blockPlacerCost += 200;
     blockPlacerBtn.textContent = "Upgrade - " + blockPlacerCost + "C";
     }
     else if(blockPlacerLvl === blockPlacermaxLvl)blockPlacerBtn.textContent = "MAX LEVEL";
@@ -726,6 +786,7 @@ jetPackBtn.addEventListener("click", () => {
     
     //Addon
     jetPackMaxFuel += 20;
+    jetPackFuel = jetPackMaxFuel;
     jetPackStrength += 2;
     equipped.jet_pack = true;
     equipped.block_placer = false;
@@ -1043,23 +1104,27 @@ function update(){
       inventoryBox.style.opacity = 1;
     }, blockPlacerCooldown);
   }
-  if(moving.space && equipped.jet_pack && jetPackFuel > 0){
+  if(moving.space && equipped.jet_pack && jetPackFuel > 1){
     jetSFX.play();
     player.dy -= (jetPackStrength / 15);
     jetPackFuel--
     inventoryBox.style.opacity = 0.5;
   }
-  if(jetPackFuel < jetPackMaxFuel && !moving.space){
+  if(jetPackFuel > 1 && !moving.space && jetPackFuel < jetPackMaxFuel && equipped.jet_pack){
     jetSFX.currentTime = 0;
     jetSFX.pause();
     jetPackFuel++
     inventoryBox.style.opacity = 1;
   }
-  if(jetPackFuel <= 1){
+  if(jetPackFuel === 1){
+    jetPackFuel = 0;
+    jetSFX.currentTime = 0;
+    jetSFX.pause();
     inventoryBox.style.background = "red";
     setTimeout(() => {
       inventoryBox.style.background = "#777";
-    }, 2000);
+      jetPackFuel = jetPackMaxFuel;
+    }, 6000);
   }
   if(moving.space && equipped.canon && cFlag){
     canonSFX.currentTime = 0;
@@ -1097,7 +1162,7 @@ function update(){
     smoke.y += 2;
     smoke.x += smoke.movement;
   });
-  if(moving.space && equipped.jet_pack && jetPackFuel > 0){
+  if(moving.space && equipped.jet_pack && jetPackFuel > 1){
     smokeIndex++
     if(smokeIndex % 10 === 0){
       smokes.push(smoke = {
@@ -1149,7 +1214,7 @@ function draw(){
   
   ctx.fillStyle = '#888';
   walls.forEach(wall => {
-    if(wall.y <= player.y + 700 && wall.y >= player.y - 700){
+    if(wall.y <= player.y + RENDER_DISTANCE && wall.y >= player.y - RENDER_DISTANCE){
     ctx.fillRect(wall.x, wall.y, wall.width, wall.height);
     }
   });

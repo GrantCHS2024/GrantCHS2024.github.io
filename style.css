@@ -70,6 +70,7 @@ html, body, .box {
 }
 .abtMeBox {
   position: absolute;
+  background: white;
   width: 200px;
   height: 500px;
   border: solid;
@@ -132,9 +133,10 @@ html, body, .box {
   border-radius: 10px;
   transition: all 0.5s;
   color: #777;
+  background: white;
   animation: appear linear;
   animation-timeline: view();
-  animation-range: entry 0% cover 40%;
+  animation-range: entry 0% cover 20%;
 }
 .game:hover {
   color: white;
@@ -162,6 +164,25 @@ html, body, .box {
 .game:nth-child(7){
   margin-top: 450px;
   margin-left: 1000px;
+}
+.floodwaterGameplay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: black;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: -1;
+  transition: all 0.5s;
+}
+.floodwaterGameplay video{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#favorite:hover ~ .floodwaterGameplay{
+  opacity: 1;
 }
 
 .asd {
