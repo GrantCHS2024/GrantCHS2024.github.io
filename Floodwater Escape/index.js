@@ -383,7 +383,7 @@ var player = {
   alive: true,
   maxHealth: 100,
   health: 100,
-  coins: 100000,     //TESTING NUMBER - - - - - - - - - - - - - - - - - RETURN BACK TO ZERO BEFORE UPDATE - - - - - - - - - - - - - - - - 
+  coins: 0,     //TESTING NUMBER - - - - - - - - - - - - - - - - - RETURN BACK TO ZERO BEFORE UPDATE - - - - - - - - - - - - - - - - 
   coinsLost: 25,
 }
 var reward = 100;
