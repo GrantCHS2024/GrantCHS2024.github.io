@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background: #888;
+    font-family: Verdana, sans-serif, Arial;
+    overflow-x: hidden;
+}
+img {
+    border: 3px solid black;
+}
+.code_One, .code_Two{
+    height: 500px;
+    width: 400px;
+    transition: all 1s ease-in-out;
+}
+.code_One:hover, .code_Two:hover{
+    height: 80%;
+}
+.code_One img, .code_Two img {
+    height: 100%;
+}
+.box {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+}
+.title {
+    position: absolute;
+    font-size: 4rem;
+    font-weight: bold;
+    text-decoration: underline;
+    top: 2%;
+}
+.subtitle {
+    position: absolute;
+    font-size: 1.5rem;
+    top: 12%;
+}
+.text {
+    position: absolute;
+    top: 20%;
+    width: 70%;
+    height: 90%;
+    border: 2px solid #222;
+    border-radius: 30px;
+    background: #d3d2d2;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #222 #d3d2d2;
+    font-family: Arial;
+    font-size: 1rem;
+    padding: 30px;
+}
+.text #text {
+    font-family: Arial;
+    font-size: 1.5rem;
+}
+.text .section{
+    font-size: 2.5rem;
+    text-decoration: underline;
+    font-family: Impact;
+    font-weight: none;
+}
+.code {
+    font-size: 1.5rem;
+    font-family: Courier, monospace;
+}
+
+/*ANIMATIONS*/
+.fade-in {
+    animation: fadeIn 1s ease-in;
+}
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}

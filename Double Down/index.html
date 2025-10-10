@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Double Down</title>
+  <link rel="icon" href="Images/DoubleDownLogo3.png" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+</head>
+<body>
+  <div class="controls">
+<img src="Images/DoubleDownControls.png"></img>
+  </div>
+  <div class="JSlogo"><img src="Images/DoubleDownJS.png"></img></div>
+  <div class="gameLogo"><img src="Images/DoubleDownLogo.png"></div>
+  <div class="timer"></div>
+   <canvas id="canvas"></canvas>
+  <div class="transitionScreen"><div class="frontText"></div></div>
+  <div class="controllerCheck">
+    <div class="controllerCheckONE">
+      <img src="Images/37942.png"></img>
+      <h1 style="margin-top: 400px;">Press a button</h1>
+    </div>
+    <div class="controllerCheckTWO">
+      <img src="Images/37942.png"></img>
+      <h1 style="margin-top: 400px;">Press a button</h1>
+    </div>
+  </div>
+  <div class="red_Side"><h1 class="redScore">0</h1></div>
+  <div class="blue_Side"><h1 class="blueScore">0</h1></div>
+  <div class="leavingScreen">
+    <h1>Are you Sure?</h1>
+    <h2>You will be returned to the menu</h2>
+    <h3>Yes - A / No - B</h3>
+  </div>
+  <div class="settings">
+    <h1>Settings</h1><!--HAVE WHEN THESE ARE HIGHLIGHTED, THEY CAN BE ADJUSTED THROUGH DPAD-->
+    <div id="four">Music: <input class="musicVolume" type="range" min="0" max="1" step="0.01" value="1"></input></div>
+    <div id="five">Sound Effects: <input class="sfxVolume" type="range" min="0" max="1" step="0.01" value="1"></input></div>
+    <div id="six">Rounds: <input class="roundsModifier" type="number" min="3" max="20" value="7"></input></div>
+    <div id="seven">Player One Color: <input class="playerOneColor" type="text" value="red"></input></div>
+    <div id="eight">Player Two Color: <input class="playerTwoColor" type="text" value="blue"></input></div>
+    <div id="nine">Controls</div>
+  </div>
+  
+  <div class="menu">
+    <img class="menuLogo" src="Images/DoubleDownLogo-removebg-preview.png"></img>
+    <div id="one" onclick="gameStart()">Start</div>
+    <div id="two" onclick="settings()">Settings</div>
+    <div id="three" onclick="leavingScreen()">Exit</div>
+  </div>
+  <script src="index.js"></script>
+</body>
+</html>

@@ -33,9 +33,9 @@
   </div>
   <div class="personal">
     <h1 style="font-size: 40px;">Personal Projects</h1>
-    <div class="game" onclick="window.location.href='Quiz/quiz.html'">
-      <h1>Quiz</h1>
-      <h2>Just a multi answer coding quiz, or just quiz in general.</h2>
+    <div class="game" id="favoriteTwo" onclick="window.location.href='Double Down/index.html'">
+      <h1>Double Down</h1>
+      <h2>(NEW)Duel your friends locally with CONTROLLER COMPATIBILITY!!</h2>
     </div>
     <div class="game" onclick="window.location.href='Notes App/notes.html'">
       <h1>Notes App</h1>
@@ -55,11 +55,15 @@
     </div>
     <div class="game" id="favorite" onclick="window.location.href='Floodwater Escape/index.html'">
       <h1>Floodwater Escape</h1>
-      <h2>(NEW)Escape the flood in this action-packed platformer with many items you can buy to help you along the way!</h2>
+      <h2>(NEW)(WIP)Escape the flood in this action-packed platformer with many items you can buy to help you along the way!</h2>
+    </div>
+    <div class="game" onclick="window.location.href='Lessons.html'">
+      <h1>Lessons</h1>
+      <h2>Current Lesson: Event Listeners, player movement, and canvas</h2>
     </div>
         <div class="floodwaterGameplay">
   <video src="Floodwater Escape Gameplay.mp4" autoplay loop></video>
-  </div>
+        </div>
   </div>
   <div class="asd">
     <h1 style="font-size: 40px;">ASD Projects</h1>
@@ -178,7 +182,7 @@ setTimeout(() => {
 
 //Now, this script above this comment was created by me for more learning purposes.
 
-var topGame = $("#favorite");
+var topGame = $("#favoriteTwo");
 var colorIndex = -1;
 setInterval(() => {
   colorIndex *= -1;

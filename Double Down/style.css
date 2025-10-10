@@ -1,0 +1,381 @@
+body {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: black;
+  user-select: none;
+}
+.leavingScreen {
+  position: absolute;
+  text-align: center;
+  color: white;
+  font-family: Verdana;
+  width: 400px;
+  height: 200px;
+  background: #111;
+  border: 2px solid black;
+  border-radius: 50px;
+  transition: all 0.5s;
+  opacity: 0;
+  z-index: -2;
+}
+.settings {
+  padding: 40px;
+  position: absolute;
+  text-align: center;
+  display: block;
+  flex-direction: row;
+  color: #999;
+  font-family: Verdana;
+  width: 80%;
+  height: 70%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #111; /* thumb color, track color */
+  background: #111;
+  z-index: -3;
+  opacity: 0;
+  border: 2px solid black;
+  border-radius: 50px;
+  transition: all 1s;
+}
+.settings h1 {
+  position: absolute;
+  text-decoration: underline;
+  top: 0%;
+}
+.settings div{
+  margin-top: 50px;
+  width: 40%;
+  height: 50px;
+  background: #999;
+  border-radius: 20px;
+  border: 2px solid black;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.controls {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  opacity: 0;
+  z-index: -5;
+}
+.roundsModifier {
+  border: none;
+  background: none;
+  font-family: Impact;
+  font-size: 1.5rem;
+}
+.playerOneColor, .playerTwoColor {
+  border: none;
+  background: none;
+  font-family: Impact;
+  font-size: 1.5rem;
+}
+.playerOneColor {
+  color: red;
+}
+.playerTwoColor {
+  color: blue;
+}
+.menu {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  background: #c5c5c5;
+}
+.menuLogo {
+  position: absolute;
+  height: 100%;
+  z-index: 0;
+  filter: invert();
+}
+#one, #two, #three{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  height: 15%;
+  background: #6b6b6b;
+  border: 2px solid black;
+  border-radius: 20px;
+  color: black;
+  transition: all 0.5s;
+  font-family: Verdana;
+  font-weight: bold;
+  font-size: 150%;
+}
+#one:hover {
+  border: 2px solid lightgreen;
+  color: lightgreen;
+  cursor: pointer;
+}
+#two:hover {
+  border: 2px solid lightgreen;
+  color: lightgreen;
+  cursor: pointer;
+}
+#three:hover {
+  border: 2px solid lightgreen;
+  color: lightgreen;
+  cursor: pointer;
+}
+#one {
+  top: 25%;
+}
+#two {
+  top: 45%;
+}
+#three {
+  top: 65%;
+}
+.timer {
+  position: absolute;
+  font-size: 3rem;
+  font-weight: bold;
+  font-family: 'Courier', monospace;
+  color: white;
+  top: 5%;
+}
+.transitionScreen {
+  position: absolute;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  background: black;
+  color: white;
+  font-family: 'Courier', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  font-weight: bold;
+  z-index: 4;
+}
+.frontText {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  text-align: center;
+  opacity: 0;
+  transition: all 0.5s;
+  color: white;
+  z-index: 4;
+}
+.JSlogo {
+  position: absolute;
+  opacity: 0;
+  width: 400px;
+  height: 400px;
+  top: 30%;
+  z-index: 6;
+  transition: all 1s;
+}
+.JSlogo img {
+  width: 100%;
+  height: 100%;
+}
+.gameLogo {
+  position: absolute;
+  opacity: 0;
+  z-index: 6;
+}
+.controllerCheck {
+  position: absolute;
+  background: black;
+  color: white;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Verdana;
+  font-size: 1rem;
+  z-index: 3;
+  opacity: 1;
+  transition: all 3s;
+}
+.controllerCheckONE, .controllerCheckTWO {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  gap: 200px;
+}
+.controllerCheckONE {
+  opacity: 0.5;
+  margin-right: 550px;
+}
+.controllerCheckTWO {
+  opacity: 0.5;
+  margin-left: 550px;
+}
+.controllerCheckONE img, .controllerCheckTWO img {
+  position: absolute;
+  filter: invert(1);
+}
+.red_Side {
+   position: absolute;
+   width: 50vw;
+   height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   left: 0%;
+   background-color: red;
+   opacity: 0;
+   transform: skew(-15deg);
+   transition: all 0.5s;
+}
+.redSlideIn{
+  animation: redSlideIn 0.5s ease-in-out;
+   animation-fill-mode: forwards;
+}
+.blue_Side {
+   position: absolute;
+   width: 50vw;
+   height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   left: 50%;
+   background-color: blue;
+   opacity: 0;
+   transform: skew(-15deg);
+   transition: all 0.5s;
+}
+.blueSlideIn{
+  animation: blueSlideIn 0.5s ease-in-out;
+   animation-fill-mode: forwards;
+}
+.red_Side .redScore{
+  position: absolute;
+  font-size: 10rem;
+  font-family: Impact;
+  left: 70%;
+}
+.blue_Side .blueScore {
+  position: absolute;
+  font-size: 10rem;
+  font-family: Impact;
+  left: 20%;
+}
+@keyframes redSlideIn {
+  from {
+    left: -50%;
+  }
+  to {
+    left: 0%;
+  }
+}
+@keyframes blueSlideIn {
+  from {
+    left: 100%;
+  }
+  to {
+    left: 50%;
+  }
+}
+.canvas {
+  width: 800px;
+  height: 500px;
+}
+#canvas{
+  background: grey;
+}
+.fade {
+  animation: fade 1s ease-in;
+  animation-fill-mode: forwards;
+}
+@keyframes fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.slideIn {
+  animation: slidein 2.5s ease-in;
+  animation-fill-mode: forwards;
+}
+@keyframes slidein {
+  0% {
+    top: 100%;
+  }
+  100% {
+    top: 0%;
+  }
+}
+.slideOut {
+  animation: slideout 2.5s ease-in;
+  animation-fill-mode: forwards;
+}
+@keyframes slideout {
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: -100%;
+  }
+}
+.slideUp {
+  animation: slideup 5s ease-in-out;
+}
+@keyframes slideup {
+  0% {
+    top: 100%;
+  }
+  50% {
+    top: 0%;
+  }
+  100% {
+    top: -100%;
+  }
+}
+.pulse {
+  animation: pulse 5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+.shake {
+  animation: shake 0.25s;
+}
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}

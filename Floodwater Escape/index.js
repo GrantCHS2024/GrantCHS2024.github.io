@@ -1181,6 +1181,8 @@ function update(){
   });
   
     //SPIKES SECTION
+if(gameFlag){
+
   spikes = spikes.filter(spike => {
     if(player.x + player.width > spike.x &&
        player.x < spike.x + spike.width &&
@@ -1201,6 +1203,8 @@ function update(){
       player.health = 0;
     }
   });
+
+}
   
   requestAnimationFrame(update);
   draw();

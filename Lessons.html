@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="Lessons_Style.css">
+  <title>Lessons</title>
+</head>
+<body>
+    <h1 class="title">Lessons</h1>
+    <h2 class="subtitle">Event Listeners, player movement, and canvas</h2>
+    <div class="text">
+        <h1 class="section">Event Listeners</h1>
+        <h1 id="text">Just like jQuery's '.on()' event function... 'addEventListener()' does the same without jQuery! <br>
+            Check out this button: <button id="myButton">Click Me!</button> <br><br>
+            I used .addEventListener("click", () => {}) to make it work! <br>
+            The first part is the event type, in this case "click". <br>
+            The second part is an arrow function, which is a shorter way to write a function. <br>
+            Inside the arrow function is what happens when the event is triggered. <br>
+            Take a look at this function: <br>
+            </h1>
+            <h1 class="code">
+                document.addEventListener("keydown", (event) => {  <br>
+    if(event.key === "c"){  <br>
+        alert("Boo! Did I scare you? You pressed the c key"); <br>
+    } <br>
+}); <br>
+            </h1>
+            <h1 id="text">
+            That's right! It listens for if a key is pressed down, then the 'event' helps it check if the key is "c"! <br>
+            If it is, then it alerts you! <br> <br>
+            </h1>
+            <h1 class="section">Player Movement</h1>
+            <h1 id="text">
+            How can we use this to create player movement? <br>
+            With the help of "keyup" events too, we can make this box move around with W, A, S, and D smoothly! <br>
+            </h1>
+            <div class="box"></div>
+            <h1 id="text">
+                Lets take a look at the code for this little guy... Details will be written beside the code. <br>
+            </h1> <br>
+            <div class="code_One"><img src="Lesson_Code_1.jpg"></img></div>
+            <h1 class="section">Canvas</h1>
+            <h1 id="text">
+                Canvas provides a blank area on a web page where graphics can be drawn dynamically using JavaScript. <br>
+                To access it, you use 'canvas' tags. You can give it a class or id and bring it to JavaScript. <br>
+                But by doing that, to access the drawing features, you'll need to establish it's context. <br>
+                You can do this by naming a new variable and setting it to '(canvas variable name).getContext(2d)' <br>
+                Now you can use that new variable to DRAW inside of that rectangle. <br>
+                Here's a quick example of a little drawing app, just click the mouse around the box below.
+            </h1>
+            <canvas class="drawingCanvas" style="background: grey;" width="500" height="400"></canvas>
+            <h1 id="text">
+                Now, here's how that works... Again, Details will be written beside the code.
+            </h1>
+            <div class="code_Two"><img src="Lesson_Code_2.jpg"></div>
+            <h1 id="text">
+                The 'event' in the parameter is a special object passed to an event handler function when an event occurs. <br>
+                For this one, it mainly tracks the mouse's position and sets the x and y values to its variables. <br>
+                <br>
+                Another thing you can add for making games inside canvas is 'ctx.clearRect(0, 0, canvas.width, canvas.height)' at the VERY top of your draw function. <br>
+                What this does is wipes the canvas so it can create a new frame instead of leaving the previous frame on screen. <br>
+                Using that you can add a separate function that updates all values you have and calls the draw function(s) so they'll be drawn accordingly... Then, you can create cool games on your own! <br>
+                If you want exmaples, check out "Floodwater Escape"'s code, and even "Double Down", which may be a work in progress at the time. Double Down also needs controllers, so check it out, and maybe the messy code...
+            </h1>
+    </div>
+    <script src="Lessons_JS.js"></script>
+</body>
+</html>

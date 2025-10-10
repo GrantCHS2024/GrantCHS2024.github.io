@@ -100,9 +100,10 @@ html, body, .box {
 
 .personal {
   width: 100vh;
-  height: 90vh;
+  height: 120vh;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   font-family: Verdana, sans-serif;
 }
@@ -164,6 +165,10 @@ html, body, .box {
 .game:nth-child(7){
   margin-top: 450px;
   margin-left: 1000px;
+}
+.game:nth-child(8){
+  margin-top: 750px;
+  margin-left: -1000px;
 }
 .floodwaterGameplay{
   position: fixed;
