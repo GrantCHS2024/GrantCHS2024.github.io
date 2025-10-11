@@ -93,13 +93,12 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 2;
-  background: #c5c5c5;
+  background: #303030;
 }
 .menuLogo {
   position: absolute;
   height: 100%;
   z-index: 0;
-  filter: invert();
 }
 #one, #two, #three{
   position: absolute;

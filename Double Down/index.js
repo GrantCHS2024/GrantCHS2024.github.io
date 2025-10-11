@@ -58,6 +58,89 @@ function resizeCanvas() {    //AGAIN, SOMETHING I'M STUDYING, DID NOT MAKE THIS
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
+function playSound(sound) {
+  const sfx = sound.cloneNode(); // duplicate the <audio> in memory   Another thing I need to study, did not make this myself
+  sfx.play();
+}
+
+function adjustSFXVolume(){
+  redShoot.volume = sfxVolumeNum;
+  blueShoot.volume = sfxVolumeNum;
+  roundScore.volume = sfxVolumeNum;
+  menuSelect.volume = sfxVolumeNum;
+  roundEnd.volume = sfxVolumeNum;
+  controllerConnect.volume = sfxVolumeNum;
+  runningSFX.volume = sfxVolumeNum;
+  crowd.volume = sfxVolumeNum / 1.25;
+  wallPlace.volume = sfxVolumeNum;
+  wallDestroy.volume = sfxVolumeNum;
+  trapPlace.volume = sfxVolumeNum;
+  trapActivate.volume = sfxVolumeNum;
+}
+function adjustMusicVolume(){
+  menuMusic.volume = musicVolumeNum;
+}
+
+const redShoot = new Audio("SFX/akm-gunshot-368240.mp3");
+redShoot.preload = "auto";
+redShoot.volume = sfxVolumeNum;
+redShoot.load();
+const blueShoot = new Audio("SFX/ak74-sound-effect-351437.mp3");
+blueShoot.preload = "auto";
+blueShoot.volume = sfxVolumeNum;
+blueShoot.load();
+const roundScore = new Audio("SFX/round_score.mp3");
+roundScore.preload = "auto";
+roundScore.volume = sfxVolumeNum;
+roundScore.load();
+const roundEnd = new Audio("SFX/round_end.mp3");
+roundEnd.preload = "auto";
+roundEnd.volume = sfxVolumeNum;
+roundEnd.load();
+const menuMusic = new Audio("SFX/menu_music.mp3");
+menuMusic.preload = "auto";
+menuMusic.loop = true;
+menuMusic.volume = musicVolumeNum;
+menuMusic.load();
+const menuSelect = new Audio("SFX/menu_select.mp3");
+menuSelect.preload = "auto";
+menuSelect.volume = sfxVolumeNum;
+menuSelect.load();
+const controllerConnect = new Audio("SFX/controller_connect.mp3");
+controllerConnect.preload = "auto";
+controllerConnect.volume = sfxVolumeNum;
+controllerConnect.load();
+const runningSFX = new Audio("SFX/running.mp3");
+runningSFX.preload = "auto";
+runningSFX.volume = sfxVolumeNum;
+runningSFX.loop = true;
+runningSFX.load();
+const crowd = new Audio("SFX/game_crowd.mp3");
+crowd.preload = "auto";
+crowd.volume = sfxVolumeNum / 1.25;
+crowd.loop = true;
+crowd.load();
+const cheer = new Audio("SFX/crowd_cheer.mp3");
+cheer.preload = "auto";
+cheer.volume = sfxVolumeNum;
+cheer.load();
+const wallPlace = new Audio("SFX/wall-place.mp3");
+wallPlace.preload = "auto";
+wallPlace.volume = sfxVolumeNum;
+wallPlace.load();
+const wallDestroy = new Audio("SFX/wall-destroy.mp3");
+wallDestroy.preload = "auto";
+wallDestroy.volume = sfxVolumeNum;
+wallDestroy.load();
+const trapPlace = new Audio("SFX/trap-place.mp3");
+trapPlace.preload = "auto";
+trapPlace.volume = sfxVolumeNum;
+trapPlace.load();
+const trapActivate = new Audio("SFX/trap-activate.mp3");
+trapActivate.preload = "auto";
+trapActivate.volume = sfxVolumeNum;
+trapActivate.load();
+
 var frontText = $(".frontText");
       document.addEventListener("DOMContentLoaded", () => {
         frontText.css("opacity", 1);
@@ -86,6 +169,7 @@ var frontText = $(".frontText");
         }, 4000);
         setTimeout(() => { //REMOVE ALL TEXT AND IMAGES TO REPLACE WITH THE GAME NAME IMAGE
           gameLogo.style.opacity = 1;
+          menuMusic.play();
           setTimeout(() => {
             transitionScreen.classList.add("fade");
             gameLogo.style.opacity = 0;
@@ -100,10 +184,6 @@ var frontText = $(".frontText");
           }, 5000);
         }, 11000);
       }
-
-function controllerCheck(){
-    
-}
 
 var world = {
   gravity: 0.9,
@@ -150,6 +230,7 @@ var players = [
     reloadTime: 200,
     reload: 200,
     walls: 5,
+    wallHealth: 100,
     justReleased: 0,
     b6Flag: true,
     gunEquipped: true,
@@ -178,6 +259,7 @@ var players = [
     reloadTime: 200,
     reload: 200,
     walls: 5,
+    wallHealth: 100,
     justReleased: 0,
     b6Flag: true,
     gunEquipped: true,
@@ -210,14 +292,15 @@ var bullets = [];
 var traps = []
 
 var walls = [];
-//LEVELS
+
+// - - - - - - - - - - - - - - - - - - - - - - - LEVELS
 
 const lone = [
   {x: 200, y: 300, width: 100, height: 10, health: 100, breakable: false, moving: false},
   {x: 500, y: 300, width: 100, height: 10, health: 100, breakable: false, moving: false},
-  {x: 400, y: 300, width: 10, height: 110, health: 100, breakable: false, moving: true, direction: -1},
-  {x: 200, y: 300, width: 10, height: 110, health: 100, breakable: false, moving: true, direction: -1},
-  {x: 600, y: 300, width: 10, height: 110, health: 100, breakable: false, moving: true, direction: -1},
+  {x: 400, y: 300, width: 10, height: 110, health: 100, breakable: false, moving: true, direction: -1, axis: "x"},
+  {x: 200, y: 300, width: 10, height: 110, health: 100, breakable: false, moving: true, direction: -1, axis: "x"},
+  {x: 600, y: 300, width: 10, height: 110, health: 100, breakable: false, moving: true, direction: -1, axis: "x"},
   {x: 150, y: 400, width: 100, height: 10, health: 100, breakable: false, moving: false},
   {x: 150, y: 400, width: 10, height: 100, health: 100, breakable: false, moving: false},
   {x: 550, y: 400, width: 100, height: 10, health: 100, breakable: false, moving: false},
@@ -244,18 +327,18 @@ const ltwo = [
   {x: 400, y: 400, width: 100, height: 10, health: 100, breakable: false, moving: false},
 ];
 const lthree = [
-  {x: 350, y: 400, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: -1},
-  {x: 150, y: 400, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: -1},
-  {x: 550, y: 400, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: -1},
-  {x: 300, y: 300, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: 1},
-  {x: 100, y: 300, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: 1},
-  {x: 500, y: 300, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: 1},
-  {x: 400, y: 200, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: -1},
-  {x: 200, y: 200, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: -1},
-  {x: 600, y: 200, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: -1},
-  {x: 350, y: 100, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: 1},
-  {x: 150, y: 100, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: 1},
-  {x: 550, y: 100, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: 1},
+  {x: 350, y: 400, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: -1, axis: "x"},
+  {x: 150, y: 400, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: -1, axis: "x"},
+  {x: 550, y: 400, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: -1, axis: "x"},
+  {x: 300, y: 300, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: 1, axis: "x"},
+  {x: 100, y: 300, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: 1, axis: "x"},
+  {x: 500, y: 300, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: 1, axis: "x"},
+  {x: 400, y: 200, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: -1, axis: "x"},
+  {x: 200, y: 200, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: -1, axis: "x"},
+  {x: 600, y: 200, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: -1, axis: "x"},
+  {x: 350, y: 100, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: 1, axis: "x"},
+  {x: 150, y: 100, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: 1, axis: "x"},
+  {x: 550, y: 100, width: 100, height: 10, health: 100, breakable: false, moving: true, direction: 1, axis: "x"},
   {x: 400, y: 400, width: 20, height: 100, health: 100, breakable: false, moving: false, direction: undefined},
 ]
 const lfour = [
@@ -357,7 +440,7 @@ function loadLevel(){
   }
 }
 
-function gameStart(){  // - - - - - - - - - - GAME START - - - - - - - - - - - - 
+function gameStart(){                          // - - - - - - - - - - GAME START - - - - - - - - - - - - 
   transitionScreen.textContent = "";
   transitionScreen.style.zIndex = 6;
   transitionScreen.classList.remove("slideUp");
@@ -365,6 +448,8 @@ function gameStart(){  // - - - - - - - - - - GAME START - - - - - - - - - - - -
   transitionScreen.classList.remove("slideOut");
   transitionScreen.classList.add("slideUp");
   setTimeout(() => {
+    menuMusic.pause();
+    crowd.play();
     document.querySelector(".menu").style.zIndex = -1;
     document.querySelector(".menu").style.opacity = 0;
     gameFlag = true;
@@ -443,11 +528,14 @@ function applyDeadzone(value, threshold = 0.2) {
       return Math.abs(value) < threshold ? 0 : value;
     }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - UPDATE FUNCTION - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 function update(){
   const gamepads = navigator.getGamepads();
 
   if(inControllerCheck){ 
       if(gamepads[0]){
+        controllerConnect.play();
       $(".controllerCheckONE h1").text("Connected!");
       $(".controllerCheckONE").css("opacity", 1);
       $(".controllerCheckONE").addClass("pulse");
@@ -461,6 +549,7 @@ function update(){
       }
       }
       if(gamepads[1]){
+        controllerConnect.play();
         inControllerCheck = false;
       $(".controllerCheckTWO h1").text("Connected!");
       $(".controllerCheckTWO").css("opacity", 1);
@@ -508,6 +597,7 @@ function update(){
         }
     if(gamepads[0].buttons[0].pressed && inMenu && aFlag){
       document.querySelector("#" + id).click();
+      menuSelect.play();
       aFlag = false;
     }
         else {
@@ -539,21 +629,25 @@ function update(){
           musicVolumeNum -= 0.01;
           musicVolumeNum = Math.max(musicVolumeNum, 0);
           musicVolume.value = musicVolumeNum;
+          adjustMusicVolume();
         }
         else if(inSettings && id === "four" && gamepads[0].buttons[15].pressed){
           musicVolumeNum += 0.01;
           musicVolumeNum = Math.min(musicVolumeNum, 1);
           musicVolume.value = musicVolumeNum;
+          adjustMusicVolume();
         }
         if(inSettings && id === "five" && gamepads[0].buttons[14].pressed){
           sfxVolumeNum -= 0.01;
           sfxVolumeNum = Math.max(sfxVolumeNum, 0);
           sfxVolume.value = sfxVolumeNum;
+          adjustSFXVolume();
         }
         else if(inSettings && id === "five" && gamepads[0].buttons[15].pressed){
           sfxVolumeNum += 0.01;
           sfxVolumeNum = Math.min(sfxVolumeNum, 1);
           sfxVolume.value = sfxVolumeNum;
+          adjustSFXVolume();
         }
         if(inSettings && id === "six" && gamepads[0].buttons[14].pressed && rmT){
           rmT = false;
@@ -644,9 +738,14 @@ function update(){
         
         if(moveX > 0.4 && gameFlag){
           player.direction = "right";
+          runningSFX.play();
         }
         else if(moveX < -0.4 && gameFlag) {
           player.direction = "left";
+          runningSFX.play();
+        }
+        else {
+          runningSFX.pause();
         }
         
         if(gp.buttons[0].pressed && player.grounded && gameFlag){
@@ -668,13 +767,14 @@ function update(){
         if(gp.buttons[6].pressed && player.b6Flag && gameFlag){
           player.b6Flag = false;
           if(player.walls > 0){
+            wallPlace.play();
             player.walls--
             walls.push({
               x: (player.direction === "right") ? (player.x + player.width) + 25 : player.x - 25,
               y: player.y - 50,
               width: 15,
-              height: 100,
-              health: 100,
+              height: 90,
+              health: player.wallHealth,
               breakable: true,
               moving: false,
               direction: undefined,
@@ -695,6 +795,12 @@ function update(){
             speed: 10,
           }
           bullets.push(bullet);
+          if(player.index === 1 && player.ammo % 3 === 0){
+            playSound(redShoot);
+          }
+          else if(player.index === 2 && player.ammo % 3 === 0) {
+            playSound(blueShoot);
+          }
           }
         }
             if(player.ammo <= 0){
@@ -709,6 +815,7 @@ function update(){
 
         if(gp.buttons[7].pressed && gameFlag && player.trapEquipped && player.tFlag && player.traps > 0){
           player.tFlag = false;
+          trapPlace.play();
           player.traps--
           var trap = {
             index: player.index,
@@ -783,6 +890,7 @@ function update(){
         });
   walls = walls.filter(wall => {
     if(wall.health <= 0){
+      wallDestroy.play();
       return false;
     }
     else return true;
@@ -816,6 +924,7 @@ function update(){
              player.y + player.height > trap.y &&
              player.y < trap.y + trap.size && trap.index !== player.index
           ){
+            trapActivate.play();
             player.health -= 50;
             player.health = Math.max(player.health, 0);
             return false;
@@ -896,7 +1005,7 @@ setTimeout(() => {
   setTimeout(() => {
     blueText.textContent = "VICTORY";
     blueSide.style.width = "100vw";
-    blueSide.style.left = "0%"
+    blueSide.style.left = "0px";
   }, 2000);
 }, 2000);
 }
@@ -918,7 +1027,7 @@ blueSide.style.left = "50%";
 */
 
 function randomPerk(){
-  var perks = ["Double Jump Strength!", "Double Ammo!", "Double Speed!"];
+  var perks = ["Double Jump Strength!", "Double Ammo!", "Double Speed!", "Low Gravity!", "Where'd I put my glasses?", "Stronger Walls!"];
   let num = Math.floor(Math.random() * perks.length);
   if(num === 0){
     players.forEach(player => {player.jumpStrength += 5;});
@@ -928,6 +1037,15 @@ function randomPerk(){
   }
   else if(num === 2){
     players.forEach(player => {player.speed += 4;});
+  }
+  else if(num === 3){
+    world.gravity = 0.5;
+  }
+  else if(num === 4){
+    $("#canvas").css("filter", "blur(20px)");
+  }
+  else if(num === 5){
+    players.forEach(player => {player.wallHealth = 300;});
   }
   return perks[num];
 }
@@ -946,7 +1064,9 @@ setInterval(() => {
                   }
                 }
               }, 100);
-function playerDeath(){
+function playerDeath(){  // - - - - - - - - - - - - - - - - - - - - - - - PLAYER DEATH FUNCTION
+  roundEnd.play();
+  cheer.play();
   transitionScreen.classList.remove("slideUp");
   transitionScreen.classList.remove("slideIn");
   transitionScreen.classList.remove("slideOut");
@@ -954,6 +1074,7 @@ function playerDeath(){
   transitionScreen.style.zIndex = 6;
   textFlag = false;
   setTimeout(() => {
+    roundScore.play();
     players.some(player => {
         //ROUND WINNERS AND MATCH ENDS AFTER SET AMOUNT OF WINS
         if(player.health > 1){
@@ -1004,6 +1125,8 @@ function playerDeath(){
             transitionScreen.classList.add("slideUp");
           timer.textContent = "";
           setTimeout(() => {
+            crowd.pause();
+            menuMusic.play();
             gameFlag = false;
           inMenu = true;
           walls = [];
@@ -1020,6 +1143,8 @@ function playerDeath(){
       });
   
     setTimeout(() => {
+      world.gravity = 0.9;
+      $("#canvas").css("filter", "blur(0px)");
       players.forEach(player => {  //COMPLETE RESET
         player.width = 20;
     player.height = 40;
@@ -1036,6 +1161,7 @@ function playerDeath(){
     player.reloadTime = 200;
     player.reload = 200;
     player.walls = 5;
+    player.wallHealth = 100;
     player.alive = true;      
       });
       redSide.classList.remove("redSlideIn");
@@ -1048,9 +1174,11 @@ blueText.textContent = 0;//SHOULD BE PLAYERTWO SCORE
 blueSide.style.opacity = 0;
 blueSide.style.width = "50vw";
 blueSide.style.left = "50%";
-    }, 8000);
+    }, 7900);
   }, 2000);
 }
+
+
 
 function draw(){
   ctx.clearRect(0, 0, canvas.width, canvas.height);
