@@ -905,6 +905,22 @@ function update(){
             player.health -= 4;
             player.health = Math.max(player.health, 0);
             document.querySelector("#canvas").classList.add("shake");
+            if(player.index === 1){
+              gamepads[0].vibrationActuator.playEffect("dual-rumble", {
+      startDelay: 0,
+      duration: 200,
+      weakMagnitude: 0.5,
+      strongMagnitude: 0.5,
+    });
+            }
+            else {
+              gamepads[1].vibrationActuator.playEffect("dual-rumble", {
+      startDelay: 0,
+      duration: 200,
+      weakMagnitude: 0.5,
+      strongMagnitude: 0.5,
+    });
+            }
             return false;
              }
              else if(b.x < 0 || b.x > canvas.width){
