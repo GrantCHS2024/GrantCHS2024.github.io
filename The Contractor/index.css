@@ -1,0 +1,189 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    overflow: hidden;
+    user-select: none;
+}
+.page {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    width: 50vw;
+    height: 50vh;
+    border-radius: 20px;
+    padding: 30px;
+    font-family: 'Courier New', Courier, monospace; /*Will later be new imported/downloaded fonts*/
+    font-size: 1.5rem;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.transitionScreen{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    top: 100%;
+}
+.info {
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    color: white;
+    font-family: 'Courier New', Courier, monospace; /*Will later be new imported/downloaded fonts*/
+    top: 45%;
+    left: 47%;
+}
+.flashlight{
+    position: absolute;
+    width: 2500px;
+    height: 2500px;
+    /*left: -13.5%;
+    top: -64%;*/
+    pointer-events: none;
+    opacity: 0;
+}
+.canvas{  /*THESE WIDTH AND HEIGHT VALUES WILL BE FOR INSIDE THE GAME... IN THE MENU AND ALL ELSE, SEt IT TO A SMALLER VALUE BY px!!*/
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+#canvas {
+    background: #1b1a27;
+}
+.inventory{
+    position: absolute;
+    top: 87vh;
+    left: 5vw;
+    display: flex;
+    gap: 10px;
+}
+.slot{
+    width: 100px;
+    height: 100px;
+    opacity: 0.8;
+    border: 2px solid black;
+    background: grey;
+    color: black;
+    font-size: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+.slot h1 {
+    z-index: 2;
+    position: absolute;
+    top: -30px;
+}
+.slot img{
+    width: 100%;
+    height: 100%;
+}
+.hearts{
+    position: absolute;
+    top: 4vh;
+    left: 2vw;
+    display: flex;
+    gap: 10px;
+}
+.heart{
+    width: 50px;
+    height: 50px;
+}
+.heart img{
+    width: 100%;
+    height: 100%;
+}
+.stamina{
+    position: absolute;
+    top: 13vh;
+    left: 2vw;
+    height: 10px;
+    opacity: 0.9;
+    background: lightblue;
+}
+.collected {
+    animation: collected 3s linear;
+    animation-fill-mode: forwards;
+}
+@keyframes collected {
+    0% {transform: scale(20%);}
+    30% {transform: scale(150%);}
+    50% {opacity: 0.5;}
+    60%{opacity: 1;}
+    70%{opacity: 0.5;}
+    80%{opacity: 1;}
+    90%{opacity: 0.5;}
+    100% {transform: scale(150%); opacity: 1;}
+}
+.fade-out-in {
+    animation: fadeOutIn 3s ease-in-out;
+    animation-fill-mode: forwards;
+}
+@keyframes fadeOutIn {
+    0%{opacity: 1}
+    30%{opacity: 0.4}
+    100%{opacity: 0.4}
+}
+.collectedItem{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 50%;
+    z-index: 10;
+    pointer-events: none;
+}
+.collectedItem img {
+    display: none;
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+}
+.missions{
+    position: absolute;
+    padding: 20px;
+    top: 15vh;
+    left: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+    color: white;
+    z-index: 5;
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    background-color: rgba(0,0,0, 0.4);
+}
+.slideUp{
+    animation: slideup 3s ease-in-out;
+    animation-fill-mode: forwards;
+}
+@keyframes slideup {
+    0% {
+        top: 100%;
+    }
+    50% {
+        top: 0%;
+    }
+    100% {
+        top: -100%;
+    }
+}
+.flickerOnce {
+    animation: flickerOnce 3s linear;
+    animation-fill-mode: forwards;
+}
+@keyframes flickerOnce {
+    /*0% {opacity: 1;}*/
+    0% {opacity: 0.2;}
+    100% {opacity: 1;}
+}

@@ -170,6 +170,9 @@ html, body, .box {
   margin-top: 750px;
   margin-left: -1000px;
 }
+.game:nth-child(9){
+  margin-top: 750px;
+}
 .floodwaterGameplay{
   position: fixed;
   top: 0;

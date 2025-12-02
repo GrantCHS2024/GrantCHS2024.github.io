@@ -11,6 +11,16 @@
     border: 2px darkgray double;
     background: lightgray;
     font-size: 30px;
+    transition: all, 0.5s;
+    box-shadow: 0px 0px 5px grey;
+}
+#goButton:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 5px grey;
+    cursor: pointer;
+}
+#goButton:active {
+    background: grey;
 }
 #sortContainer {
     display: table;
