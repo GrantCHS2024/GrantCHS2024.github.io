@@ -6,10 +6,10 @@
 // THE CONSTANTS BELOW MAY BE ALTERED FOR EXPERIMENTATION PURPOSES
 
 // set the delay between each sort step
-const SLEEP_AMOUNT = 0;
+const SLEEP_AMOUNT = 10;
 
 // set the max number of squares
-const MAX_SQUARES = 100;
+let MAX_SQUARES = 500;
 
 // set constants for pseudo-random number generation
 const SEED = 2;
@@ -23,7 +23,7 @@ const INCREASE = 7181930;
 // values related to drawing the sorting grid
 const IMAGE_SIZE = 256;                         // pixels
 const MAX_SQUARE_WIDTH = 25;                    // percentage of width
-const MAX_SQUARE_HEIGHT = 1/MAX_SQUARES*100;    // percentage of height
+let MAX_SQUARE_HEIGHT = 1/MAX_SQUARES*100;    // percentage of height
 
 // define the arrays that will store all created HTML elements
 const bubbleList = [];
@@ -54,8 +54,9 @@ var bubbleSort, quickSort;
 ///////////////// Run the setup /////////////////
 /////////////////////////////////////////////////
 
-$(document).ready(function(){
+function startSort(){
     // resize the containers to fit everything
+    MAX_SQUARE_HEIGHT = 1/MAX_SQUARES*100;
     let squareHeight = $(bubbleId).width() * (Math.min((1 / MAX_SQUARES * 100), MAX_SQUARE_WIDTH)/100);
     
     $(bubbleId).height(squareHeight*MAX_SQUARES);
@@ -64,7 +65,7 @@ $(document).ready(function(){
     // create the two lists and all elements
     generateList(bubbleList, bubbleId, bubbleClass, bubbleElementBaseId);
     generateList(quickList, quickId, quickClass, quickElementBaseId);
-});
+};
 
 
 /////////////////////////////////////////////////

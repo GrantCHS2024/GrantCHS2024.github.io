@@ -1,22 +1,54 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #333;
+    user-select: none;
+}
+.popup{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40vw;
+    height: 40vh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    background: #888;
+    font-family: Verdana;
+    box-shadow: 5px 5px 5px black;
+    z-index: 5;
+    transition: all 0.5s;
+}
+.popup input {
+    position: relative;
+    
+    width: 50px;
+    background: #888;
+}
 #fullContainer {
     width:100%;
+    filter: blur(15px);
+    
 }
 #buttonContainer {
     margin:auto;
     width: 40%;
 }
 #goButton {
-    margin: auto;
+    margin: 10px auto;
     width: 100%;
     border: 2px darkgray double;
     background: lightgray;
     font-size: 30px;
     transition: all, 0.5s;
-    box-shadow: 0px 0px 5px grey;
+    box-shadow: 0px 0px 5px black;
 }
 #goButton:hover {
     transform: translateY(-5px);
-    box-shadow: 0px 5px 5px grey;
+    box-shadow: 0px 5px 5px black;
     cursor: pointer;
 }
 #goButton:active {
@@ -62,4 +94,9 @@
 .quickElement {
     background: url('img/quick.png');
     /*border: 2px firebrick ridge;*/
+}
+#bubbleCounter, #quickCounter{
+    font-family: 'Courier New', Courier, monospace;
+    color: #999;
+
 }

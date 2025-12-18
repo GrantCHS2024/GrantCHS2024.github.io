@@ -6,19 +6,56 @@
   <title>The Contractor</title>
   <link rel="stylesheet" href="index.css">
   <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Burned&family=Tiny5&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="intro"><video id="introVideo" src="Videos/The Contractor Intro.mp4" autoplay></video></div>
+    <img class="explosion" src="Sprites/Knight/Explosion.png">
     <img class="flashlight" src="Sprites/flashlight.png">
-    <div class="transitionScreen"></div>
-    <div class="collectedItem"><img src="" alt=""></div>
-    <div class="missions"></div>
-    <div class="info"></div>
-    <div class="page"></div>
-    <div class="canvas">
+    <div class="blizzard">
+      <img src="Sprites/World/Blizzard.gif">
+    </div>
+    <div class="rain">
+      <img src="Images/rain-10807.gif">
+    </div>
+    <div class="light"></div>
+
+    <div class="home">
+      <div class="title">
+        <h1 style="color: black">The</h1>
+        <h1 style="color: red">Contractor</h1></div>
+      <div id="button" class="startBtn"><img src="Icons/menu/start.png"></div>
+      <div id="button" class="exitBtn"><img src="Icons/menu/exit.png"></div>
+      <div class="tab">
+        <h1>Are you sure?</h1>
+        <button id="yes">Yes</button><button id="no">No</button>
+      </div>
+    </div>
+    <div class="menu">
+      <div class="shop"><img src="Icons/shop.png"><h1>Shop</h1></div>
+      <div class="list"><img src="Icons/list.png"><h1>List</h1></div>
+      <div class="profile"><img src="Icons/profile.png"><h1>Profile</h1></div>
+
+      <div class="tab">
+        <div class="nav-bar"><h1></h1><div class="exit-button">X</div></div>
+
+      </div>
+    </div>
+    <div class="HUD">
+      <div class="info"></div>
+      <div class="page"></div>
       <div class="inventory"></div>
       <div class="hearts"></div>
       <div class="stamina"></div>
-      
+      <div class="magic"></div>
+      <div class="missions"></div>
+    </div>
+    <div class="transitionScreen"><h1></h1></div>
+    <div class="collectedItem"><img src="" alt=""></div>
+    <div class="canvas">   
       <canvas id="canvas"></canvas>
     </div>
 

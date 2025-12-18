@@ -2,13 +2,16 @@
 function update(){
   let newX = player.x;
   let newY = player.y;
+  
+  let xFree;
+  let yFree;
 
-  if(moving.w && player.alive && !player.attacking && !player.defending){newY -= player.speed; playerWalk.maxDelay = player.speed * 2;}
-  if(moving.a && player.alive && !player.attacking && !player.defending){newX -= player.speed; player.direction = -1; playerWalk.maxDelay = player.speed * 2;}
-  if(moving.s && player.alive && !player.attacking && !player.defending){newY += player.speed; playerWalk.maxDelay = player.speed * 2;}
-  if(moving.d && player.alive && !player.attacking && !player.defending){newX += player.speed; player.direction = 1; playerWalk.maxDelay = player.speed * 2;}
+  if(moving.w && player.alive && !player.magicAttacking && !player.attacking && !player.defending){newY -= player.speed; playerWalk.maxDelay = player.speed * 2;}
+  if(moving.a && player.alive && !player.magicAttacking && !player.attacking && !player.defending){newX -= player.speed; player.direction = -1; playerWalk.maxDelay = player.speed * 2;}
+  if(moving.s && player.alive && !player.magicAttacking && !player.attacking && !player.defending){newY += player.speed; playerWalk.maxDelay = player.speed * 2;}
+  if(moving.d && player.alive && !player.magicAttacking && !player.attacking && !player.defending){newX += player.speed; player.direction = 1; playerWalk.maxDelay = player.speed * 2;}
 
-  if(!moving.w && !moving.a && !moving.s && !moving.d && player.alive && moving.space && player.stamina > 0){
+  if(!player.frozen && !moving.w && !moving.a && !moving.s && !moving.d && player.alive && moving.space && player.stamina > 0){
     player.defending = true;
     player.relaxed = false;
     player.stamina -= 0.35;
@@ -22,11 +25,11 @@ function update(){
 
   if(outside){
 
-  const xFree = !checkCollision(newX, player.y);
-const yFree = !checkCollision(player.x, newY);
+  xFree = !checkCollision(newX, player.y);
+  yFree = !checkCollision(player.x, newY);
 
-if (xFree) player.x = newX;
-if (yFree) player.y = newY;
+  if (xFree && newX > 0 && newX + player.width < GAME_WIDTH) player.x = newX;
+  if (yFree && newY > 0 && newY + player.height < GAME_HEIGHT) player.y = newY;
 
 
       if(checkEntrance(newX, newY)){
@@ -34,11 +37,18 @@ if (yFree) player.y = newY;
     if(moving.enter){
       $(".transitionScreen").addClass("slideUp");
     setTimeout(() => {
+      clearAmbience();
+      SFX.enter.currentTime = 0;
+      SFX.enter.play();
+      ambience.dungeon.play();
       player.x = 100;
     player.y = 75;
     outside = false;
     inside = true;
+    ground = grounds.dungeon;
     $(".flashlight").css("opacity", 1);
+    $(".blizzard").css("opacity", 0);
+    $(".rain").css("opacity", 0);
     determineMission();
     }, 1500);
     setTimeout(() => {
@@ -48,11 +58,20 @@ if (yFree) player.y = newY;
   }
   else if(checkBeacon(newX, newY)){
     $(".info").text("Press Enter to Leave");
-    if(moving.enter){
+    if(moving.enter && !player.left){
+      player.left = true;
       setTimeout(() => {
-        $(".transitionScreen").addClass("slideUp");
+        $(".transitionScreen").css("top", "0%").addClass("fade-in");
+        allSoundStop();
       setTimeout(() => {
+        days++
+        player.left = false;
+        outside = false;
+        inside = false;
+        inMenu = true;
+        inGame = false;
         walls = [];
+        loot = [];
         enemies = [
           {
     type: 'PLACEHOLDER',
@@ -64,14 +83,36 @@ if (yFree) player.y = newY;
         code = "";
         contractItemCollected = false;
         contractItem = "";
+        $('.menu').css("z-index", 5);
+        $(".canvas").css("z-index", -1);
+        $(".HUD").css("z-index", -1);
+        $(".blizzard").css("opacity", 0);
+        $(".rain").css("opacity", 0);
         for(var i = 0; i < sites.length - 1; i++){
           sites[i].type = "";
         }
-      }, 1500);
-      setTimeout(() => {
-        $(".transitionScreen").removeClass("slideUp");
       }, 3000);
-      }, 2000);
+      setTimeout(() => {
+        $(".transitionScreen").removeClass("fade-in");
+        $(".transitionScreen").addClass("fade-out");
+        for(var i = 0; i < inventory.length; i++){
+          player.coins += inventory[i].cost;
+        }
+        inventory = [];
+        rating += multiplier;
+        rating = Math.min(rating, 10);
+        stars = Math.floor(rating / 2);
+        //BONUS COINS
+        player.coins += (stars * 5);
+        if(biome === "Underworld"){
+          player.coins += (stars * 5);
+        }
+        setTimeout(() => {
+          $(".transitionScreen").removeClass("fade-out");
+          $(".transitionScreen").css("top", "100%");
+        }, 3000);
+      }, 3000);
+      }, 500);
     }
   }
     else{
@@ -79,9 +120,11 @@ if (yFree) player.y = newY;
   }
   }
   else if(inside){
+    xFree = !checkCollisionInside(newX, player.y);
+    yFree = !checkCollisionInside(player.x, newY);
 
-    if(!checkCollisionInside(newX, player.y) && newX > 0 && newX < (ground.naturalWidth * 2.5) - 100)player.x = newX;
-    if(!checkCollisionInside(player.x, newY) && newY > 50 && newY < (ground.naturalHeight * 2.5) - 600)player.y = newY;
+    if(xFree && newX > 0 && newX < (ground.naturalWidth * 2.5) - 100)player.x = newX;
+    if(yFree && newY > 50 && newY < (ground.naturalHeight * 2.5) - 600)player.y = newY;
     
         if(checkExit()){
     $(".info").text("Press Enter to Exit");
@@ -94,9 +137,37 @@ if (yFree) player.y = newY;
           player.y = (wall.y + wall.height) + 2;
         }
       })
+      clearAmbience();
+      SFX.enter.currentTime = 0;
+      SFX.enter.play();
     outside = true;
     inside = false;
+  switch(biome){
+    case "Forest":
+    ground = grounds.grass;
+    ambience.forest.play();
+    break;
+    case "Winter":
+    ground = grounds.winter;
+    ambience.winter.play();
+    break;
+    case "Underworld":
+    ground = grounds.underworld;
+    ambience.underworld.play();
+    break;
+    case "Thunderstorm":
+    ground = grounds.grass;
+    ambience.rain.play();
+    break;
+    case "Desert":
+    ground = grounds.desert;
+    ambience.desert.play();
+    break;
+    default: ground = grounds.grass;
+  }
     $(".flashlight").css("opacity", 0);
+    $(".blizzard").css("opacity", 0);
+    $(".rain").css("opacity", 0);
     }, 1500);
     setTimeout(() => {
       $(".transitionScreen").removeClass("slideUp");
@@ -121,15 +192,22 @@ if (yFree) player.y = newY;
   }
   $(".stamina").css("width", `${player.stamina * 5}px`);
 
+  if(player.magic <= player.maxMagic){
+    player.magic += 0.1;
+  }
+  $(".magic").css("width", `${player.magic * 2.5}px`);
+
   //Enemy Moving
   //Slime
   enemies.forEach(enemy => {
-      if(player.x > enemy.x && enemy.type === "Slime" && outside)enemy.x += enemy.speed;
-      if(player.x < enemy.x && enemy.type === "Slime" && outside)enemy.x -= enemy.speed;
-      if(player.y > enemy.y && enemy.type === "Slime" && outside)enemy.y += enemy.speed;
-      if(player.y < enemy.y && enemy.type === "Slime" && outside)enemy.y -= enemy.speed;
+      
 
-      if(enemy.type === "Slime"){
+      if(enemy.type === "Slime" || enemy.type === "blackSlime" && outside){
+      if(player.x > enemy.x)enemy.x += enemy.speed;
+      if(player.x < enemy.x)enemy.x -= enemy.speed;
+      if(player.y > enemy.y)enemy.y += enemy.speed;
+      if(player.y < enemy.y)enemy.y -= enemy.speed;
+
         if (Math.abs(enemy.x - player.x) > rDWidth * 1.5 ||
     Math.abs(enemy.y - player.y) > rDHeight * 1.5) return;
       if(player.x + player.width > enemy.x &&
@@ -140,6 +218,8 @@ if (yFree) player.y = newY;
         player.health -= enemy.damage;
         player.health = Math.max(player.health, 0);
         drawHearts();
+        SFX.hurt.currentTime = 0;
+        SFX.hurt.play();
         enemy.speed *= -10;
         setTimeout(() => {
           enemy.speed *= -0.1;
@@ -149,6 +229,53 @@ if (yFree) player.y = newY;
         player.x < enemy.x + enemy.width &&
         player.y + player.height > enemy.y &&
         player.y < enemy.y + enemy.height && player.defending){
+        SFX.defend.currentTime = 0;
+        SFX.defend.play();
+        enemy.speed *= -10;
+        setTimeout(() => {
+          enemy.speed *= -0.15;
+        }, 2000);
+       }
+      }
+      if(enemy.type === "WinterSlime"){
+        if(player.x > enemy.x && outside)enemy.x += enemy.speed;
+        if(player.x < enemy.x && outside)enemy.x -= enemy.speed;
+        if(player.y > enemy.y && outside)enemy.y += enemy.speed;
+        if(player.y < enemy.y && outside)enemy.y -= enemy.speed;
+
+        if (Math.abs(enemy.x - player.x) > rDWidth * 1.5 ||
+    Math.abs(enemy.y - player.y) > rDHeight * 1.5) return;
+      if(player.x + player.width > enemy.x &&
+        player.x < enemy.x + enemy.width &&
+        player.y + player.height > enemy.y &&
+        player.y < enemy.y + enemy.height && !player.defending && outside && !player.frozen
+      ){
+        player.frozen = true;
+        moving.w = false;
+        moving.a = false;
+        moving.s = false;
+        moving.d = false;
+        playerWalk.animation = playerSprites.frozen;
+        playerWalk.frame = 0;
+        monsters.winterSlime.currentTime = 0; 
+        monsters.winterSlime.play();
+        setTimeout(() => {
+          player.frozen = false;
+          playerWalk.animation = playerSprites.idle;
+          playerWalk.frame = 0;
+        }, player.frozenTime * 1000);
+        enemy.speed *= -10;
+        enemy.x += 10;
+        setTimeout(() => {
+          enemy.speed *= -0.1;
+        }, 2000);
+      }
+      else if(player.x + player.width > enemy.x &&
+        player.x < enemy.x + enemy.width &&
+        player.y + player.height > enemy.y &&
+        player.y < enemy.y + enemy.height && player.defending){
+          SFX.defend.currentTime = 0;
+        SFX.defend.play();
         enemy.speed *= -10;
         setTimeout(() => {
           enemy.speed *= -0.15;
@@ -158,23 +285,36 @@ if (yFree) player.y = newY;
 
 
       //Child
-      if(player.x - ((window.innerWidth / 2) + 150) > enemy.x && enemy.type === "Child" && enemy.stalking)enemy.x += enemy.speed;
-      if(player.x + ((window.innerWidth / 2)) < enemy.x && enemy.type === "Child" && enemy.stalking)enemy.x -= enemy.speed;
-      if(player.y - ((window.innerHeight / 2)) > enemy.y && enemy.type === "Child" && enemy.stalking)enemy.y += enemy.speed;
-      if(player.y + ((window.innerHeight / 2) + 200) < enemy.y && enemy.type === "Child" && enemy.stalking)enemy.y -= enemy.speed;
+      if(player.x - ((window.innerWidth / 2) + 300) > enemy.x && enemy.type === "Child" && enemy.stalking)enemy.x += enemy.speed;
+      if(player.x + ((window.innerWidth / 2) + 300) < enemy.x && enemy.type === "Child" && enemy.stalking)enemy.x -= enemy.speed;
+      if(player.y - ((window.innerHeight / 2) + 300) > enemy.y && enemy.type === "Child" && enemy.stalking)enemy.y += enemy.speed;
+      if(player.y + ((window.innerHeight / 2) + 300) < enemy.y && enemy.type === "Child" && enemy.stalking)enemy.y -= enemy.speed;
 
       if(outside && enemy.type === "Child"){
         if (Math.abs(enemy.x - player.x) > rDWidth * 1.5 ||
     Math.abs(enemy.y - player.y) > rDHeight * 1.5) return;
 
-        if(player.x + player.width + 200 > enemy.x &&
-        player.x - 200 < enemy.x + enemy.width &&
-        player.y + player.height + 200 > enemy.y &&
-        player.y - 200 < enemy.y + enemy.height
+        if(player.x + player.width + ((window.innerWidth / 2) + 300) > enemy.x &&
+        player.x - ((window.innerWidth / 2) + 300) < enemy.x + enemy.width &&
+        player.y + player.height + ((window.innerWidth / 2) + 300) > enemy.y &&
+        player.y - ((window.innerWidth / 2) + 300) < enemy.y + enemy.height
+      ){
+        monsters.childGiggle.currentTime = 0;
+        monsters.childGiggle.play();
+      }
+
+        if(player.x + player.width + 250 > enemy.x &&
+        player.x - 250 < enemy.x + enemy.width &&
+        player.y + player.height + 250 > enemy.y &&
+        player.y - 250 < enemy.y + enemy.height
       ){
         player.health -= enemy.damage;
         player.health = Math.max(player.health, 0);
         drawHearts();
+        SFX.hurt.currentTime = 0;
+        SFX.hurt.play();
+        monsters.childYell.currentTime = 0;
+        monsters.childYell.play();
         enemy.x = Math.floor(Math.random() * (GAME_WIDTH - 1000) + 1000);
         enemy.y = Math.floor(Math.random() * (GAME_HEIGHT - 1000) + 1000);
         $("body").addClass("flickerOnce");
@@ -197,8 +337,10 @@ if (yFree) player.y = newY;
           else if(player.x < enemy.x)enemy.x -= enemy.speed;
           if(player.y > enemy.y)enemy.y += enemy.speed;
           else if(player.y < enemy.y)enemy.y -= enemy.speed;
+          monsters.bees.play();
         }
         else {
+          monsters.bees.pause();
           if(enemy.Hx > enemy.x)enemy.x += enemy.speed;
           else if(enemy.Hx < enemy.x)enemy.x -= enemy.speed;
           if(enemy.Hy > enemy.y)enemy.y += enemy.speed;
@@ -213,6 +355,8 @@ if (yFree) player.y = newY;
           if(enemy.tick <= 0){
             player.health--
             drawHearts();
+            SFX.hurt.currentTime = 0;
+            SFX.hurt.play();
             enemy.tick = enemy.maxTick;
           }
         }
@@ -223,16 +367,19 @@ if (yFree) player.y = newY;
         if (Math.abs(enemy.x - player.x) > rDWidth * 1.5 ||
     Math.abs(enemy.y - player.y) > rDHeight * 1.5) return;
 
-        if((player.x + player.width) + 200 > enemy.x &&
+        if((player.x + player.width) + (window.innerWidth / 3) > enemy.x &&
           player.x < (enemy.x + enemy.width) + (window.innerWidth / 3) &&
-          (player.y + player.height) + (window.innerWidth / 3) > enemy.y &&
-          player.y < (enemy.y + enemy.height) + (window.innerHeight / 3.5)
+          (player.y + player.height) + (window.innerHeight / 3) > enemy.y &&
+          player.y < (enemy.y + enemy.height) + (window.innerHeight / 3)
         ){
           if(enemy.awake){
             if(player.x < enemy.x){enemy.direction = -1;}
             if(player.x > enemy.x){enemy.direction = 1;}
 
             if(enemy.frame === enemy.totalFrames - 2){
+              monsters.skeleton.currentTime = 0;
+              monsters.skeleton.play();
+              var reloadTime = (enemy.afraid) ? 7000 : 9000;
               var arrow = {
                 x: enemy.x,
                 y: enemy.y,
@@ -249,7 +396,11 @@ if (yFree) player.y = newY;
 
               setTimeout(() => {
                 enemy.frame = 0;
-              }, 7000);
+              }, reloadTime);
+              if(enemy.frame >= enemy.totalFrames && enemy.afraid){
+                enemy.frame = 0;
+                enemy.afraid = false;
+              }
             }
           }
         }
@@ -261,6 +412,291 @@ if (yFree) player.y = newY;
             if(player.y > enemy.y)enemy.y += enemy.speed;
           }
         }
+      }
+      //TORNADO
+      if(enemy.type === "Tornado" && outside){
+        enemy.x -= (enemy.direction * enemy.speed);
+        if(enemy.x <= 0 || enemy.x >= GAME_WIDTH){
+          enemy.direction *= -1;
+        }
+        if(player.x + player.width + ((window.innerWidth / 2)) > enemy.x &&
+        player.x - ((window.innerWidth / 2)) < enemy.x + enemy.width &&
+        player.y + player.height + ((window.innerWidth / 2)) > enemy.y &&
+        player.y - ((window.innerWidth / 2)) < enemy.y + enemy.height
+      ){
+        monsters.tornado.play();
+      }
+      else monsters.tornado.pause();
+        if(player.x + player.width > enemy.x &&
+          player.x < enemy.x + enemy.width&&
+          player.y + player.height > enemy.y &&
+          player.y < enemy.y + enemy.height
+        ){
+          enemy.tick--
+          if(enemy.tick <= 0){
+            player.health--
+            drawHearts();
+            SFX.hurt.currentTime = 0;
+            SFX.hurt.play();
+            enemy.tick = enemy.maxTick;
+          }
+        }
+      }
+      if(enemy.type === "Spike"){
+        if(player.x > enemy.x)enemy.x += enemy.speed;
+        if(player.x < enemy.x)enemy.x -= enemy.speed;
+        if(player.y > enemy.y)enemy.y += enemy.speed;
+        if(player.y < enemy.y)enemy.y -= enemy.speed;
+
+        if(player.x + player.width > enemy.x &&
+          player.x < enemy.x + enemy.width &&
+          player.y + player.height > enemy.y &&
+          player.y < enemy.y + (enemy.height / 2)
+        ){
+          if(!player.defending){
+          player.health--
+          drawHearts();
+          SFX.hurt.currentTime = 0;
+        SFX.hurt.play();
+          enemy.x = Math.floor(Math.random() * (GAME_WIDTH - 500) + 500);
+          enemy.y = Math.floor(Math.random() * (GAME_HEIGHT - 500) + 500);
+          }
+          else {
+            SFX.defend.currentTime = 0;
+            SFX.defend.play();
+            enemy.speed *= -1;
+            setTimeout(() => {
+              enemy.speed *= -1;
+            }, 10000);
+          }
+        }
+      }
+      if(enemy.type === "Scorpion"){
+        if(player.x > enemy.x && !enemy.attacking && enemy.awake){
+          enemy.direction = 1; enemy.walking = true; enemy.x += enemy.speed;
+        }
+        if(player.x < enemy.x && !enemy.attacking && enemy.awake){
+          enemy.direction = -1;enemy.walking = true; enemy.x -= enemy.speed;
+        }
+        if(player.y > enemy.y && !enemy.attacking && enemy.awake){
+          enemy.walking = true;enemy.y += enemy.speed;
+        }
+        if(player.y < enemy.y && !enemy.attacking && enemy.awake){
+          enemy.walking = true;enemy.y -= enemy.speed;
+        }
+
+        if(player.x + player.width > enemy.x &&
+          player.x < enemy.x + enemy.width &&
+          player.y + player.height > enemy.y &&
+          player.y < enemy.y + (enemy.height / 2)
+        ){
+          if(enemy.awake && !enemy.attacking){
+          enemy.src = scorpionImg.attack;
+          enemy.attacking = true;
+          enemy.walking = false;
+          enemy.frame = 0;
+          if(!player.defending){
+            player.health -= enemy.damage;
+            drawHearts();
+            SFX.hurt.currentTime = 0;
+        SFX.hurt.play();
+          }
+          else {
+            SFX.defend.currentTime = 0;
+            SFX.defend.play();
+          }
+            setTimeout(() => {
+              enemy.src = scorpionImg.walk;
+            enemy.attacking = false;
+            enemy.walking = true;
+            enemy.frame = 0;
+            enemy.speed *= -2;
+            setTimeout(() => {
+              enemy.speed /= -2;
+            }, 6000);
+            }, 800);
+         }
+        }
+        else {
+          if(enemy.awake){
+            enemy.src = scorpionImg.walk;
+          }
+        }
+      }
+      if(enemy.type === "Knight"){
+      if(enemy.forceMove){
+        if(player.x < enemy.x){
+            enemy.x -= enemy.speed;
+            enemy.direction = -1;
+          }
+          if(player.x > enemy.x){
+            enemy.x += enemy.speed;
+            enemy.direction = 1;
+          }
+          if(player.y < enemy.y){
+            enemy.y -= enemy.speed;
+          }
+          if(player.y > enemy.y){
+            enemy.y += enemy.speed;
+          }
+      }
+        if(player.x + player.width + enemy.range > enemy.x &&
+          player.x - enemy.range < enemy.x + enemy.width &&
+          player.y + player.height + enemy.range > enemy.y &&
+          player.y - enemy.range < enemy.y + (enemy.height / 2)
+        ){
+          if(enemy.stamina >= 25 && player.stamina < 25 && enemy.alive && !enemy.attacking && !enemy.defending && !enemy.running){
+            enemy.src = playerSprites.attack;
+            enemy.stamina -= 25;
+            enemy.walking = false;
+            enemy.attacking = true;
+            enemy.defending = false;
+            enemy.frame = 0;
+            enemy.delay = 2;
+            enemy.maxDelay = 2;
+            enemy.totalFrames = 4;
+            setTimeout(() => {
+              if(player.x + player.width + enemy.range > enemy.x &&
+          player.x - enemy.range < enemy.x + enemy.width &&
+          player.y + player.height + enemy.range > enemy.y &&
+          player.y - enemy.range < enemy.y + (enemy.height / 2) && !player.defending
+        ){
+          player.health -= enemy.damage;
+          drawHearts();
+          SFX.hurt.currentTime = 0;
+        SFX.hurt.play();
+            enemy.walking = true;
+            enemy.attacking = false;
+            enemy.defending = false;
+            enemy.forceMove = true;
+            enemy.speed = (player.speed / -1.5);
+            setTimeout(() => {
+              enemy.speed = (player.speed / 1.5);
+            }, 2000);
+        }
+        if(player.defending){
+          SFX.defend.currentTime = 0;
+          SFX.defend.play();
+        }
+            setTimeout(() => {
+              enemy.forceMove = false;
+            }, 2000);
+            }, 500);
+            setTimeout(() => {
+              enemy.frame = 0;
+            }, 600);
+          }
+          else if(enemy.stamina >= 15 && player.stamina > 25 && enemy.alive && !enemy.attacking && !player.attacking && !enemy.running){
+            enemy.src = playerSprites.defend;
+            enemy.stamina -= 0.25;
+            enemy.walking = false;
+            enemy.attacking = false;
+            enemy.defending = true;
+            enemy.frame = 0;
+            enemy.delay = 2;
+            enemy.maxDelay = 2;
+            enemy.totalFrames = 5;
+          }
+          else if(player.attacking && enemy.stamina >= 15){
+            enemy.src = playerSprites.defend;
+            enemy.stamina -= 0.25;
+            enemy.walking = false;
+            enemy.attacking = false;
+            enemy.defending = true;
+            enemy.frame = 0;
+            enemy.delay = 2;
+            enemy.maxDelay = 2;
+            enemy.totalFrames = 5;
+          }
+          else {
+            if(!enemy.running){
+            enemy.src = playerSprites.idle;
+            enemy.stamina += 0.25;
+            enemy.walking = false;
+            enemy.attacking = false;
+            enemy.defending = false;
+            enemy.frame = 0;
+            enemy.delay = 2;
+            enemy.maxDelay = 2;
+            enemy.totalFrames = 5;
+            }
+          }
+          if(enemy.stamina < 15){
+            enemy.speed = (player.speed / -1.5);
+            enemy.running = true;
+          }
+          else if(enemy.stamina >= 25){
+            enemy.speed = (player.speed / 1.5);
+            enemy.running = false;
+          }
+        }
+        else {
+          enemy.src = playerSprites.walk;
+          enemy.totalFrames = 8;
+          enemy.maxDelay = player.speed * 2;
+          enemy.walking = true;
+          enemy.attack = false;
+          enemy.defending = false;
+          enemy.stamina += 0.25;
+          enemy.stamina = Math.min(enemy.stamina, 50);
+          enemy.forceMove = false;
+
+          if(player.x < enemy.x){
+            enemy.x -= enemy.speed;
+            enemy.direction = -1;
+          }
+          if(player.x > enemy.x){
+            enemy.x += enemy.speed;
+            enemy.direction = 1;
+          }
+          if(player.y < enemy.y){
+            enemy.y -= enemy.speed;
+          }
+          if(player.y > enemy.y){
+            enemy.y += enemy.speed;
+          }
+
+          if(enemy.stamina < 15){
+            enemy.speed = (player.speed / -1.5);
+            enemy.running = true;
+          }
+          else if(enemy.stamina >= 25){
+            enemy.speed = (player.speed / 1.5);
+            enemy.running = false;
+          }
+        }
+      }
+      if(enemy.type === "Father"){
+        if(player.x - ((window.innerWidth / 2) + 300) > enemy.x)enemy.x += enemy.speed;
+      if(player.x + ((window.innerWidth / 2) + 300) < enemy.x)enemy.x -= enemy.speed;
+      if(player.y - ((window.innerHeight / 2) + 300) > enemy.y)enemy.y += enemy.speed;
+      if(player.y + ((window.innerHeight / 2) + 300) < enemy.y)enemy.y -= enemy.speed;
+
+        if(player.x + player.width + 600 > enemy.x &&
+        player.x - 600 < enemy.x + enemy.width &&
+        player.y + player.height + 400 > enemy.y &&
+        player.y - 400 < enemy.y + enemy.height
+      ){
+        monsters.father.currentTime = 0;
+        monsters.father.play();
+        enemy.tick--
+        if(enemy.tick <= 0){
+          enemy.encounters++
+          enemy.tick = enemy.maxTick;
+          var blackSlime = {
+            type: "blackSlime",
+            x: (enemy.x + enemy.width),
+            y: (enemy.y + enemy.height) - 50,
+            src: blackSlimeImg,
+            width: blackSlimeImg.naturalWidth,
+            height: blackSlimeImg.naturalHeight,
+            speed: 1,
+            health: 20,
+            damage: enemy.damage,
+          }
+          enemies.push(blackSlime);
+        }
+       }
       }
   });
 
@@ -284,8 +720,14 @@ if (yFree) player.y = newY;
         player.y < arrow.y + arrow.height
       ){
         if(!player.defending){
-          player.health--
+          player.health -= arrow.damage;
         drawHearts();
+        SFX.hurt.currentTime = 0;
+        SFX.hurt.play();
+        }
+        else {
+          SFX.defend.currentTime = 0;
+          SFX.defend.play();
         }
       }
     }
@@ -303,11 +745,20 @@ if (yFree) player.y = newY;
   });
 
   loot = loot.filter(item => {
-    if(player.x + player.width > item.x &&
+    if(player.x + player.width + 200 > item.x &&
+       player.x < item.x + item.width + 200 &&
+       player.y + player.height + 200 > item.y &&
+       player.y < item.y + item.height + 200 && outside && item.mirage
+    ){
+      return false;
+    }
+    else if(player.x + player.width > item.x &&
        player.x < item.x + item.width &&
        player.y + player.height > item.y &&
-       player.y < item.y + item.height && isInventoryOpen() === true && outside
+       player.y < item.y + item.height && isInventoryOpen() === true && outside && !item.mirage
     ){
+      SFX.itemCollect.currentTime = 0;
+      SFX.itemCollect.play();
       addToInventory(item);
       drawInInventory();
       return false;
@@ -348,6 +799,8 @@ if (inside) {
       $(".page").text(activeSite.text);
       $(".page").css("opacity", 1);
       $(".page").css("pointer-events", "none");
+      SFX.paper.currentTime = 0;
+      SFX.paper.play();
      }
     } 
     else if(activeSite.type === "chest" && !contractItemCollected){
@@ -362,7 +815,8 @@ if (inside) {
       let button = $("<button>").text("Enter").appendTo(".page");
       button.on("click", () => {
         if(Number(input.val()) === code){
-          console.log("Right!");
+          SFX.contractItemCollect.currentTime = 0;
+          SFX.contractItemCollect.play();
           contractItemCollected = true;
           $(".canvas").addClass("fade-out-in");
           $(".collectedItem img").css("display", "block").attr("src", `Sprites/World/Loot/1/${contractItem}.png`).addClass("collected");
@@ -411,8 +865,10 @@ if (inside) {
 
 }
 
+if(!inMenu){
   requestAnimationFrame(update);
   draw();
+}
 }
 
 function draw(){
@@ -422,12 +878,10 @@ ctx.save(); //FOR CAMERA
 ctx.translate(-player.x + (canvasContainer.offsetWidth / 2) - 20, -player.y + (canvasContainer.offsetHeight / 2) - 30)
 
 if(outside){
-  ground.src = `Sprites/World/${biome}.png`;
   ctx.fillStyle = ctx.createPattern(ground, "repeat");
   ctx.fillRect(player.x - rDWidth, player.y - rDHeight, (player.x + rDWidth) - (player.x - rDWidth), (player.y + rDHeight) - (player.y - rDHeight));
 }
 else if(inside){
-  ground.src = `Sprites/World/Dungeon.jpg`;
   ctx.drawImage(ground, 0, 0, 2500, 2500);
 }
 
@@ -465,7 +919,7 @@ else if(!player.alive){
 
   //ANIMATIONS
   if(moving.w || moving.a || moving.s || moving.d){
-    if(player.alive && !player.attacking && !player.defending){
+    if(player.alive && !player.attacking && !player.defending && !player.magicAttacking){
       playerWalk.animation = playerSprites.walk;
     playerWalk.frameWidth = 129;
     playerWalk.frameHeight = 129; 
@@ -473,7 +927,7 @@ else if(!player.alive){
     playerWalk.delay--;
     }
   }
-  else if(!moving.w && !moving.a && !moving.s && !moving.d && player.alive && !player.attacking){
+  else if(!moving.w && !moving.a && !moving.s && !moving.d && player.alive && !player.attacking && !player.magicAttacking && !player.frozen){
     playerWalk.frame = 0;
     if(!player.defending){
     playerWalk.animation = playerSprites.idle;
@@ -489,28 +943,30 @@ else if(!player.alive){
     playerWalk.animation = playerSprites.attack;
     playerWalk.delay--;
   }
+  else if(player.magicAttacking && player.alive){
+    playerWalk.animation = playerSprites.magic;
+    playerWalk.frame = 0;
+  }
 
 
 loot.forEach(item => {
-  if((player.x + player.width) + 700 > item.x &&
-      player.x < (item.x + item.width) + 700  &&
-      (player.y + player.height) + 350 > item.y &&
-      player.y < (item.y + item.height) + 350 && outside){
+  if((player.x + player.width) + rDWidth > item.x &&
+      player.x < (item.x + item.width) + rDWidth  &&
+      (player.y + player.height) + rDHeight > item.y &&
+      player.y < (item.y + item.height) + rDHeight && outside){
         ctx.drawImage(item.type, item.x, item.y, item.width, item.height);
       }
 });
 
 enemies.forEach(enemy => {
    if(Math.abs(enemy.x - player.x) < rDWidth &&
-    Math.abs(enemy.y - player.y) < rDHeight && outside && enemy.type !== "Bees" && enemy.type !== "Skeleton"){
+    Math.abs(enemy.y - player.y) < rDHeight && outside && enemy.type !== "Bees" && enemy.type !== "Skeleton" && enemy.type !== "Tornado" && enemy.type !== "Spike" && enemy.type !== "Scorpion" && enemy.type !== "Knight"){
         ctx.drawImage(enemy.src, enemy.x, enemy.y, enemy.width, enemy.height)
       };
 
       if(Math.abs(enemy.x - player.x) < rDWidth &&
     Math.abs(enemy.y - player.y) < rDHeight && enemy.type === "Bees" && outside){
-
         ctx.drawImage(enemy.src, bugsSprite.frame * bugsSprite.frameWidth, 0, bugsSprite.frameWidth, bugsSprite.frameHeight, enemy.x, enemy.y, enemy.width, enemy.height);
-
         bugsSprite.delay--
         if(bugsSprite.delay <= 0){
           bugsSprite.frame++
@@ -520,13 +976,84 @@ enemies.forEach(enemy => {
           }
         }
       }
+      if(Math.abs(enemy.x - player.x) < rDWidth &&
+    Math.abs(enemy.y - player.y) < enemy.height + rDHeight && enemy.type === "Tornado" && outside){
+        ctx.drawImage(enemy.src, (enemy.frame * enemy.frameWidth), 0, enemy.frameWidth, enemy.frameHeight, enemy.x, enemy.y, enemy.width, enemy.height);
+        enemy.delay--
+        if(enemy.delay <= 0){
+          enemy.frame++
+          enemy.delay = enemy.maxDelay;
+          if(enemy.frame === enemy.totalFrames){
+            enemy.frame = 0;
+          }
+        }
+      }
+      if(Math.abs(enemy.x - player.x) < rDWidth &&
+    Math.abs(enemy.y - player.y) < enemy.height + rDHeight && enemy.type === "Spike" && outside){
+        ctx.drawImage(enemy.src, (enemy.frame * enemy.frameWidth), 0, enemy.frameWidth, enemy.frameHeight, enemy.x, enemy.y, enemy.width, enemy.height);
+        enemy.delay--
+        if(enemy.delay <= 0){
+          enemy.frame++
+          enemy.delay = enemy.maxDelay;
+          if(enemy.frame === enemy.totalFrames){
+            enemy.frame = 0;
+          }
+        }
+      }
+      if(Math.abs(enemy.x - player.x) < rDWidth &&
+    Math.abs(enemy.y - player.y) < enemy.height + rDHeight && enemy.type === "Scorpion" && outside){
+      ctx.save();
+      if(enemy.direction === -1){
+        ctx.drawImage(enemy.src, (enemy.frame * enemy.frameWidth), 0, enemy.frameWidth, enemy.frameHeight, enemy.x, enemy.y, enemy.width, enemy.height);
+      }
+      else {
+        ctx.scale(-1, 1);
+        ctx.drawImage(enemy.src, (enemy.frame * enemy.frameWidth), 0, enemy.frameWidth, enemy.frameHeight, -enemy.x - (enemy.frameWidth / 2), enemy.y, enemy.width, enemy.height);
+      }
+        ctx.restore();
+        enemy.delay--
+        if(enemy.delay <= 0){
+          enemy.frame++
+          enemy.delay = enemy.maxDelay;
+          if(enemy.frame === enemy.totalFrames && enemy.walking){
+            enemy.frame = 0;
+          }
+        }
+        if(!enemy.walking){
+          enemy.frame = Math.min(enemy.frame, enemy.totalFrames);
+        }
+      }
+
+      if(Math.abs(enemy.x - player.x) < rDWidth &&
+    Math.abs(enemy.y - player.y) < enemy.height + rDHeight && enemy.type === "Knight" && outside){
+      ctx.save();
+      if(enemy.direction === 1){
+        ctx.drawImage(enemy.src, (enemy.frame * enemy.frameWidth), 0, enemy.frameWidth, enemy.frameHeight, enemy.x, enemy.y, enemy.width, enemy.height);
+      }
+      else {
+        ctx.scale(-1, 1);
+        ctx.drawImage(enemy.src, (enemy.frame * enemy.frameWidth), 0, enemy.frameWidth, enemy.frameHeight, -enemy.x - (enemy.frameWidth / 2), enemy.y, enemy.width, enemy.height);
+      }
+        ctx.restore();
+        enemy.delay--
+        if(enemy.delay <= 0){
+          enemy.frame++
+          enemy.delay = enemy.maxDelay;
+          if(enemy.frame === enemy.totalFrames && enemy.walking){
+            enemy.frame = 0;
+          }
+        }
+        if(!enemy.walking){
+          enemy.frame = Math.min(enemy.frame, enemy.totalFrames);
+        }
+      }
 
       if(enemy.type === "Skeleton" && outside){
         ctx.save();
-        if((player.x + player.width) + 200 > enemy.x &&
+        if((player.x + player.width) + (window.innerWidth / 3) > enemy.x &&
           player.x < (enemy.x + enemy.width) + (window.innerWidth / 3) &&
-          (player.y + player.height) + (window.innerWidth / 3) > enemy.y &&
-          player.y < (enemy.y + enemy.height) + (window.innerHeight / 3.5)
+          (player.y + player.height) + (window.innerHeight / 3) > enemy.y &&
+          player.y < (enemy.y + enemy.height) + (window.innerHeight / 3)
         ){
           if(enemy.awake){
             skeletonSprites.animation = skeletonSprites.shot;
@@ -647,9 +1174,3 @@ sites.forEach(site => {
   ctx.restore();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  setTimeout(() => {
-      update();
-  loadGame();
-  }, 1000);
-})

@@ -4,8 +4,16 @@ let STARTED = false;
 
 $(document).ready(function(){
     $("#goButton").on("click", function(){
-        if (!STARTED){
+        const input = $(".numberInput");
+        if (!STARTED && input.val() >= 25){
+            MAX_SQUARES = input.val();
             STARTED = true;
+            $("#fullContainer").css("filter", "none");
+            $(".popup").css({
+                "opacity": 0,
+                "z-index": -1,
+            });
+            startSort();
 
             if (bubbleSort){
                 bubbleSort(bubbleList);
@@ -13,6 +21,9 @@ $(document).ready(function(){
             if (quickSort){
                 quickSort(quickList, 0, quickList.length-1);
             }
+        }
+        else if(!STARTED && input.val() < 25){
+            $(".popupText").text("We recommend you select a number higher than 25.");
         }
     })
 })
