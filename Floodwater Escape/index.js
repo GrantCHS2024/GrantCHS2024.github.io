@@ -8,6 +8,8 @@ canvas.height = 500;
 let RENDER_DISTANCE = 700; //FOR LATER LARGER USE
 let gameFlag = false;
 
+let lockedExit = false;
+
 var tran_Screen = document.querySelector(".transitionScreen");
 
 var jsLogo = document.querySelector(".JS_logo");
@@ -24,6 +26,7 @@ var gameSFX = document.querySelector(".gameSFX");
 gameSFX.volume = 0.75;
 var jumpSFX = document.querySelector(".jumpSFX");
 jumpSFX.volume = 0.1;
+var floatieActivated = false;
 var deathSFX = document.querySelector(".deathSFX");
 var spikeDamageSFX = document.querySelector(".spikeDamageSFX");
 var purchaseSFX = document.querySelector(".purchaseSFX");
@@ -53,7 +56,7 @@ let activateTimer = false;
           suspense.pause();
           clockTick.currentTime = 0;
           suspense.currentTime = 0;
-          removeInterval(countdown);
+          clearInterval(countdown);
         }
       }
     }, 1000);
@@ -113,6 +116,7 @@ var tip = "";
 
 var world = {
   gravity: 0.6,
+  OGgravity: 0.6,
   level: 1,
 }
 levelCount.textContent = world.level;
@@ -144,6 +148,10 @@ var water = {
 }
 //Coins section
 var coinBoxes = [];
+var keys = [];
+
+const keyImage = new Image();
+keyImage.src = "Images/key.png";
 
 //Obstacles section
 let WALLS_TAKEAWAY = 2;
@@ -218,7 +226,10 @@ function startGame(){
     gameFlag = true;
     tran_Screen.classList.remove("slideUp");
     tran_Screen.style.opacity = 0;
-    camera.classList.add("shake");
+    if(world.level % 8 === 0){
+    $(".canvasDiv").addClass("tiltshake");
+  }
+  else camera.classList.add("shake");
   }, 3000);
   
   setTimeout(() => {
@@ -320,6 +331,12 @@ for(var i = 0; i < numWalls; i++){
       }
       spikes.push(spike);
     }
+    spikes = spikes.filter(spike => {
+      if(spike === undefined){
+        return false;
+      }
+      else return true;
+    });
   }
 
   //LASERS SPAWNING
@@ -349,7 +366,7 @@ for(var i = 0; i < numWalls; i++){
   // - - - - - - - - - - - - - - - - - - - TIMER ROUND - - - - - - - - - - - - - - - - - - - - -
 
   var clockRoundChance = Math.floor(Math.random() * 100);
-  if(clockRoundChance <= 10){
+  if(clockRoundChance <= 15){
     clock = 60;
     activateTimer = true;
     tipsDIV.textContent = clock;
@@ -361,6 +378,16 @@ for(var i = 0; i < numWalls; i++){
     tipsDIV.style.fontSize = "1.5rem";
     tipsDIV.style.color = "white";
     }, 5000);
+  };
+  var keyRoundChance = Math.floor(Math.random() * 100);
+  if(keyRoundChance <= 15){
+    lockedExit = true;
+    keys.push({
+      x: Math.floor(Math.random() * ((500 - 10) - 1) + 1),
+      y: Math.floor(Math.random() * ((CANVAS_GAME_HEIGHT - 10) - 100) + 100),
+    });
+    let keydiv = $("<div>").addClass("key").appendTo("body");
+    $("<img>").addClass("fade-in-out").attr("src", "Images/key.png").appendTo(keydiv);
   };
     
     camera.scrollTop = player.y - 400;
@@ -447,17 +474,16 @@ clockTick.currentTime = 0;
 suspense.currentTime = 0;
 gameSFX.pause();
 menuMusic.play();
+lockedExit = false;
 
 player.x = canvas.width / 2;
 player.y = canvas.height - 40;
 player.health = player.maxHealth;
-if(world.level % 10 === 0){
-  player.coinsLost *= 2;
-}
 player.coins -= player.coinsLost;
 player.coins = Math.max(player.coins, 0);
 coinCounter.textContent = "Coins: $" + player.coins;
 camera.classList.remove("shake");
+camera.classList.remove("tiltshake");
   $(".redScreen").css("opacity", (((player.health/player.maxHealth * -1)  * 100) + 100) + "%");
       water.y = CANVAS_GAME_HEIGHT + 150;
   walls = [
@@ -515,6 +541,7 @@ function levelCompletion(){
   body.classList.remove("blackout");
   if(!highRisk)body.style.background = "#555";
   gameSFX.pause();
+  $(".key").remove();
 
   setTimeout(() => {
     tran_Screen.classList.remove("fade");
@@ -552,10 +579,14 @@ player.health = player.maxHealth;
 
   if(!highRisk)world.level++;
   if(!highRisk)levelCount.textContent = world.level; //UPDATE LEVEL COUNTER
+  if(world.level % 5 === 0){
+  player.coinsLost *= 2;
+}
 water.speed += 0.2;
 player.coins += reward;
 coinCounter.textContent = "Coins: $" + player.coins;
 camera.classList.remove("shake");
+camera.classList.remove("tiltshake");
   
 if(world.level % 2 === 0){
   wallYOffset += 25;
@@ -719,6 +750,7 @@ umbrellaBtn.addEventListener("click", () => {
     
     //Addon
     world.gravity -= 0.1;
+    world.OGgravity -= 0.1;
     
     umbrellaCost *= 2;
     umbrellaBtn.textContent = "Upgrade - " + umbrellaCost + "C";
@@ -728,6 +760,34 @@ umbrellaBtn.addEventListener("click", () => {
   else {
     umbrellaBtn.classList.add("invalid");
     setTimeout(() => {umbrellaBtn.classList.remove("invalid");}, 500);
+  }
+});
+var floatieBtn = document.querySelector(".floatie button");
+let floatieCost = 150;
+let floatieLvl = 0;
+let floatiemaxLvl = 1;
+floatieBtn.textContent = "Buy - " + floatieCost + "C";
+
+floatieBtn.addEventListener("click", () => {
+  if(player.coins >= floatieCost){
+    //Cost
+    purchaseSFX.currentTime = 0;
+    purchaseSFX.play();
+    if(floatieLvl < 1){
+    player.coins -= floatieCost;
+    }
+    coinCounter.textContent = "Coins: $" + player.coins;
+    floatieLvl++
+    
+    //Addon
+    floatieActivated = true;
+    
+    floatieCost *= 2;
+    floatieBtn.textContent = "Equipped";
+  }
+  else {
+    floatieBtn.classList.add("invalid");
+    setTimeout(() => {floatieBtn.classList.remove("invalid");}, 500);
   }
 });
 var blockPlacerBtn = document.querySelector(".blockPlacer button");
@@ -805,6 +865,8 @@ jetPackBtn.addEventListener("click", () => {
 });
 var smokeIndex = 0;
 var smokes = []; //This is for the Jet pack VISUALS.
+
+var particles = []; //(water particles)
 
 var canonBtn = document.querySelector(".canon button");
 let canonCost = 400;
@@ -1055,21 +1117,78 @@ function update(){
     }
     else return true;
   });
+
+  //Keys section
+
+  keys = keys.filter(key => {
+    if(player.x + player.width > key.x &&
+       player.x < key.x + 30 &&
+       player.y + player.height > key.y &&
+       player.y < key.y + 30){
+        $(".keys img").css("opacity", 1);
+        coinCollectSFX.currentTime = 0;
+        coinCollectSFX.play();
+        lockedExit = false;
+      return false;
+    }
+    else return true;
+  });
   
   //Health Section
+  if((player.y + player.height) > water.y - 10 && (player.y + player.height) < water.y){
+    waterSplashSFX.currentTime = 0;
+    waterSplashSFX.play();
+    particles.push({
+      x: player.x - 20,
+      y: player.y - 20,
+      size: 10,
+      dy: -1.5,
+      d: -1.5,
+    });
+    particles.push({
+      x: player.x - 30,
+      y: player.y - 15,
+      size: 10,
+      dy: -1,
+      d: -2,
+    });
+    particles.push({
+      x: (player.x + player.width) + 20,
+      y: player.y - 20,
+      size: 10,
+      dy: -1.5,
+      d: 1.5,
+    });
+    particles.push({
+      x: (player.x + player.width) + 30,
+      y: player.y - 15,
+      size: 10,
+      dy: -1,
+      d: 2,
+    });
+  }
+  particles = particles.filter(particle => {
+    if(particle.y > water.y + 15){
+      return false;
+    }
+    else return true;
+  });
   
   if(player.y + player.height > water.y){
-    waterSplashSFX.play();
+    if(floatieActivated){
+      world.gravity = 0.05;
+      player.grounded = true;
+    }
     player.health -= 0.75;
      $(".redScreen").css("opacity", (((player.health/player.maxHealth * -1)  * 100) + 100) + "%");
   }
   else if(player.y + player.height < water.y) {
-    waterSplashSFX.pause();
-    waterSplashSFX.currentTime = 0;
+    world.gravity = world.OGgravity;
   }
   if(player.health <= 0 && gameFlag){
     playerDeath();
     $(".redScreen").css("opacity", 100);
+    $(".key").remove();
   }
   if(player.health <= 0){
     player.y++
@@ -1077,7 +1196,7 @@ function update(){
   
   //Level Completion
   
-  if(player.y < 50 && gameFlag){
+  if(player.y < 50 && gameFlag && !lockedExit){
     levelCompletion();
   }
   
@@ -1228,6 +1347,9 @@ function draw(){
       ctx.fillRect(box.x, box.y, box.size, box.size);
     }
   });
+  keys.forEach(key => {
+    ctx.drawImage(keyImage, key.x, key.y, 30, 30);
+  });
   ctx.fillStyle = "white";
     fanWind.forEach(wind => {
       ctx.fillRect(wind.x, wind.y, wind.width, wind.height);
@@ -1258,10 +1380,20 @@ function draw(){
   lasers.forEach(laser => {
     ctx.fillStyle = laser.color;
     ctx.fillRect(0, laser.y, laser.width, laser.height);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, laser.y - 5, 20, 10);
+    ctx.fillRect(canvas.width - 20, laser.y - 5, 20, 10);
   });
   
   ctx.fillStyle = 'rgba(0, 0, 200, 0.75)';
   ctx.fillRect(water.x, water.y, water.width, water.height);
+
+  particles.forEach(particle => {
+    particle.dy += 0.6;
+    particle.y += particle.dy;
+    particle.x += particle.d;
+    ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
+  })
 }
 
 update();

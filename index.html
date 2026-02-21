@@ -3,208 +3,414 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Portfolio / Grant Oleksik</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <title>Portfolio - Grant Oleksik</title>
 </head>
 <body>
-  <div class="watermark" style="font-family: 'Courier New', Courier, monospace;">Grant Oleksik</div>
-  <audio id="Menu_music" src="Wii Menu Music - Oheao.mp3"></audio>
-  <audio id="clickSound" src="Wii click sound.mp3"></audio>
+  <div class="background"></div>
+  <div class="transition"></div>
+  
+  <div class="navBar">
+    <div class="logo">Grant Oleksik</div>
+    <div class="item" id="about-me">About Me</div>
+    <div class="item" id="apps">Apps</div>
+    <div class="item" id="images">Images</div>
+  </div>
 
-  <img class="startScreen" src="Website_Startup_Screen.png">
-  <div class="box"><img src="Cursor.png"></img></div> <!--Custom Cursor box-->
-
+  <!--LEFT SIDE OF SCREEN, where then magic happens-->
+  
   <div class="main">
-    <h1 class="welcome"></h1>
-  </div>
-  <div class="about-me">
-    <h1 style="font-size: 40px;">About Me</h1>
-    
-    <div class="abtMeBox">  <!--Third box-->
-      <h2>When it comes to being outside, I enjoy taking pictures or videos of beautiful scenes, making me love photography. On the other hand, I love playing sports and getting active, playing a total of 8 sports.</h2>
-    </div>
-    <div class="abtMeBox"> <!--First box-->
-      <h2>I am a member of my high school's band as a trumpet player who's been playing for 3 years. I got into Junior Honor band on my second year, and I've also been in the New Orleans Super Bowl parade!</h2>
-    </div>
-    <div class="abtMeBox"> <!--Second box-->
-      <h2>I've so far been coding for one year and I love it even when I don't plan on making a career out of it. I study it hard and love making games out of it. I overall love learning languages in general just like how I'm striving to learn French and Spanish.</h2>
-    </div>
-  </div>
-  <div class="personal">
-    <h1 style="font-size: 40px;">Personal Projects</h1>
-    <div class="game"  onclick="window.location.href='Double Down/index.html'">
-      <h1>Double Down</h1>
-      <h2>(NEW)Two Controllers, Two sides, Two outcomes. Play against a friend locally and find out.</h2>
-    </div>
-    <div class="game" onclick="window.location.href='Notes App/notes.html'">
-      <h1>Notes App</h1>
-      <h2>Notes app with many features for comfort! Try it out yourself!</h2>
-    </div>
-    <div class="game" onclick="window.location.href='Hunt Or Be Hunted/index.html'">
-      <h1>HUNT OR BE HUNTED</h1>
-      <h2>(OLD)(FULL) We need you to search this place for evidence, but whatever you do, stay alive and bring back that evidence, now. Don't let him catch you</h2>
-    </div>
-    <div class="game" onclick="window.location.href='Spelling Bee/index.html'">
-      <h1>Spelling Bee</h1>
-      <h2>Spelling Bee using microsoft's text to speech!</h2>
-    </div>
-    <div class="game" onclick="window.location.href='Pong(Personal)/index.html'">
-      <h1>Pong Game</h1>
-      <h2>My OWN PERSONAL Pong game with random game events! Do you have what it takes?</h2>
-    </div>
-    <div class="game" id="favorite" onclick="window.location.href='Floodwater Escape/index.html'">
-      <h1>Floodwater Escape</h1>
-      <h2>(NEW)Escape the flood in this action-packed platformer with many items you can buy to help you along the way!</h2>
-    </div>
-    <div class="game" onclick="window.location.href='Lessons.html'">
-      <h1>Lessons</h1>
-      <h2>Current Lesson: Event Listeners, player movement, and canvas</h2>
-    </div>
-    <div class="game" id="favoriteTwo" onclick="window.location.href='The Contractor/index.html'">
-      <h1>The Contractor</h1>
-      <h2>Go on contracts through highly dangerous biomes, collect the item specified on the contract throught a puzzle in the dungeon, and collects more items outside which you can sell and make money to upgrade your gear!</h2>
-    </div>
-        <div class="floodwaterGameplay">
-  <video src="Floodwater Escape Gameplay.mp4" autoplay loop></video>
+    <h1 class="title"></h1>
+    <div class="picture"><img src="picture.jpg"></div>
+    <div class="instagram" target="_blank" onclick="window.location.href = `https://www.instagram.com/grantoleksik/`"><img src="instagram.png"></div>
+    <div class="youtube" target="_blank" onclick="window.location.href = `https://www.youtube.com/@gruntisfr1681`"><img src="youtube.png"></div>
+
+    <div class="game-card">
+        <h1 class="game-card-name">Game Name</h1>
+        <div class="game-card-description">Game Description goes here...
         </div>
-  </div>
-  <div class="asd">
-    <h1 style="font-size: 40px;">ASD Projects</h1>
-    <div class="project" onclick="window.location.href='asd-projects/data-shapes/index.html'">
-      <h1>Data Shapes</h1>
-      <h2>DESCRIPTION</h2>
+        <div class="play-game">Play</div>
+        <div class="exit-game">Leave</div>
+        <div class="game-card-image"><img src=""></div>
+        <div class="game-card-video"><video src="" muted loop controls></div>
+        <div class="game-card-tags">
+      
+        </div>
+      </div>
+    <div class="apps">
+  <!--NEWS FOR MY APPS-->    <marquee>Updates for 'The Standoff' are underway! Updates/remasters of 'Explore More Apps'
+    projects are possible! Stay tuned and trailers for all games shall be released when available. 
+    Gameplay of 'The Standoff' may be posted to my Youtube Channel may be posted soon.
+  </marquee>
+      <div class="game" id="1">
+        <div class="stars"><img src="Icons/3.png"></div>
+        <div class="starDescription">I have rated this game my best</div>
+        <div class="descriptionText">Enter a 1 on 1 gunfight in a variety of maps, and use
+          various weapon systems and non-lethal/lethal items to eliminate the enemy!
+        </div>
+        <div class="gameLink">The Standoff/index.html</div>
+        <h1 class="game-name">The Standoff</h1>
+        <div class="game-image"><img src="The Standoff/Sprites/Logos/Standoff Logo.png"></div>
+        <div class="game-tags">
+          <div class="game-tag">Shooter</div>
+          <div class="game-tag">Top-Down</div>
+          <div class="game-tag">Competitive</div>
+          <div class="game-tag">Intense</div>
+          <div class="game-tag" style="background: white">Controllers Only</div>
+        </div>
+      </div>
+      <div class="game" id="2">
+        <div class="stars"><img src="Icons/4.png"></div>
+        <div class="starDescription">I have rated this game my second best</div>
+        <div class="descriptionText">A game of escaping rising floodwaters as you climb higher
+          to escape from it, do you have what it takes to do so?
+        </div>
+        <div class="gameLink">Floodwater Escape/index.html</div>
+        <h1 class="game-name">Floodwater Escape</h1>
+        <div class="game-image"><img src="Logos/Floodwater Escape Page.png"></div>
+        <div class="game-tags">
+          <div class="game-tag">Platformer</div>
+          <div class="game-tag">Relaxed</div>
+        </div>
+      </div>
+      <div class="game" id="3">
+        <div class="hazard"><img src="Icons/2.png"></div>
+        <div class="hazardDescription">A lot of the game has been fixed, but there is still a very small chance there will be bugs.</div>
+        <div class="stars"><img src="Icons/5.png"></div>
+        <div class="starDescription">I have rated this game my third best</div>
+        <div class="descriptionText">Go on an adventure through the deadliest of biomes
+          to steal relics you were sent for on a contract. Can YOU do it?
+        </div>
+        <div class="gameLink">The Contractor/index.html</div>
+        <h1 class="game-name">The Contractor</h1>
+        <div class="game-image"><img src="Logos/The Contractor Page.png"></div>
+        <div class="game-tags">
+          <div class="game-tag">Top-Down</div>
+          <div class="game-tag">Intense</div>
+          <div class="game-tag" style="background: darkred">Hard</div>
+        </div>
+      </div>
+      <div class="game" id="4">
+        <div class="descriptionText">Go in a 1v1 against a friend in this Shooter.
+          Build walls and outsmart your opponent.
+        </div>
+        <div class="gameLink">Double Down/index.html</div>
+        <h1 class="game-name">Double Down</h1>
+        <div class="game-image"><img src="Double Down/Images/DoubleDownLogo.png"></div>
+        <div class="game-tags">
+          <div class="game-tag">Platformer</div>
+          <div class="game-tag">Shooter</div>
+          <div class="game-tag">Basic</div>
+          <div class="game-tag" style="background: white">Controllers Only</div>
+        </div>
+      </div>
+      <div class="game" id="5">
+        <div class="descriptionText">Many people went missing in this area long ago.
+          No one found out why. Explore the area and be the one to solve the mystery by collecting evidence.
+        </div>
+        <div class="gameLink">Hunt Or Be Hunted/index.html</div>
+        <h1 class="game-name">Hunt or Be Hunted</h1>
+        <div class="game-image"><img src="Logos/Hunt or Be Hunted.png"></div>
+        <div class="game-tags">
+          <div class="game-tag">Top-Down</div>
+          <div class="game-tag">Very Basic</div>
+          <div class="game-tag">Scary</div>
+        </div>
+      </div>
+      <div class="extraApps">
+        <h1>Explore More Apps</h1>
+        <div class="appItem" onclick="window.location.href = `projects/platformer/index.html`"><h1>Platformer - </h1><h2> A simple platformer with Hallebot!</h2></div>
+        <div class="appItem" onclick="window.location.href = `projects/bouncing-box/index.html`"><h1>Bouncing Box -</h1><h2>Click a box to earn points</h2></div>
+        <div class="appItem" onclick="window.location.href = `projects/circularity/index.html`"><h1>Circularity -</h1><h2>A motion poem using moving circles</h2></div>
+        <div class="appItem" onclick="window.location.href = `asd-projects/walker/index.html`"><h1>Walker -</h1><h2>Run away from a chasing enemy using this moving player.</h2></div>
+        <div class="appItem" onclick="window.location.href = `Spelling Bee/index.html`"><h1>Spelling Bee -</h1><h2>It's self explanatory buddy.</h2></div>
+        <div class="appItem" onclick=""><h1>Class Help -</h1><h2>An app I PLAN to create in the future after completing 'The Standoff' and its entirity. This will be an app where you can go to practice
+          English tests, from normal to timed, from grade 9 - 12(maybe)
+        </h2></div>
+      </div>
     </div>
-    <div class="game" onclick="window.location.href='asd-projects/debugging-exercise/index.html'">
-      <h1>Ghost Party</h1>
-      <h2>A page of a number of ghosts you wish floating all over your screen! (Debug exercise)</h2>
+
+
+    <div class="about-me">
+      <h1>Introduction</h1>
+      <h2>I'm currently a Sophomore at Covington High School living in Louisiana. Three interests of mine are coding(obviously), 
+        sports, music composition, and music performance.
+        Everyone shall love and respect each other for what they do
+        no matter what, even when disputes arise(Matthew 22:39). I have been coding for about one and a half years
+        through the help of <a target="_blank" href="https://roconnell15.github.io/" style="color: white;">Richard O'Connell</a>, teacher and coach at Covington High School, 
+        and the <a target="_blank" href="https://www.operationspark.org" style="color: white;">Operation Spark</a> Team!</h2>
+        <h1>Skills</h1>
+        <div class="skillsSec">
+          <div class="htmlSkill">HTML</div>
+          <div class="cssSkill">CSS</div>
+          <div class="jsSkill">JavaScript</div>
+        </div>
+        <h2>I have learned a lot about JavaScript through many projects, mainly games, but never 
+          had a massive focus on HTML nor CSS.
+        </h2>
+        <h1>Academic Life</h1>
+      <h2>Member of the Tri-M Honor Society and trumpet player,
+        I have taken two full JavaScript classes with the help of <a target="_blank" href="https://roconnell15.github.io/" style="color: white;">Mr. O'Connell</a>,
+        and I really enjoy helping others in class with ideas or topics they seem to not understand.
+      </h2>
+      <h1>Outside Life</h1>
+      <h2>The most important things to do throughout your day is to enjoy nature, what is has to offer, and
+        to work out in it like through runs, bike rides, or more. Exploring nature is the best kinds of therapy, for it can definitely
+        bring lots of peace to the soul and mind, especially during stressful moments.
+      </h2>
+      <h1>Final Thoughts</h1>
+      <h2>It's important to be a great example to others and not let failure or frustration ruin your day, you too can be a leader
+        and show others how powerful you can be if you just keep moving anyway. A life with Jesus Christ on top of that will show you how
+        to spread that peace and love, and will show you to guide, not judge, others... For we're all made through God. <br>
+        "If you don't fail, you're not even trying." - Denzel Washington.
+      </h2>
     </div>
-    <div class="game" onclick="window.location.href='asd-projects/snake/index.html'">
-      <h1>Snake</h1>
-      <h2>Snake game</h2>
+    <div class="images">
+      <div class="image-container">
+        <img>
+        <div class="left-arrow"><h1><</h1></div>
+        <div class="right-arrow"><h1>></h1></div>
+      </div>
+      <div class="bubble-container">
+      </div>
     </div>
-    <div class="game" onclick="window.location.href='asd-projects/dice-app/index.html'">
-      <h1>Dice Roll</h1>
-      <h2>Click the die to roll 'em</h2>
-    </div>
-    <div class="game" onclick="window.location.href='asd-projects/walker/index.html'">
-      <h1>Walker</h1>
-      <h2>A moving player</h2>
-    </div>
-    <div class="game" onclick="window.location.href='asd-projects/image-filtering/index.html'">
-      <h1>Image Filtering</h1>
-      <h2>Applying Filters to Images</h2>
-    </div>
-    <div class="game" onclick="window.location.href='asd-pacman/index.html'">
-      <h1>Pacman</h1>
-      <h2>Pacman</h2>
-    </div>
-    <div class="game" onclick="window.location.href='asd-projects/sorting/index.html'">
-      <h1>Sorting</h1>
-      <h2></h2>
-    </div>
-  </div>
-  <div class="images">
-    <h1>Pictures</h1>
-    
-    <div class="slideshow">
-            <div class="slide"><img src="Images Folder/Big Pond[Wide shot].JPG"></div>
-            <div class="slide"><img src="Images Folder/Big Pond[With weeds].JPG"></div>  
-            <div class="slide"><img src="Images Folder/Ducks Big Pond[Zoomed in].JPG"></div> 
-            <div class="slide"><img src="Images Folder/Ducks water[Zoomed in shot].JPG"></div> 
-            <div class="slide"><img src="Images Folder/Ducks[Zoomed in shot].JPG"></div>
-            <div class="slide"><img src="Images Folder/Ant.JPG"></div>
-            <div class="slide"><img src="Images Folder/Pond Trail[Zoomed in, tree close up].JPG"></div>
-            <div class="slide"><img src="Images Folder/CHS.JPG"></div>
-            <div class="slide"><img src="Images Folder/CHS(2).JPG"></div>
-            <div class="slide"><img src="Images Folder/Beauty.JPG"></div>
-            <div class="slide"><img src="Images Folder/Line.JPG"></div>
-            <div class="slide"><img src="Images Folder/Line(2).JPG"></div>
-            <div class="slide"><img src="Images Folder/Texture.JPG"></div>
-            <div class="slide"><img src="Images Folder/Buckee.JPG"></div>
-            <div class="slide"><img src="Images Folder/Charlie(1).JPG"></div>
-            <div class="slide"><img src="Images Folder/Charlie(2).JPG"></div>
-            <div class="slide"><img src="Images Folder/Genesis(Front).JPG" alt=""></div>
-            <div class="slide"><img src="Images Folder/Genesis(Back).JPG" alt=""></div>
-            <div class="slide"><img src="Images Folder/Bike.JPG" alt=""></div>
-            <div class="slide"><img src="Images Folder/Bucees.JPG" alt=""></div>
-            <div class="slide"><img src="Images Folder/River.JPG" alt=""></div>
-            <div class="slide"><img src="Images Folder/House.JPG" alt=""></div>
-            <div class="slide"><img src="Images Folder/Pond.JPG" alt=""></div>
-            <div class="slide"><img src="Images Folder/Trees.JPG" alt=""></div>
-          </div>
-       <!--   <button class="left-btn"><</button> <button class="right-btn">></button>   -->
   </div>
 
   <script>
-    var started = false;
-    var startScreen = document.querySelector(".startScreen");
-    var menuMusic = document.getElementById("Menu_music");
-    var clickSound = document.getElementById("clickSound");
+    $(".transition").addClass("fade-out"); //STARTING ANIMATION
+    $(".title").addClass("fade-in");
 
-    window.onload = () => {
-      startScreen.style.opacity = 100;
-      $("body").css("background-color", "black");
-      $(".watermark").css("opacity", "0%");
-      started = false;
-    };
-
-    document.addEventListener("click", () => {
-      clickSound.currentTime = 0;
-      clickSound.play();
-      if(!started) {menuMusic.play(); $(".watermark").css("opacity", "100%"); startScreen.style.opacity = 0; startScreen.style.zIndex = -1; $("body").css("background-color", "#e8e8e8"); type();}
-    });
-
-    //Custom Cursor box and inner workings
-    var box = document.querySelector(".box");
-
-document.addEventListener("mousemove", (event) => {
-  let mouseX = event.clientX;
-  let mouseY = event.clientY;
-  
-  $(".box").css("left", mouseX - Number($(".box").css("width")[0] + $(".box").css("width")[1]) / 2);
-  $(".box").css("top", mouseY - Number($(".box").css("height")[0] + $(".box").css("height")[1]) / 2);
-  $("body").css("cursor", "none");
-});
-
-
-
-    let text = "Hello, I am Grant Oleksik!";
-const speed = 100;
-
-let i = 0;
-function type() {
-  if (i < text.length) {
-    document.querySelector(".welcome").textContent += text.charAt(i);
-    i++;
-    setTimeout(type, speed);
+function typeWrite(word, i, selector, text){
+  let newtext = text;
+  let newi = i
+  if(i < word.length + 1){
+    newtext += word[i];
+    newi++
+    $(selector).text(text);
+    setTimeout(() => {
+      typeWrite(word, newi, selector, newtext)
+    }, 500);
   }
+  else return;
 }
 
-//FYI: Script above was created with help... Only thing I really needed to know was '.charAt' (That means study it, Grant)
+typeWrite("Welcome", 0, ".title", "");
+setTimeout(() => {
+  $(".title").removeClass("fade-in").text("Choose from the navigation bar to get started!").css({
+    "font-size": "3cqw",
+  });
+  if(Number($(".title").css("opacity")) !== 0){
+  $(".title").addClass("fade-in-quick");
+  }
+}, 11000);
+$(".picture").addClass("slide-up");
 
 setTimeout(() => {
-  i = 0;
-  document.querySelector(".welcome").textContent = "";
-  text = "I am a sophomore at Covington High School studying JavaScript!";
-  type();
+  $(".picture").removeClass("slide-up");
+  $(".picture").addClass("float");
+}, 3000);
+setTimeout(() => {
+  $(".instagram").css("opacity", 1).addClass("slide-up");
   setTimeout(() => {
-    i = 0;
-  document.querySelector(".welcome").textContent = "";
-  text = "More about me and my projects below!";
-  type();
-  }, 12000);
-}, 10000);
+    $(".instagram").removeClass("slide-up");
+    $(".instagram").addClass("float");
+  }, 3000);
+}, 1000);
+setTimeout(() => {
+  $(".youtube").css("opacity", 1).addClass("slide-up");
+  setTimeout(() => {
+    $(".youtube").removeClass("slide-up");
+    $(".youtube").addClass("float");
+  }, 3000);
+}, 1800);
 
-//Now, this script above this comment was created by me for more learning purposes.
+//Speckle background
 
-var topGame = $("#favoriteTwo");
-var colorIndex = -1;
 setInterval(() => {
-  colorIndex *= -1;
-  var color = (colorIndex === 1) ? "" : "yellow";
-  topGame.css("background", color);
-}, 500);
+  const size = Math.floor(Math.random() * 7) + 2;
+  const speckle = document.createElement("div");
+
+  speckle.classList.add("speckle");
+  speckle.style.left = Math.random() * window.innerWidth + "px";
+  speckle.style.width = size + "px";
+  speckle.style.height = size + "px";
+
+  document.body.appendChild(speckle);
+
+  // Remove after animation finishes
+  setTimeout(() => {
+    speckle.remove();
+  }, 4000);
+
+}, 300);
+
+// - - - - - - - - - - - - - - - - IMAGES - - - - - - - - - - - - - - - - - - - - -
+function loadImage(src){
+  const img = new Image();
+    img.src = src;
+    return img.src;
+}
+let index = 0;
+function loadImageContainer(){
+  $(".image-container img").attr("src", images[index]);
+}
+$(".left-arrow").on("click", () => {
+  if(index > 0){
+    index--
+    loadImageContainer();
+    $(".bubble").css("background", "none");
+    $(`.bubble:nth-child(${Number(index) + 1})`).css("background", "white");
+  }
+});
+$(".right-arrow").on("click", () => {
+  if(index < images.length - 1){
+    index++
+    loadImageContainer();
+    $(".bubble").css("background", "none");
+    $(`.bubble:nth-child(${Number(index) + 1})`).css("background", "white");
+  }
+});
+//loadImage("Images Folder/.JPG"),
+const images = [
+  loadImage("Images Folder/Ant.JPG"),
+  loadImage("Images Folder/Beauty.JPG"),
+  loadImage("Images Folder/Big Pond[Wide shot].JPG"),
+  loadImage("Images Folder/Big Pond[With weeds].JPG"),
+  loadImage("Images Folder/Bike.JPG"),
+  loadImage("Images Folder/Bucees.JPG"),
+  loadImage("Images Folder/Buckee.JPG"),
+  loadImage("Images Folder/Charlie(1).JPG"),
+  loadImage("Images Folder/Charlie(2).JPG"),
+  loadImage("Images Folder/CHS.JPG"),
+  loadImage("Images Folder/CHS(2).JPG"),
+  loadImage("Images Folder/CHS(3).JPG"),
+  loadImage("Images Folder/Genesis(Back).JPG"),
+  loadImage("Images Folder/Genesis(Front).JPG"),
+  loadImage("Images Folder/House.JPG"),
+  loadImage("Images Folder/Line.JPG"),
+  loadImage("Images Folder/Line(2).JPG"),
+  loadImage("Images Folder/Pond Trail[Zoomed in, tree close up].JPG"),
+  loadImage("Images Folder/Pond.JPG"),
+  loadImage("Images Folder/River.JPG"),
+  loadImage("Images Folder/Texture.JPG"),
+  loadImage("Images Folder/Trees.JPG"),
+]
+
+loadImageContainer();
+for(var i = 0; i < images.length; i++){
+  $("<div>").addClass("bubble").appendTo(".bubble-container");
+}
+$(".bubble").on("click", function(){
+  $(".bubble").css("background", "none");
+  let imageIndex = $(this).index();
+  $(this).css("background", "white");
+  index = Number(imageIndex);
+  loadImageContainer();
+});
+// - - - - - - - - - - - - - - - - GAME CARD - - - - - - - - - - - - - - - - - - - 
+
+/*$(".game-card-video").on("mouseenter", () => {
+  $(".game-card-video video")[0].play();
+});
+$(".game-card-video").on("mouseleave", () => {
+  $(".game-card-video video")[0].pause();
+});*/
+
+$(".game").on("click", function() {
+  $(".apps").css({
+    "filter": "blur(10px)",
+    "pointer-events": "none",
+  });
+  $(".game-card").css({
+    "opacity": 1,
+    "z-index": 3,
+  });
+  let index = $(this).index();
+  let tagLength = $(`#${index} .game-tags .game-tag`).length;
+  $(".game-card-name").text($(`#${index} .game-name`).text());
+  $(".game-card-image img").attr("src", $(`#${index} .game-image img`).attr("src"));
+  //$(".game-card-video video").attr("src", `gameplay/${$(`#${index} .game-name`).text()}.mp4`);
+  $(".game-card-tags").empty();
+  for(var i = 1; i < tagLength + 1; i++){
+    $("<div>").addClass("game-card-tag").text($(`#${index} .game-tags .game-tag:nth-child(${i})`).text()).appendTo(".game-card-tags")
+  }
+  $(".game-card-description").text($(`#${index} .descriptionText`).text());
+  $(".play-game").attr("onclick", `window.location.href = "${$(`#${index} .gameLink`).text().toString()}"`);
+});
+
+$(".exit-game").on("click", () => {
+  $(".apps").css({
+    "filter": "blur(0px)",
+    "pointer-events": "auto",
+  });
+  $(".game-card").css({
+    "opacity": 0,
+    "z-index": -2,
+  });
+});
+
+$("#about-me").on("click", () => {
+  $(".about-me").css({
+    "opacity": 1,
+    "z-index": 2,
+  });
+  $(".apps").css({
+    "opacity": 0,
+    "z-index": -1,
+  });
+  $(".images").css({
+    "opacity": 0,
+    "z-index": -1,
+  });
+  $(".title").removeClass("fade-in")
+  $(".title").removeClass("fade-in-quick")
+  $(".title").css("opacity", 0);
+  $(".picture").remove();
+  $(".youtube").remove();
+  $(".instagram").remove();
+});
+$("#apps").on("click", () => {
+  $(".about-me").css({
+    "opacity": 0,
+    "z-index": -1,
+  });
+  $(".apps").css({
+    "opacity": 1,
+    "z-index": 2,
+  });
+  $(".images").css({
+    "opacity": 0,
+    "z-index": -1,
+  });
+  $(".title").removeClass("fade-in")
+  $(".title").removeClass("fade-in-quick")
+  $(".title").css("opacity", 0);
+  $(".picture").remove();
+  $(".youtube").remove();
+  $(".instagram").remove();
+});
+$("#images").on("click", () => {
+  $(".about-me").css({
+    "opacity": 0,
+    "z-index": -1,
+  });
+  $(".apps").css({
+    "opacity": 0,
+    "z-index": -1,
+  });
+  $(".images").css({
+    "opacity": 1,
+    "z-index": 3,
+  });
+  $(".title").removeClass("fade-in")
+  $(".title").removeClass("fade-in-quick")
+  $(".title").css("opacity", 0);
+  $(".picture").remove();
+  $(".youtube").remove();
+  $(".instagram").remove();
+});
+
   </script>
 </body>
 </html>

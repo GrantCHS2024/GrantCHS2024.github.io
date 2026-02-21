@@ -1,0 +1,766 @@
+body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    overflow: hidden;
+}
+.canvas{  /*THESE WIDTH AND HEIGHT VALUES WILL BE FOR INSIDE THE GAME... IN THE MENU AND ALL ELSE, SEt IT TO A SMALLER VALUE BY px!!*/
+    position: absolute;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    /*z-index: 2;*/
+}
+.map{
+    position: absolute;
+    height: 100%;
+    z-index: 1;
+}
+.coverMap {
+    position: absolute;
+    height: 100%;
+    z-index: 3;
+    opacity: 1;
+}
+#canvas{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+}
+#canvashud{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 4;
+}
+.playerOneIcon {
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    top: 2%;
+    left: 2%;
+}
+.hud {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
+.playerOneHealth {
+    position: absolute;
+    height: 10%;
+    top: 2%;
+    left: 10%;
+    z-index: 5;
+    opacity: 0.7;
+    filter: sepia(0) hue-rotate(-50deg) saturate(3);
+}
+.playerTwoHealth {
+    position: absolute;
+    height: 10%;
+    top: 1%;
+    left: 85%;
+    z-index: 5;
+    opacity: 0.7;
+    filter: sepia(0) hue-rotate(-50deg) saturate(3);
+}
+.playerOneHealth img, .playerTwoHealth img {
+    width: 100%;
+    height: 100%;
+}
+.time {
+    border-radius: 10px;
+    margin: 30px auto;
+    width: 5%;
+    height: 2%;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.4);
+   -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  font-weight: bold;
+  font-size: 1cqw;
+}
+.helicopter {
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    left: -1000px;
+    z-index: 6;
+    transform: rotate(270deg);
+}
+.flyBy {
+    animation: flyBy 0.75s linear;
+}
+@keyframes flyBy {
+    0% {
+        left: -1000px;
+    }
+    100% {
+        left: 100vw;
+    }
+}
+.shake {
+  animation: shake 0.25s;
+}
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.transition {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+   -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+    z-index: 11;
+    opacity: 0;
+}
+.transitiontwo {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    z-index: 11;
+    opacity: 0;
+}
+.score {
+    opacity: 0;
+    width: 40%;
+    height: 15%;
+    z-index: 12;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15cqw;
+    font-family: "Tiny5", sans-serif;
+}
+.score .playerOne {
+    width: 50%;
+}
+.fade-in {
+    animation: fadein 2s ease-in forwards;
+}
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.fade-out {
+    animation: fadeout 2s ease-in forwards;
+}
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.fade-in-out {
+    animation: fadeinout 4s ease-in-out forwards;
+}
+@keyframes fadeinout {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.loadoutScreen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('Sprites/backgrounds/loadoutbackground.png');
+    z-index: -1;
+    display: none;
+}
+.loadoutScreen .p1 {
+    float: left;
+    width: 50%;
+    height: 100%;
+    border-right: 5px solid;
+}
+.menu {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+}
+.menu .background {
+    width: 100%;
+    height: 100%;
+    filter: none;
+    transition: all 2s;
+}
+.menu .logo {
+    position: absolute;
+    width: 20%;
+    top: 5%;
+    left: 2.5%;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.5);
+}
+.menu .local {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 5%;
+    top: 30%;
+    left: 2.5%;
+    font-size: 2.5cqw;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    border-bottom: 2px solid white;
+    background: linear-gradient(to right, white, rgba(0, 0, 0, 0));
+    transition: all 0.5s;
+}
+.menu .campaign {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 5%;
+    top: 40%;
+    left: 2.5%;
+    font-size: 2.5cqw;
+    color: grey;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    border-bottom: 2px solid grey;
+    transition: all 0.5s;
+}
+.menu .battle {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 5%;
+    top: 50%;
+    left: 2.5%;
+    font-size: 2.5cqw;
+    color: grey;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    border-bottom: 2px solid grey;
+    transition: all 0.5s;
+}
+.menu .settingsOption {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 5%;
+    top: 60%;
+    left: 2.5%;
+    font-size: 2.5cqw;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    border-bottom: 2px solid white;
+    transition: all 0.5s;
+}
+
+.settings {
+    position: absolute;
+    opacity: 0;
+    width: 70%;
+    height: 70%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: -1;
+    left: 15%;
+    top: 15%;
+    border-radius: 50px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.5s;
+}
+.settings div {
+    margin: 25px;
+    width: 70%;
+    height: 10%;
+}
+.settings div h1{
+    color: white;
+    margin-left: 20px;
+    font-family: "Tiny5", sans-serif;
+}
+.musicAudio {
+    border: 2px solid white;
+}
+
+.dodCard {
+    position: absolute;
+    border-radius: 30px;
+    background: url('Sprites/backgrounds/defuse.png') center center;
+    background-size: cover;
+    width: 30%;
+    height: 75%;
+    top: 10%;
+    left: 15%;
+    display: flex;
+    justify-content: center;
+}
+.dodCard h1 {
+    position: absolute;
+    margin-top: 20%;
+    color: white;
+    font-family: "Rubik Burned", system-ui;
+    font-size: 3rem;
+}
+.dodCard h2 {
+    position: absolute;
+    margin-top: 50%;
+    color: white;
+    font-family: "Rubik Burned", system-ui;
+    font-size: 1.5rem;
+}
+.casualCard {
+    position: absolute;
+    border-radius: 30px;
+    background: url('Sprites/backgrounds/casual.png') center center;
+    background-size: cover;
+    width: 30%;
+    height: 75%;
+    top: 10%;
+    left: 55%;
+    display: flex;
+    justify-content: center;
+    filter: blur(10px);
+}
+.casualCard h1 {
+    position: absolute;
+    margin-top: 20%;
+    color: white;
+    font-family: "Rubik Burned", system-ui;
+    font-size: 3rem;
+}
+.casualCard h2 {
+    position: absolute;
+    margin-top: 50%;
+    color: white;
+    font-family: "Rubik Burned", system-ui;
+    font-size: 1.5rem;
+}
+.blurIn {
+    animation: blurIn 0.5s ease-in-out forwards;
+}
+@keyframes blurIn {
+    0% {
+        filter: blur(0px);
+    }
+    100% {
+        filter: blur(10px);
+    }
+}
+.blurOut {
+    animation: blurOut 0.5s ease-in-out forwards;
+}
+@keyframes blurOut {
+    0% {
+        filter: blur(10px);
+    }
+    100% {
+        filter: blur(0px);
+    }
+}
+
+.primarySlot {
+    position: absolute;
+    width: 23%;
+    height: 20%;
+    top: 5%;
+    margin-left: 2%;
+    background: url('Sprites/backgrounds/slot.png') center center;
+    border-radius: 10px;
+    border: 2px solid white;
+    opacity: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.primarySlot img {
+    opacity: 1;
+    height: 100%;
+}
+.primaryAttachmentSlot {
+    position: absolute;
+    width: 5%;
+    height: 10%;
+    top: 27.5%;
+    margin-left: 5%;
+    background: url('Sprites/backgrounds/slot.png') center center;
+    border-radius: 10px;
+    border: 2px solid #222;
+    opacity: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.primaryAttachmentSlot img {
+    opacity: 1;
+    height: 100%;
+}
+.secondaryAttachmentSlot {
+    position: absolute;
+    width: 5%;
+    height: 10%;
+    top: 27.5%;
+    margin-left: 32%;
+    background: url('Sprites/backgrounds/slot.png') center center;
+    border-radius: 10px;
+    border: 2px solid #222;
+    opacity: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.secondaryAttachmentSlot img {
+    opacity: 1;
+    height: 100%;
+}
+.secondarySlot {
+    position: absolute;
+    width: 10%;
+    height: 20%;
+    top: 5%;
+    margin-left: 30%;
+    background: url('Sprites/backgrounds/slot.png') center center;
+    border-radius: 10px;
+    border: 2px solid #222;
+    opacity: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.secondarySlot img {
+    opacity: 1;
+    height: 100%;
+}
+.item1Slot {
+    position: absolute;
+    width: 10%;
+    height: 20%;
+    top: 40%;
+    margin-left: 3%;
+    background: url('Sprites/backgrounds/slot.png') center center;
+    border-radius: 10px;
+    border: 2px solid #222;
+    opacity: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.item1Slot img {
+    opacity: 1;
+    height: 100%;
+}
+.item2Slot {
+    position: absolute;
+    width: 10%;
+    height: 20%;
+    top: 40%;
+    margin-left: 14.5%;
+    background: url('Sprites/backgrounds/slot.png') center center;
+    border-radius: 10px;
+    border: 2px solid #222;
+    opacity: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.item2Slot img {
+    opacity: 1;
+    height: 100%;
+}
+.armorSlot {
+    position: absolute;
+    width: 10%;
+    height: 20%;
+    top: 40%;
+    margin-left: 30%;
+    background: url('Sprites/backgrounds/slot.png') center center;
+    border-radius: 10px;
+    border: 2px solid #222;
+    opacity: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.armorSlot img {
+    opacity: 1;
+    height: 100%;
+}
+.appearanceSlot {
+    position: absolute;
+    width: 13%;
+    height: 24%;
+    top: 68%;
+    margin-left: 2%;
+    background: url('Sprites/backgrounds/slot.png') center center;
+    border-radius: 10px;
+    border: 2px solid #222;
+    opacity: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.appearanceSlot img {
+    opacity: 1;
+    height: 100%;
+}
+.readyButton {
+    position: absolute;
+    width: 22%;
+    height: 20%;
+    top: 70%;
+    margin-left: 20%;
+    background: red;
+    border-radius: 10px;
+    border: 4px solid #222;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4.5cqw;
+    font-family: "Rubik Burned", system-ui;
+    transition: all 0.5s;
+}
+.loadoutScreen .p2 {
+    float: right;
+    width: 50%;
+    height: 100%;
+    border-left: 5px solid;
+}
+.sidebar {
+    float: right;
+    height: 100%;
+    width: 40%;
+    background: #444;
+    border: 3px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.sidebar .name {
+    position: absolute;
+    font-size: 2cqw;
+    color: white;
+    font-family: "Rubik Burned", system-ui;
+    top: 10%;
+}
+.sidebar .ammoCapacity {
+    position: absolute;
+    font-size: 1cqw;
+    color: white;
+    font-family: "Rubik Burned", system-ui;
+    top: 20%;
+    width: 10%;
+    height: 2%;
+    border-radius: 10px;
+    background: linear-gradient(
+    to right, 
+    #4CAF50 0%, /* Green color for the filled portion (adjust '75%' for your percentage) */
+    #999 0%    /* Light gray for the remaining portion */
+  )
+}
+.sidebar .accuracy {
+    position: absolute;
+    font-size: 1cqw;
+    color: white;
+    font-family: "Rubik Burned", system-ui;
+    top: 30%;
+    width: 10%;
+    height: 2%;
+    border-radius: 10px;
+    background: linear-gradient(
+    to right, 
+    #4CAF50 0%, /* Green color for the filled portion (adjust '75%' for your percentage) */
+    #999 0%    /* Light gray for the remaining portion */
+  )
+}
+.sidebar .damage {
+    position: absolute;
+    font-size: 1cqw;
+    color: white;
+    font-family: "Rubik Burned", system-ui;
+    top: 40%;
+    width: 10%;
+    height: 2%;
+    border-radius: 10px;
+    background: linear-gradient(
+    to right, 
+    #4CAF50 0%, /* Green color for the filled portion (adjust '75%' for your percentage) */
+    #999 0%    /* Light gray for the remaining portion */
+  )
+}
+.sidebar .weight {
+    position: absolute;
+    font-size: 1cqw;
+    color: white;
+    font-family: "Rubik Burned", system-ui;
+    top: 50%;
+    width: 10%;
+    height: 2%;
+    border-radius: 10px;
+    background: linear-gradient(
+    to right, 
+    #4CAF50 0%, /* Green color for the filled portion (adjust '75%' for your percentage) */
+    #999 0%    /* Light gray for the remaining portion */
+  )
+}
+.sidebar .rateOfFire {
+    position: absolute;
+    font-size: 1cqw;
+    color: white;
+    font-family: "Rubik Burned", system-ui;
+    top: 60%;
+    width: 10%;
+    height: 2%;
+    border-radius: 10px;
+    background: linear-gradient(
+    to right, 
+    #4CAF50 0%, /* Green color for the filled portion (adjust '75%' for your percentage) */
+    #999 0%    /* Light gray for the remaining portion */
+  )
+}
+.sidebar .description {
+    position: absolute;
+    font-size: 1cqw;
+    color: white;
+    font-family: "Rubik Burned", system-ui;
+    top: 25%;
+    width: 80%;
+    height: 15%;
+    text-align: center;
+}
+.leaveNotification {
+    position: absolute;
+    width: 20%;
+    height: 10%;
+    top: 5%;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid black;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1cqw;
+    font-family: "Rubik Burned", system-ui;
+    color: white;
+    z-index: 15;
+    gap: 25px;
+    user-select: none;
+    
+    opacity: 0;
+}
+.controllerNotification {
+    position: absolute;
+    width: 20%;
+    height: 10%;
+    top: 5%;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid black;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1cqw;
+    font-family: "Rubik Burned", system-ui;
+    color: white;
+    z-index: 21;
+    gap: 25px;
+    user-select: none;
+    
+    opacity: 0;
+}
+.controllerNotification h1 {
+    font-size: 1cqw;
+}
+.controllerNotification img {
+    filter: invert(100%);
+    width: 20%;
+}
+.poptop {
+    animation: poptop 0.35s ease-in-out forwards;
+}
+@keyframes poptop {
+    0% {
+        opacity: 0;
+        top: 0%;
+        width: 0%;
+        height: 0%;
+    }
+    100% {
+        opacity: 1;
+        top: 5%;
+        width: 20%;
+        height: 10%;
+    }
+}
+
+.intro {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 20;
+}
+.intro h1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 23;
+    color: white;
+    font-family: Verdana;
+    font-size: 1cqw;
+}
+.intro video {
+    width: 100%;
+    height: 100%;
+}
+.controls {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 20px;
+    opacity: 0;
+    z-index: -1;
+    transition: all 0.5s;
+}
+.controls img {
+    width: 100%;
+}

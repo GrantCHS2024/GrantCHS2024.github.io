@@ -10,7 +10,7 @@ body {
   overflow: hidden;
   user-select: none;
 }
-img {
+.gameLogo, .JS_logo {
   position: absolute;
   z-index: 6;
   opacity: 0;
@@ -129,6 +129,33 @@ img {
 .shop div button:hover{
   background: #999;
   cursor: pointer;
+}
+
+.key {
+  position: absolute;
+  top: 10%;
+  width: 110px;
+  height: 110px;
+  z-index: 3;
+  opacity: 1;
+}
+.key img {
+  width: 100%;
+}
+
+.fade-in-out {
+  animation: fade-in-out 7s linear forwards;
+}
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+}
 }
 
 .redScreen{
@@ -303,4 +330,22 @@ img {
   80% { transform: translate(-3px, -3px) rotate(3deg); }
   90% { transform: translate(3px, 6px) rotate(0deg); }
   100% { transform: translate(3px, -6px) rotate(-3deg); }
+}
+
+.tiltshake {
+  animation: tiltshake 0.5s linear infinite forwards;
+}
+
+@keyframes tiltshake {
+    0% { transform: translate(3px, 3px) rotate(-10deg); }
+  10% { transform: translate(-3px, -6px) rotate(-13deg); }
+  20% { transform: translate(-9px, 0px) rotate(-7deg); }
+  30% { transform: translate(9px, 6px) rotate(-10deg); }
+  40% { transform: translate(3px, -3px) rotate(-7deg); }
+  50% { transform: translate(-3px, 6px) rotate(-13deg); }
+  60% { transform: translate(-9px, 3px) rotate(-10deg); }
+  70% { transform: translate(9px, 3px) rotate(-13deg); }
+  80% { transform: translate(-3px, -3px) rotate(-7deg); }
+  90% { transform: translate(3px, 6px) rotate(-10deg); }
+  100% { transform: translate(3px, -6px) rotate(-13deg); }
 }

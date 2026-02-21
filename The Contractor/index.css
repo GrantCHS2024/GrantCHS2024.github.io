@@ -338,6 +338,9 @@ body {
     z-index: 8;
 }
 .canvas{  /*THESE WIDTH AND HEIGHT VALUES WILL BE FOR INSIDE THE GAME... IN THE MENU AND ALL ELSE, SEt IT TO A SMALLER VALUE BY px!!*/
+    position: absolute;
+    top: 0;
+    left: 0;
     overflow: hidden;
     width: 100vw;
     height: 100vh;
@@ -345,7 +348,17 @@ body {
     z-index: 4;
 }
 #canvas {
-    background: #1b1a27;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    background: transparent;
+}
+#groundcanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
 }
 .HUD {
     pointer-events: none;
@@ -456,6 +469,7 @@ body {
     object-fit: contain;
     height: 100%;
     width: 100%;
+    pointer-events: none;
 }
 .missions{
     position: absolute;

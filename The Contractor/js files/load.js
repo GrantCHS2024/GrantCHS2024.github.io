@@ -1,11 +1,15 @@
 //THIS FILE IS RESPONSIBLE FOR LOADING ALL VARIABLES, IMAGES, SOUND EFFECTS, AND LOADING IMAGES
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+const groundcanvas = document.getElementById("groundcanvas");
+const groundctx = groundcanvas.getContext("2d");
 const canvasContainer = document.querySelector(".canvas");
 let GAME_WIDTH = 3000;
 let GAME_HEIGHT = 3000;
 canvas.width = GAME_WIDTH;
 canvas.height = GAME_HEIGHT;
+groundcanvas.width = window.innerWidth;
+groundcanvas.height = window.innerHeight;
 const rDWidth = (window.innerWidth / 1.5);
 const rDHeight = (window.innerHeight / 1.5);
 let inMenu = true;
@@ -24,6 +28,8 @@ let contractItem = "Icon1"; //PLACEHOLDER
 let contractItemCollected = false;
 let code = "";
 let days = 0;
+let groundPattern = null;
+const groundPatterns = {};
 
 var player = {
   x: 100,
@@ -51,7 +57,7 @@ var player = {
   magicUsage: 50,
   maxMagic: 0,
   magicReady: true,
-  coins: 0, // CHANGE TO 0 AFTER DONE
+  coins: 100000, // CHANGE TO 0 AFTER DONE
 };
 
 let enemies = [
@@ -147,7 +153,7 @@ let shop = [
   },
   {
     name: "Magic Potion",
-    description: "Increases Magic",
+    description: "Increases Magic (F to Use)",
     cost: 150,
     src: "Icons/shop/Icon12.png",
     purchase: function() {
@@ -260,7 +266,7 @@ else if(inGame){
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas(); // Run once on startup
 
-var biomes = ["Forest", "Winter", "Desert", "Underworld", "Thunderstorm", "Void"];//HAVE ENEMIES VARY BASED ON BIOME, MAKE SPAWNS RANDOM, BUT THE TIME THEY SPAWN AND AMOUNT DEPENDENT ON DIFFICULTY AND BIOME
+var biomes = ["Forest", "Winter", "Desert", "Underworld", "Thunderstorm"];//HAVE ENEMIES VARY BASED ON BIOME, MAKE SPAWNS RANDOM, BUT THE TIME THEY SPAWN AND AMOUNT DEPENDENT ON DIFFICULTY AND BIOME
 var biome = biomes[1];
 
 var grass_ruins = ["Water_ruins1", "Water_ruins2"];
@@ -692,6 +698,9 @@ let letters = "ABCDE";
 let letterCode;
 
 function determinePuzzle(){ //14 BOXES, 9 CHESTS
+  sites.forEach(site => {
+    site.type = "";
+  });
   if(Number(difficulty) === 1){
     code = Math.floor(Math.random() * (9999 - 1000) + 1000);
     let chosenBox = Math.floor(Math.random() * 14);
@@ -785,7 +794,7 @@ function determinePuzzle(){ //14 BOXES, 9 CHESTS
 }
 
 function determineMission(){
-  switch (difficulty) {
+  switch (Number(difficulty)) {
     case 1:
     $(".missions").text("Mission: Search for the box with the code to the chest and retrieve the contract item.");
     break;
@@ -900,14 +909,15 @@ $("#introVideo").on('ended', () => {
 });
 
 const grounds = {
-  grass: loadImage("Sprites/World/Forest.png"),
-  winter: loadImage("Sprites/World/Winter.png"),
-  underworld: loadImage("Sprites/World/Underworld.png"),
-  desert: loadImage("Sprites/World/Desert.png"),
-  dungeon: loadImage("Sprites/World/Dungeon.jpg")
+  Forest: loadImage("Sprites/World/Forest.png"),
+  Thunderstorm: loadImage("Sprites/World/Forest.png"),
+  Winter: loadImage("Sprites/World/Winter.png"),
+  Underworld: loadImage("Sprites/World/Underworld.png"),
+  Desert: loadImage("Sprites/World/Desert.png"),
+  Dungeon: loadImage("Sprites/World/Dungeon.jpg")
 }
 
-var ground = grounds.grass;  //WORK ON NEW GROUND IMAGES, used to be too small, now it's larger but glitched because of how it was all copied together.
+var ground = grounds.grass; 
 const playerWalk = {
   animation: loadImage("Sprites/Knight/Idle.png"),
   delay: 3,
@@ -1088,13 +1098,14 @@ function drawHearts(){
           sites[i].type = "";
         }
         rating -= multiplier;
-        rating = Math.max(rating, 0);
+        rating = Math.max(rating, 1);
         stars = Math.floor(rating / 2);
+        stars = Math.max(stars, 1);
       }, 4500);
       setTimeout(() => {
         $(".transitionScreen").css("top", "100%").removeClass(".fade-out");
         $(".transitionScreen h1").removeClass("fade-in-quick").text("");
-        console.log(difficulty)
+        //console.log(difficulty)
       }, 9000);
     }, 3000)
   }
@@ -1301,14 +1312,14 @@ function removeBlackSlime(){
 function loadContracts(){
   for(var i = 0; i < 3; i++){
     let contract = $("<div>").addClass("contract").appendTo(".tab");
-    let d = (Math.random() > 0.5) ? Number(difficulty) : Number(difficulty) + 1;
+    let d = (Math.random() > 0.5) ? Number(stars) : Number(stars) + 1;
     let diff = (d === 1) ? "⭐" :
                (d === 2) ? "⭐⭐" :
                (d === 3) ? "⭐⭐⭐" :
                (d === 4) ? "⭐⭐⭐⭐" : 
                (d === 5) ? "⭐⭐⭐⭐⭐" : "";
     let num = Math.floor(Math.random() * biomes.length);
-    let b = biomes[num];//WILL LATER BE RANDOM AFTER ALL BIOMES ARE DONE
+    let b = biomes[num];
     let bio = (b === biomes[0]) ? "Sprites/World/Trees/middle_lane_tree2.png" : 
               (b === biomes[1]) ? "Sprites/World/Trees/winter_conifer_tree_4.png" : 
               (b === biomes[2]) ? "Sprites/World/Trees/group_cactus.png" : 
@@ -1698,10 +1709,9 @@ $(".shop").on("click", () => {
   }
 });
 $(".tab").on("click", ".shopItem", function() {
-  var index = $(".shopItem").index(this);
-  var cost = shop[index].cost
-  if(player.coins >= cost){
-    player.coins -= cost;
+  var index = ($(".shopItem").index(this)) - (shop.length);
+  if(player.coins >= shop[index].cost){
+    player.coins -= shop[index].cost;
     shop[index].purchase();
     shop[index].cost *= 2;
     $(this).find(".cost").text(`Cost: $ ${shop[index].cost}`);
@@ -1824,27 +1834,34 @@ function startGame(){
   //THIS FUNCTIONS SETS ALL VALUES, MUST BE CALLED FIRST
   switch(biome){
     case "Forest":
-    ground = grounds.grass;
+    ground = grounds.Forest;
     ambience.forest.play();
     break;
     case "Winter":
-    ground = grounds.winter;
+    ground = grounds.Winter;
     ambience.winter.play();
     break;
     case "Underworld":
-    ground = grounds.underworld;
+    ground = grounds.Underworld;
     ambience.underworld.play();
     break;
     case "Thunderstorm":
-    ground = grounds.grass;
+    ground = grounds.Thunderstorm;
     ambience.rain.play();
     break;
     case "Desert":
-    ground = grounds.desert;
+    ground = grounds.Desert;
     ambience.desert.play();
     break;
-    default: ground = grounds.grass;
+    default: ground = grounds.Forest;
   }
+
+  if (!groundPatterns[biome]) {
+  groundPatterns[biome] = ctx.createPattern(grounds[biome], "repeat");
+}
+
+groundPattern = groundPatterns[biome];
+
   $(".canvas").css("display", "block");
   $(".HUD").css("z-index", 7);
   $(".tab .contract").remove();
@@ -1876,6 +1893,7 @@ function startGame(){
   $("<h1>").appendTo($newSlot);
 }
   $(".missions").text("Search for the entrance to the dungeon and collect items for cash on the way.");
+  drawGround();
 }
 /*document.addEventListener("DOMContentLoaded",() => {
   setTimeout(() => {

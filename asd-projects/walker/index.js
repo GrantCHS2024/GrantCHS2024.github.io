@@ -1,4 +1,50 @@
 /* global $, sessionStorage */
+let gameLive = true;
+let objectDown = false;
+let objectCollected = false;
+let countdown = 3;
+
+let object = {
+    x: undefined,
+    y: undefined,
+  }
+
+setInterval(() => {
+  if(gameLive){
+  countdown = 3;
+  objectCollected = false;
+  objectDown = true;
+  let X = Math.floor(Math.random() * 800);
+  let Y = Math.floor(Math.random() * 800);
+  object.x = X;
+  object.y = Y;
+  $("<div>").addClass("object").css({
+    "position": "absolute",
+    "top": `${Y}px`,
+    "left": `${X}px`,
+    "width": "10px",
+    "height": "10px",
+    "background": "yellow",
+  }).appendTo("#board");
+}
+  setTimeout(() => {
+    if(!objectCollected){
+      gameLive = false;
+      $(".number").css("font-size", "5rem").text("Game Over");
+    }
+    $(".object").remove();
+  }, 3000);
+}, 8000);
+setInterval(() => {
+  if(objectDown && !objectCollected && gameLive){
+    $(".number").text(countdown);
+    countdown--
+    if(countdown === -1){
+      $(".number").text("");
+      objectDown = false;
+    }
+  }
+}, 1000);
 
 $(document).ready(runProgram); // wait for the HTML / CSS elements of the page to fully load, then execute runProgram()
   
@@ -23,8 +69,8 @@ function runProgram(){
   var playerTwo = {
     x: 700,
     y: 700,
-    speedX: 5,
-    speedY: 5,
+    speedX: 6,
+    speedY: 6,
     width: Number($("#playerTwo").css("width").slice(0, 2)),
     height: Number($("#playerTwo").css("height").slice(0, 2)),
   }
@@ -75,10 +121,10 @@ function runProgram(){
     var newX = player.x;
     var newY = player.y;
 
-    if(key.w)newY -= player.speedY;
-    if(key.a)newX -= player.speedX;
-    if(key.s)newY += player.speedY;
-    if(key.d)newX += player.speedX;
+    if(key.w && gameLive)newY -= player.speedY;
+    if(key.a && gameLive)newX -= player.speedX;
+    if(key.s && gameLive)newY += player.speedY;
+    if(key.d && gameLive)newX += player.speedX;
 
     if(newX > 0 && 
     newX + player.width < board.width &&
@@ -94,11 +140,22 @@ function runProgram(){
       player.y < playerTwo.y + playerTwo.height
     ){
       $("#gameItem").css("background-color", "darkred");
-      $("body").css("background-color", "darkred");
+      $(".fade").css("opacity", 1);
     }
     else {
       $("#gameItem").css("background-color", "grey"); 
-      $("body").css("background-color", "#adadad");
+      $(".fade").css("opacity", 0);
+    }
+
+    if(player.x + player.width > object.x &&
+      player.x < object.x + 10 &&
+      player.y + player.height > object.y &&
+      player.y < object.y + 10
+    ){
+      object = {};
+      objectCollected = true;
+      $(".object").remove();
+      $(".number").text("");
     }
   }
   

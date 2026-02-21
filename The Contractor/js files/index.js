@@ -37,7 +37,9 @@ function update(){
     if(moving.enter){
       $(".transitionScreen").addClass("slideUp");
     setTimeout(() => {
-      clearAmbience();
+      clearAmbience(); //FLAG
+      monsters.bees.pause();
+      monsters.tornado.pause();
       SFX.enter.currentTime = 0;
       SFX.enter.play();
       ambience.dungeon.play();
@@ -45,8 +47,9 @@ function update(){
     player.y = 75;
     outside = false;
     inside = true;
-    ground = grounds.dungeon;
+    ground = grounds["Dungeon"];
     $(".flashlight").css("opacity", 1);
+    $("#groundcanvas").css("opacity", 0);
     $(".blizzard").css("opacity", 0);
     $(".rain").css("opacity", 0);
     determineMission();
@@ -63,6 +66,8 @@ function update(){
       setTimeout(() => {
         $(".transitionScreen").css("top", "0%").addClass("fade-in");
         allSoundStop();
+        monsters.bees.pause();
+        monsters.tornado.pause();
       setTimeout(() => {
         days++
         player.left = false;
@@ -123,8 +128,8 @@ function update(){
     xFree = !checkCollisionInside(newX, player.y);
     yFree = !checkCollisionInside(player.x, newY);
 
-    if(xFree && newX > 0 && newX < (ground.naturalWidth * 2.5) - 100)player.x = newX;
-    if(yFree && newY > 50 && newY < (ground.naturalHeight * 2.5) - 600)player.y = newY;
+    if(xFree && newX > 0 && newX < (grounds["Dungeon"].naturalWidth * 2.5) - 100)player.x = newX;
+    if(yFree && newY > 50 && newY < (grounds["Dungeon"].naturalHeight * 2.5) - 600)player.y = newY;
     
         if(checkExit()){
     $(".info").text("Press Enter to Exit");
@@ -144,30 +149,35 @@ function update(){
     inside = false;
   switch(biome){
     case "Forest":
-    ground = grounds.grass;
+    ground = grounds.Forest;
     ambience.forest.play();
     break;
     case "Winter":
-    ground = grounds.winter;
+    ground = grounds.Winter;
     ambience.winter.play();
     break;
     case "Underworld":
-    ground = grounds.underworld;
+    ground = grounds.Underworld;
     ambience.underworld.play();
     break;
     case "Thunderstorm":
-    ground = grounds.grass;
+    ground = grounds.Thunderstorm;
     ambience.rain.play();
     break;
     case "Desert":
-    ground = grounds.desert;
+    ground = grounds.Desert;
     ambience.desert.play();
     break;
-    default: ground = grounds.grass;
+    default: ground = grounds.Forest;
   }
     $(".flashlight").css("opacity", 0);
-    $(".blizzard").css("opacity", 0);
-    $(".rain").css("opacity", 0);
+    $("#groundcanvas").css("opacity", 1);
+    if(biome === "Winter"){
+    $(".blizzard").css("opacity", 1);
+    }
+    if(biome === "Thunderstorm"){
+    $(".rain").css("opacity", 1);
+    }
     }, 1500);
     setTimeout(() => {
       $(".transitionScreen").removeClass("slideUp");
@@ -821,7 +831,10 @@ if (inside) {
           $(".canvas").addClass("fade-out-in");
           $(".collectedItem img").css("display", "block").attr("src", `Sprites/World/Loot/1/${contractItem}.png`).addClass("collected");
           setTimeout(() => {
-            $(".collectedItem img").css("display", "none").attr("src", "").removeClass("collected");
+            $(".collectedItem img").css({
+              "display": "none",
+              "z-index": -3,
+            }).attr("src", "").removeClass("collected");
             $(".canvas").removeClass("fade-out-in");
             $(".missions").text("Exit the realm using the beacon back where you entered.");
           }, 4000);
@@ -859,8 +872,10 @@ if (inside) {
     }
   } else {
     // Not touching any sites at all
+    if(!checkExit()){
     $(".info").text("");
     $(".page").css("opacity", 0);
+    }
   }
 
 }
@@ -871,19 +886,35 @@ if(!inMenu){
 }
 }
 
+function drawGround(){
+  groundctx.clearRect(0, 0, groundcanvas.width, groundcanvas.height);
+
+  if(outside){
+    groundctx.fillStyle = groundPattern;
+    groundctx.fillRect(player.x - rDWidth, player.y - rDHeight, (player.x + rDWidth) - (player.x - rDWidth), (player.y + rDHeight) - (player.y - rDHeight));
+  }
+}
+
 function draw(){
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 ctx.save(); //FOR CAMERA
+groundctx.save(); //FOR CAMERA
 ctx.translate(-player.x + (canvasContainer.offsetWidth / 2) - 20, -player.y + (canvasContainer.offsetHeight / 2) - 30)
+groundctx.translate(-player.x + (canvasContainer.offsetWidth / 2) - 20, -player.y + (canvasContainer.offsetHeight / 2) - 30)
 
 if(outside){
-  ctx.fillStyle = ctx.createPattern(ground, "repeat");
-  ctx.fillRect(player.x - rDWidth, player.y - rDHeight, (player.x + rDWidth) - (player.x - rDWidth), (player.y + rDHeight) - (player.y - rDHeight));
+  //ctx.fillStyle = ctx.createPattern(ground, "repeat");
+  
+  groundctx.fillRect(player.x - rDWidth, player.y - rDHeight, (player.x + rDWidth) - (player.x - rDWidth), (player.y + rDHeight) - (player.y - rDHeight));
 }
-else if(inside){
+if(inside){
+  ctx.fillStyle = "black"
+  ctx.fillRect(player.x - rDWidth, player.y - rDHeight, (player.x + rDWidth) - (player.x - rDWidth), (player.y + rDHeight) - (player.y - rDHeight));
   ctx.drawImage(ground, 0, 0, 2500, 2500);
 }
+
+groundctx.restore();
 
 //KNIGHT ANIMATIONS
 
