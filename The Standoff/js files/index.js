@@ -290,7 +290,7 @@ function update(){
         p2Leaving = true;
       }
 
-      if(p1Leaving && gameLive){ //REVERT BACK TO NORMAL
+      if(p1Leaving && p2Leaving && gameLive){ //REVERT BACK TO NORMAL
         leaving = false;
         $(".leaveNotification").removeClass("poptop");
         player.flags.menu2 = false;
@@ -1014,7 +1014,7 @@ function menuUpdate(){
         p2Leaving = true;
       }
 
-      if(p1Leaving ){ //REVERT BACK TO NORMAL
+      if(p1Leaving && p2Leaving){ //REVERT BACK TO NORMAL
         leaving = false;
       $(".leaveNotification").removeClass("poptop");
       player.flags.menu2 = false;

@@ -57,7 +57,7 @@ var player = {
   magicUsage: 50,
   maxMagic: 0,
   magicReady: true,
-  coins: 100000, // CHANGE TO 0 AFTER DONE
+  coins: 0, // CHANGE TO 0 AFTER DONE
 };
 
 let enemies = [

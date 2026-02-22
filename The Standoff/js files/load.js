@@ -988,7 +988,7 @@ let loadoutItems = [
         playerTwoReady = false;
         $(".p2 .readyButton").css("background", "red").text("READY?");
       }
-      if(playerOneReady && !starting){ //REVERT BACK TO NORMAL
+      if(playerOneReady && playerTwoReady && !starting){ //REVERT BACK TO NORMAL
         starting = true;
         players[0].score = 0;
         players[1].score = 0;

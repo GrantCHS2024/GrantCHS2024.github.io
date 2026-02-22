@@ -25,7 +25,7 @@ let playerOneReady = false;
 let playerTwoReady = false;
 let starting = false;
 let time = 121;
-let maxRounds = 2;
+let maxRounds = 8;
 let rounds = -1;
 
 let flags = {
