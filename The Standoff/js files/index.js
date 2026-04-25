@@ -30,7 +30,6 @@ function update(){
        player.angle = (Math.atan2(aimY, aimX) * (180 / Math.PI)) - 90;
         }
        }
-       //console.log(player.angle)
        if(gp.buttons[6].pressed && player.alive){
         player.flags.leftTrigger = false;
        }
@@ -289,8 +288,8 @@ function update(){
       if(player.team === 2){
         p2Leaving = true;
       }
-
-      if(p1Leaving && p2Leaving && gameLive){ //REVERT BACK TO NORMAL
+    }
+    if(p1Leaving && p2Leaving && gameLive && leaving){ //REVERT BACK TO NORMAL
         leaving = false;
         $(".leaveNotification").removeClass("poptop");
         player.flags.menu2 = false;
@@ -318,7 +317,6 @@ function update(){
           //$(".coverMap").css("display", "none");
           }, 2000);
       }
-    }
 
     if(!gp.buttons[9].pressed){
       player.flags.menu2 = true;
@@ -812,7 +810,7 @@ function menuUpdate(){
       let activatedSlot;
       for(var r = 0; r < loadoutItems[player.team - 1].length; r++){
         if(loadoutItems[player.team - 1][r].activated){
-          activatedSlot = loadoutItems[player.team - 1][r]
+          activatedSlot = loadoutItems[player.team - 1][r];
         }
       }
       if(activatedSlot.down){
@@ -825,7 +823,7 @@ function menuUpdate(){
       let activatedSlot;
       for(var r = 0; r < loadoutItems[player.team - 1].length; r++){
         if(loadoutItems[player.team - 1][r].activated){
-          activatedSlot = loadoutItems[player.team - 1][r]
+          activatedSlot = loadoutItems[player.team - 1][r];
         }
       }
       if(activatedSlot.up){

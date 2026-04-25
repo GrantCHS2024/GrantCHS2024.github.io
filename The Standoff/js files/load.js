@@ -40,6 +40,12 @@ resizeCanvas();
 
 //- - - - - - - - - - - - - - - - - - - - - - - 
 
+function cloneItem(item) {
+  const cloned = { ...item };
+  cloned.select = item.select;
+  return cloned;
+}
+
 function loadMap(map){
   var bottom;
   var top;
@@ -945,7 +951,6 @@ let loadoutItems = [
     up: "4l",
     down: "9l",
     select: (player) => {
-      //console.log(player)
       loadArmorScreen("p1");
     }, //THEN MOVE FOCUS TO NEW ITEM
   },
@@ -1138,6 +1143,8 @@ let loadoutItems = [
         $(".p2 .readyButton").css("background", "red").text("READY?");
       }
       if(playerOneReady && playerTwoReady && !starting){
+        playerOneReady = false;
+        playerTwoReady = false;
         starting = true;
         players[0].score = 0;
         players[1].score = 0;
@@ -1174,13 +1181,7 @@ for(var p = 0; p < guns.length; p++){
     right: null,
     up: null,
     down: null,
-    select: function(player, gun){
-      player.primary = structuredClone(gun);
-      player.primary.icon = gunIcons[gun.icon];
-      player.primary.sound = gunAudio[gun.icon];
-      loadLoadoutScreen(`p${player.team}`);
-      playSound(audio.equip);
-    }, //THEN MOVE FOCUS TO NEW ITEM
+    select: null, //THEN MOVE FOCUS TO NEW ITEM
   }
   item.gun = guns[p];
   if(p !== 0 && p !== guns.length){
@@ -1191,8 +1192,25 @@ for(var p = 0; p < guns.length; p++){
       item.down = `${p+1}p`;
     }
   }
+  let clonedItem = structuredClone(item);
+  clonedItem.select = function(player, gun){
+      player.primary = structuredClone(gun);
+      player.primary.icon = gunIcons[gun.icon];
+      player.primary.sound = gunAudio[gun.icon];
+      loadLoadoutScreen(`p${player.team}`);
+      playSound(audio.equip);
+    };
+
+    item.select = function(player, gun){
+      player.primary = structuredClone(gun);
+      player.primary.icon = gunIcons[gun.icon];
+      player.primary.sound = gunAudio[gun.icon];
+      loadLoadoutScreen(`p${player.team}`);
+      playSound(audio.equip);
+    };
+
   loadoutItems[0].push(item);
-  loadoutItems[1].push(item);
+  loadoutItems[1].push(clonedItem);
  }
 }
 for(var s = 0; s < guns.length; s++){
@@ -1205,13 +1223,7 @@ for(var s = 0; s < guns.length; s++){
     right: null,
     up: null,
     down: null,
-    select: function(player, gun){
-      player.secondary = structuredClone(gun);
-      player.secondary.icon = gunIcons[gun.icon];
-      player.secondary.sound = gunAudio[gun.icon];
-      loadLoadoutScreen(`p${player.team}`);
-      playSound(audio.equip);
-    }, //THEN MOVE FOCUS TO NEW ITEM
+    select: null, //THEN MOVE FOCUS TO NEW ITEM
   }
   item.gun = guns[s];
     if(guns[s-1]?.type && guns[s-1]?.type === "pistol"){
@@ -1220,13 +1232,31 @@ for(var s = 0; s < guns.length; s++){
     if(guns[s+1]?.type && guns[s+1]?.type === "pistol"){
       item.down = `${s+1}s`;
     }
+
+  let clonedItem = structuredClone(item);
+  clonedItem.select = function(player, gun){
+      player.secondary = structuredClone(gun);
+      player.secondary.icon = gunIcons[gun.icon];
+      player.secondary.sound = gunAudio[gun.icon];
+      loadLoadoutScreen(`p${player.team}`);
+      playSound(audio.equip);
+    };
+    
+    item.select = function(player, gun){
+      player.secondary = structuredClone(gun);
+      player.secondary.icon = gunIcons[gun.icon];
+      player.secondary.sound = gunAudio[gun.icon];
+      loadLoadoutScreen(`p${player.team}`);
+      playSound(audio.equip);
+    };
+
   loadoutItems[0].push(item);
-  loadoutItems[1].push(item);
+  loadoutItems[1].push(clonedItem);
  }
 }
 for(var k = 0; k < loadoutMenuItems.length; k++){
   loadoutItems[0].push(loadoutMenuItems[k])
-  loadoutItems[1].push(loadoutMenuItems[k])
+  loadoutItems[1].push(cloneItem(loadoutMenuItems[k]))
 }
 var t = -1;
 for(let key in playerImages){
@@ -1276,9 +1306,8 @@ for(let key in playerImages){
     item.down = `${t + 2}ap`;
   }
   loadoutItems[0].push(item);
-  loadoutItems[1].push(item);
+  loadoutItems[1].push(cloneItem(item));
 }
-//console.log(loadoutItems[0])
 
 function moveFocusMenu(array, newSpot){
   for(var i = 0; i < array.length; i++){
@@ -1528,7 +1557,7 @@ function loadLoadoutScreen(side){
   $("<img>").attr("src", players[Number(side[1] - 1)].armorIcon).appendTo(`.${side} .armorSlot`);
   $("<img>").attr("src", players[Number(side[1] - 1)].appearance).appendTo(`.${side} .appearanceSlot`);
 
-  moveFocus(loadoutItems[Number(side[1])-1], "1l", side);
+  moveFocus(loadoutItems[Number(side[1] - 1)], "1l", side);
 }
 
 function adjustGuns(){
